@@ -32,13 +32,13 @@ spec:
     server:
       image:
         # Enterprise Image
-        # repository: "hashicorp/vault-enterprise"
-        # tag: "1.6.1_ent"
-        # tag: "1.5.0_ent"   
+        repository: "hashicorp/vault-enterprise"
+        tag: "1.6.1_ent"
+        # tag: "1.5.0_ent" 
 
         # Non-Enterprise
-        repository: "hashicorp/vault"
-        tag: "1.6.1"
+        # repository: "hashicorp/vault"
+        # tag: "1.6.1"
 
       # These Resource Limits are in line with node requirements in the
       # Vault Reference Architecture for a Small Cluster
@@ -97,7 +97,7 @@ spec:
       # Run Vault in "HA" mode.
       ha:
         enabled: true
-        replicas: 5
+        replicas: 4
 
         raft:
           enabled: true

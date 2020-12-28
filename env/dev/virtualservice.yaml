@@ -6,7 +6,7 @@ spec:
   gateways:
   - main.istio-system.svc.cluster.local
   hosts:
-  - vault.cnap.dev
+  - vault.dso.mil
   http:
   - route:
     - destination:
