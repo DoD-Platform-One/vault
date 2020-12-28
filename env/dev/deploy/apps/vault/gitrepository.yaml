@@ -1,0 +1,16 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: vault-deploy
+  namespace: vault
+spec:
+  interval: 1m
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.sh
+  interval: 10m
+  url: https://repo1.dso.mil/kobayashi-maru/vault.git
+  ref:
+    tag: v0.1.0
