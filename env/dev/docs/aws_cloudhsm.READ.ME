@@ -22,7 +22,7 @@
 ##```sudo /opt/cloudhsm/bin/configure -a <IP address>```
 
 ##Configure the HSM cluster from the bastion
-##
+##https://docs.aws.amazon.com/cloudhsm/latest/userguide/activate-cluster.html
 ##```/opt/cloudhsm/bin/cloudhsm_mgmt_util /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg```
 ##```enable_e2e```
 ##```listUsers```
@@ -31,6 +31,7 @@
 ##```listUsers``` #notice the PRECO user 'admin' changed to a CO user
 
 ##Create/Modify/Delete necessary Crypto Officers, Crypto Users, Precrypto Users in the HSM (as needed)
+##https://docs.aws.amazon.com/cloudhsm/latest/userguide/cli-users.html
 ##```createUser CU vault <password>
 ##Change passwords as needed
 ##```changePswd CO <username> <password>
