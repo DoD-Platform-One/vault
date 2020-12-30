@@ -73,7 +73,8 @@ EXPOSE 8200
 #
 # For production derivatives of this container, you should add the IPC_LOCK
 # capability so that Vault can mlock memory.
-RUN curl https://raw.githubusercontent.com/hashicorp/vault/master/scripts/docker/docker-entrypoint.sh > /usr/local/bin/docker-entrypoint.sh
+RUN curl https://raw.githubusercontent.com/hashicorp/vault/master/scripts/docker/docker-entrypoint.sh >> /usr/bin/docker-entrypoint.sh \
+    && chmod +x /usr/bin/docker-entrypoint.sh 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # By default you'll get a single-node development server that stores everything
