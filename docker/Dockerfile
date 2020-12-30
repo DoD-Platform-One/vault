@@ -25,18 +25,21 @@ FROM ${UBI_IMAGE} AS base
 
 # Create a vault user and group first so the IDs get set the same way,
 # even as the rest of this may change over time.
-RUN addgroup vault && \
-    adduser -S -G vault vault
+RUN groupadd vault && \
+    useradd vault -g vault
 
+WORKDIR /opt
 # Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
-RUN set -eux; \
-    yum install --no-cache ca-certificates wget libcap su-exec unzip dumb-init tzdata \
-    && wget -r https://releases.hashicorp.com/vault/1.6.1+ent.hsm/ \
-    && unzip -d 1.6.1+ent.hsm/*zip
+RUN yum install ca-certificates wget libcap unzip tzdata openssl-devel -y \
+    && wget https://releases.hashicorp.com/vault/1.6.0+ent.hsm/vault_1.6.0+ent.hsm_linux_amd64.zip \
+    && unzip vault_1.6.0+ent.hsm*zip \ 
+    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm \
+    && yum install ./cloudhsm-client-latest.el8.x86_64.rpm -y
 
 
 
-COPY --from=builder /go/bin/vault /bin/vault
+
+
 
 # /vault/logs is made available to use as a location to store audit logs, if
 # desired; /vault/file is made available to use as a location with the file
@@ -65,6 +68,7 @@ EXPOSE 8200
 #
 # For production derivatives of this container, you should add the IPC_LOCK
 # capability so that Vault can mlock memory.
+RUN curl https://raw.githubusercontent.com/hashicorp/vault/master/scripts/docker/docker-entrypoint.sh > /usr/local/bin/docker-entrypoint.sh
 COPY ./scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
