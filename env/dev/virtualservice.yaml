@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vault
+spec:
+  gateways:
+  - main.istio-system.svc.cluster.local
+  hosts:
+  - vault.dso.mil
+  http:
+  - route:
+    - destination:
+        host: vault
+        port:
+          number: 8200

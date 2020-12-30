@@ -1,0 +1,65 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: vault-selfsigning-issuer
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: vault-ca
+spec:
+  secretName: tls-ca
+  commonName: "vault-ca"
+  isCA: true
+  issuerRef:
+    name: vault-selfsigning-issuer
+  usages:
+  - "any"
+
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: vault-ca-issuer
+spec:
+  ca:
+    secretName: tls-ca
+
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: server
+spec:
+  secretName: tls-server
+  issuerRef:
+    name: vault-ca-issuer
+  usages:
+  - "any"
+  dnsNames:
+  - "*.vault-internal"
+  - "vault-0.vault-internal"
+  - "vault-1.vault-internal"
+  - "vault-2.vault-internal"
+  - "vault-3.vault-internal"
+  - "vault-4.vault-internal"
+  - "vault-0.vault-internal.vault.svc.cluster.local"
+  - "vault-1.vault-internal.vault.svc.cluster.local"
+  - "vault-2.vault-internal.vault.svc.cluster.local"
+  - "vault-3.vault-internal.vault.svc.cluster.local"
+  - "vault-4.vault-internal.vault.svc.cluster.local"
+  - "vault"
+  - "vault-internal"
+  - "vault-internal.vault.svc.cluster.local"
+  - "localhost"
+  - "vault.vault"
+  - "vault.vault.svc"
+  - "vault.vault.svc.cluster.local"
+  - "vault-agent-injector-svc"
+  - "vault-agent-injector-svc.vault"
+  - "vault-agent-injector-svc.vault.svc"
+  - "vault-agent-injector-svc.vault.svc.cluster.local"
+  ipAddresses:
+  - "127.0.0.1"
