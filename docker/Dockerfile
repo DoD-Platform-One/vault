@@ -11,33 +11,30 @@ ARG UBI_IMAGE=${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 # we're explicitly compiling for 'linux/amd64'
 ARG VERSION=1.15.3
 
-FROM golang:${VERSION} AS builder
-
 ARG CGO_ENABLED=0
 ARG BUILD_TAGS
 
-WORKDIR /go/src/github.com/hashicorp/vault
 
-# PULL BINARY
-# https://releases.hashicorp.com/vault/1.6.1+ent.hsm/
 
-COPY . .
-
-RUN make bootstrap \
-  && CGO_ENABLED=$CGO_ENABLED BUILD_TAGS='$BUILD_TAGS' VAULT_DEV_BUILD=1 XC_OSARCH='linux/amd64' sh -c "'./scripts/build.sh'"
+# RUN make bootstrap \
+#   && CGO_ENABLED=$CGO_ENABLED BUILD_TAGS='$BUILD_TAGS' VAULT_DEV_BUILD=1 XC_OSARCH='linux/amd64' sh -c "'./scripts/build.sh'"
 
 # Docker Image
 
-FROM ${UBI_IMAGE}
+FROM ${UBI_IMAGE} AS base
 
 # Create a vault user and group first so the IDs get set the same way,
 # even as the rest of this may change over time.
 RUN addgroup vault && \
     adduser -S -G vault vault
 
-# Set up certificates, our base tools, and Vault.
+# Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
 RUN set -eux; \
-    apk add --no-cache ca-certificates libcap su-exec dumb-init tzdata
+    yum install --no-cache ca-certificates wget libcap su-exec unzip dumb-init tzdata \
+    && wget -r https://releases.hashicorp.com/vault/1.6.1+ent.hsm/ \
+    && unzip -d 1.6.1+ent.hsm/*zip
+
+
 
 COPY --from=builder /go/bin/vault /bin/vault
 
