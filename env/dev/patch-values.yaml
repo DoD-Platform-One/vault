@@ -156,6 +156,15 @@ spec:
               }
             }
 
+            seal "pkcs11" {
+                lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
+                slot = "1"
+                pin = "vault:Password2"
+                key_label = "hsm_demo"
+                hmac_key_label = "hsm_hmac_demo"
+                generate_key = "true"
+            }
+
             service_registration "kubernetes" {}
 
     # Vault UI
