@@ -11,35 +11,40 @@ ARG UBI_IMAGE=${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 # we're explicitly compiling for 'linux/amd64'
 ARG VERSION=1.15.3
 
-FROM golang:${VERSION} AS builder
-
 ARG CGO_ENABLED=0
 ARG BUILD_TAGS
 
-WORKDIR /go/src/github.com/hashicorp/vault
 
-# PULL BINARY
-# https://releases.hashicorp.com/vault/1.6.1+ent.hsm/
 
-COPY . .
-
-RUN make bootstrap \
-  && CGO_ENABLED=$CGO_ENABLED BUILD_TAGS='$BUILD_TAGS' VAULT_DEV_BUILD=1 XC_OSARCH='linux/amd64' sh -c "'./scripts/build.sh'"
+# RUN make bootstrap \
+#   && CGO_ENABLED=$CGO_ENABLED BUILD_TAGS='$BUILD_TAGS' VAULT_DEV_BUILD=1 XC_OSARCH='linux/amd64' sh -c "'./scripts/build.sh'"
 
 # Docker Image
 
-FROM ${UBI_IMAGE}
+FROM ${UBI_IMAGE} AS base
 
 # Create a vault user and group first so the IDs get set the same way,
 # even as the rest of this may change over time.
-RUN addgroup vault && \
-    adduser -S -G vault vault
+RUN groupadd vault && \
+    useradd vault -g vault
 
-# Set up certificates, our base tools, and Vault.
-RUN set -eux; \
-    apk add --no-cache ca-certificates libcap su-exec dumb-init tzdata
+WORKDIR /opt
+# Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
+RUN yum install ca-certificates wget libcap unzip tzdata -y \
+    && wget https://releases.hashicorp.com/vault/1.6.0+ent.hsm/vault_1.6.0+ent.hsm_linux_amd64.zip \
+    && unzip vault_1.6.0+ent.hsm*zip \ 
+    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta \
+    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm \
+    && wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm \
+    && wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/compat-openssl10-1.0.2o-3.el8.x86_64.rpm \
+    && yum install ./lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm -y \
+    && yum install ./compat-openssl10-1.0.2o-3.el8.x86_64.rpm -y \
+    && yum install  ./cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y
 
-COPY --from=builder /go/bin/vault /bin/vault
+
+
+
+
 
 # /vault/logs is made available to use as a location to store audit logs, if
 # desired; /vault/file is made available to use as a location with the file
@@ -68,7 +73,8 @@ EXPOSE 8200
 #
 # For production derivatives of this container, you should add the IPC_LOCK
 # capability so that Vault can mlock memory.
-COPY ./scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN curl https://raw.githubusercontent.com/hashicorp/vault/master/scripts/docker/docker-entrypoint.sh >> /usr/bin/docker-entrypoint.sh \
+    && chmod +x /usr/bin/docker-entrypoint.sh 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 # By default you'll get a single-node development server that stores everything
