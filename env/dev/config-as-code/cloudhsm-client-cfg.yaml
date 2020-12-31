@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudhsm-client-cfg
+  namespace: vault
+data:
+  cloudhsm_client.cfg: |-
+    {
+        "client": {
+            "CriticalAlertScript": "",
+            "create_object_minimum_nodes": 1,
+            "daemon_id": 1,
+            "e2e_owner_crt_path": "/opt/cloudhsm/etc/customerCA.crt",
+            "log_level": "INFO",
+            "reconnect_attempts": -1,
+            "reconnect_interval": 3,
+            "socket_type": "UNIXSOCKET",
+            "sslreneg": 0,
+            "tcp_port": 1111,
+            "workers": 1,
+            "zoneid": 0
+        },
+        "dualfactor": {
+            "certificate": "certificate.crt",
+            "dualfactor_ch_ssl_ciphers": "default",
+            "dualfactor_ssl": "yes",
+            "enable": "no",
+            "pkey": "pkey.pem",
+            "port": 2225
+        },
+        "loadbalance": {
+            "enable": "yes",
+            "prefer_same_zone": "no",
+            "relative_idleness_weight": 1,
+            "sucess_rate_weight": 1
+        },
+        "server": {
+            "hostname": "10.122.8.27",
+            "port": 2223
+        },
+        "ssl": {
+            "CApath": "/opt/cloudhsm/etc/certs",
+            "certificate": "/opt/cloudhsm/etc/client.crt",
+            "pkey": "/opt/cloudhsm/etc/client.key",
+            "server_ch_ssl_ciphers": "default",
+            "server_ssl": "yes"
+        }
+    }

@@ -13,7 +13,9 @@ spec:
     global:
       enabled: true
       tlsDisable: false
-
+      imagePullSecrets:
+        - name: private-registry
+        
     injector:
       enabled: false
       # Use the Vault K8s Image https://github.com/hashicorp/vault-k8s/
@@ -31,14 +33,19 @@ spec:
 
     server:
       image:
-        # Enterprise Image
-        repository: "hashicorp/vault-enterprise"
-        tag: "1.6.1_ent"
+        # Enterprise Image - license required
+        # repository: "hashicorp/vault-enterprise"
+        # tag: "1.6.1_ent"
         # tag: "1.5.0_ent" 
 
-        # Non-Enterprise
+        # Non-Enterprise - no license required
         # repository: "hashicorp/vault"
         # tag: "1.6.1"
+
+        # Custom IB UBI8 Vault + HSM
+        repository: registry.dso.mil/kobayashi-maru/vault/vault_ent_hsm
+        tag: "v1.6.1"
+        pullPolicy: Always
 
       # These Resource Limits are in line with node requirements in the
       # Vault Reference Architecture for a Small Cluster
@@ -84,6 +91,26 @@ spec:
           name: tls-server
         - type: secret
           name: tls-ca
+        - type: configMap
+          name: cloudhsm-client-cfg
+        - type: configMap
+          name: cloudhsm-mgmt-util-cfg
+        - type: configMap
+          name: customer-ca-crt
+      
+      # THIS IS BROKEN
+      volumeMounts:
+        - name: userconfig-cloudhsm-client-cfg
+          mountPath:  /opt/cloudhsm/etc/cloudhsm_client.cfg
+          subPath: cloudhsm_client.cfg
+        - name: cloudhsm-mgmt-util-cfg
+          mountPath:  /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg
+          subPath: cloudhsm_mgmt_util.cfg
+        - name: customer-ca-crt
+          mountPath:  /opt/cloudhsm/etc/customerCA.crt
+          subPath: customerCA.crt
+
+
 
       # This configures the Vault Statefulset to create a PVC for audit logs.
       # See https://www.vaultproject.io/docs/audit/index.html to know more
@@ -156,14 +183,14 @@ spec:
               }
             }
 
-            seal "pkcs11" {
-                lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
-                slot = "1"
-                pin = "vault:Password2"
-                key_label = "hsm_demo"
-                hmac_key_label = "hsm_hmac_demo"
-                generate_key = "true"
-            }
+            # seal "pkcs11" {
+            #     lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
+            #     slot = "1"
+            #     pin = "vault:hsmdevpasswordsarecool"
+            #     key_label = "hsm_dev"
+            #     hmac_key_label = "hsm_hmac_dev"
+            #     generate_key = "true"
+            # }
 
             service_registration "kubernetes" {}
 
