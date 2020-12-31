@@ -63,8 +63,13 @@ RUN mkdir -p /tmp/source \
     && tar -xzf /tmp/source/vault.tar.gz -C /tmp/source --strip-components=1
 
 
+# Convert entrypoint to run on UBI8
+# removes dumb-init
+# may break openshift deployments
 RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/bin/docker-entrypoint.sh \
     && chmod +x /usr/bin/docker-entrypoint.sh \
+    && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/bin/docker-entrypoint.sh \   
+    && sed -i 's/su-exec vault/vault/g' /usr/bin/docker-entrypoint.sh \  
     && rm -rf /tmp/*
 
 
@@ -72,4 +77,5 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 
 # By default you'll get a single-node development server that stores everything
 # in RAM and bootstraps itself. Don't use this configuration for production.
-CMD ["server", "-dev"]
+CMD ["server"]
+# CMD ["server", "-dev"]
