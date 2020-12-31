@@ -103,10 +103,10 @@ spec:
         - name: userconfig-cloudhsm-client-cfg
           mountPath:  /opt/cloudhsm/etc/cloudhsm_client.cfg
           subPath: cloudhsm_client.cfg
-        - name: cloudhsm-mgmt-util-cfg
+        - name: userconfig-cloudhsm-mgmt-util-cfg
           mountPath:  /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg
           subPath: cloudhsm_mgmt_util.cfg
-        - name: customer-ca-crt
+        - name: userconfig-customer-ca-crt
           mountPath:  /opt/cloudhsm/etc/customerCA.crt
           subPath: customerCA.crt
 
