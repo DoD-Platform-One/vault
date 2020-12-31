@@ -183,14 +183,14 @@ spec:
               }
             }
 
-            # seal "pkcs11" {
-            #     lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
-            #     slot = "1"
-            #     pin = "vault:hsmdevpasswordsarecool"
-            #     key_label = "hsm_dev"
-            #     hmac_key_label = "hsm_hmac_dev"
-            #     generate_key = "true"
-            # }
+            seal "pkcs11" {
+                lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
+                slot = "1"
+                pin = "vault:hsmdevpasswordsarecool"
+                key_label = "hsm_dev"
+                hmac_key_label = "hsm_hmac_dev"
+                generate_key = "true"
+            }
 
             service_registration "kubernetes" {}
 
