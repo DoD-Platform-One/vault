@@ -22,17 +22,13 @@ jobs:
   docker_build: 
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      
       - name: Login to registry1
-        uses: docker/login-action@v1
-        with:
-          registry: registry1.dso.mil
-          username: ${{ secrets.REGISTRY1_USERNAME }}
-          password: ${{ secrets.REGISTRY1_TOKEN }}
-      - name: Checkout Repo
-        uses: actions/checkout@v2
+        run: echo "${{ secrets.REGISTRY1_TOKEN }}" | docker login registry1.dso.mil --username "${{ secrets.REGITRY1_USERNAME }}" --password-stdin
+
       - name: Build the image
-        run: |
-          cd docker && docker build . --file Dockerfile
+        run: docker build ./docker --file ./docker/Dockerfile -tag $IMAGE_NAME
 
 
   # Push image to GitHub Packages.
