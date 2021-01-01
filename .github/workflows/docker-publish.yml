@@ -26,8 +26,7 @@ jobs:
 
       - name: Build the image
         run: | 
-          echo "${{ secrets.REGISTRY1_TOKEN }}" | docker login registry1.dso.mil -u "${{ secrets.REGISTRY1_USERNAME }}" --password-stdin 
-          docker build ./docker --file ./docker/Dockerfile --tag $IMAGE_NAME
+          echo "${{ secrets.REGISTRY1_TOKEN }}" | docker login registry1.dso.mil -u "${{ secrets.REGISTRY1_USERNAME }}" --password-stdin && docker build ./docker --file ./docker/Dockerfile --tag $IMAGE_NAME
 
 
   # Push image to GitHub Packages.
