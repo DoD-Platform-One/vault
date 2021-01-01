@@ -25,6 +25,7 @@ jobs:
       -
         name: Login to registry1
         uses: docker/login-action@v1
+        uses: actions/checkout@v2
         with:
           registry: registry1.dso.mil
           username: ${{ secrets.REGISTRY1_USERNAME }}
@@ -38,6 +39,7 @@ jobs:
             docker-compose --file docker-compose.test.yml build
             docker-compose --file docker-compose.test.yml run sut
           else
+            pwd
             docker build . --file docker/Dockerfile
           fi
 
