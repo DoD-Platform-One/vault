@@ -33,7 +33,6 @@ jobs:
 
       - 
         name: Run tests
-        uses: actions/checkout@v2
         run: |
           if [ -f docker-compose.test.yml ]; then
             docker-compose --file docker-compose.test.yml build
