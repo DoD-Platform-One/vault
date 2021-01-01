@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Login to registry1
-        run: docker login registry1.dso.mil --username "${{ secrets.REGITRY1_USERNAME }}" --password-stdin "${{ secrets.REGISTRY1_TOKEN }}"
+        run: docker login registry1.dso.mil -u "${{ secrets.REGITRY1_USERNAME }}" --password-stdin "${{ secrets.REGISTRY1_TOKEN }}"
 
       - name: Build the image
         run: docker build ./docker --file ./docker/Dockerfile -tag $IMAGE_NAME
