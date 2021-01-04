@@ -60,20 +60,25 @@ EXPOSE 8200
 # For production derivatives of this container, you should add the IPC_LOCK
 # capability so that Vault can mlock memory.
 
-RUN mkdir -p /tmp/source \
-    && curl -Lo /tmp/source/vault.tar.gz https://github.com/hashicorp/vault/archive/v${VAULT_VERSION}.tar.gz \
-    && tar -xzf /tmp/source/vault.tar.gz -C /tmp/source --strip-components=1
-
+# COPY ENTIRE VAULT REPO FOR ENTRYPOINT.SH
+# RUN mkdir -p /tmp/source \
+#     && curl -Lo /tmp/source/vault.tar.gz https://github.com/hashicorp/vault/archive/v${VAULT_VERSION}.tar.gz \
+#     && tar -xzf /tmp/source/vault.tar.gz -C /tmp/source --strip-components=1
 
 # Convert entrypoint to run on UBI8
 # removes dumb-init
 # may break openshift deployments
-RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
-    && rm -rf /tmp/*
+# RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+#     && chmod +x /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
+#     && rm -rf /tmp/*
 
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+COPY run_cloudhsm_client.sh /usr/local/bin/run_cloudhsm_client.sh
+RUN chmod +x /usr/local/bin/run_cloudhsm_client.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
