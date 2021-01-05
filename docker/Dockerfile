@@ -29,6 +29,7 @@ RUN groupadd vault && \
     useradd vault -g vault
 
 WORKDIR /opt
+ARG VAULT_VERSION="1.6.1"
 # Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
 RUN yum install ca-certificates wget libcap unzip tzdata -y \
     && wget https://releases.hashicorp.com/vault/${VAULT_VERSION}+ent.hsm/vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip \
