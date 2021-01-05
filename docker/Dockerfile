@@ -88,6 +88,9 @@ RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-ent
     && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
     && rm -rf /tmp/*
 
+COPY cloudhsm.sh /usr/local/bin
+
+RUN /bin/bash /usr/local/bin/cloudhsm.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
