@@ -21,17 +21,15 @@ RUN yum install ca-certificates wget libcap unzip tzdata -y \
     && mkdir -p /tmp/binaries \
     && unzip vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip -d /tmp/binaries \ 
     && cp /tmp/binaries/vault /bin/vault \
-    #&& rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta \
-    #&& wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm \
-    #&& wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/compat-openssl10-1.0.2o-3.el8.x86_64.rpm \
     && yum install http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/compat-openssl10-1.0.2o-3.el8.x86_64.rpm --nogpgcheck -y \
-    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm \
-    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm \    
-    && yum install ./lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm -y \
-    && yum install ./compat-openssl10-1.0.2o-3.el8.x86_64.rpm -y \
-    && yum install ./cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
-    && yum install ./cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y
+    && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
+    && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y    
 
+COPY CA.crt /opt/cloudhsm/etc/
+
+ARG HSM_IP="10.122.8.27"
+
+RUN /opt/cloudhsm/bin/configure -a ${HSM_IP} 
 
 # /vault/logs is made available to use as a location to store audit logs, if
 # desired; /vault/file is made available to use as a location with the file
