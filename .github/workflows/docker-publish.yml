@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build the image
-        run: docker build ./docker --file ./docker/Dockerfile.github --tag $IMAGE_NAME
+        run: echo "${{ secrets.DOCKER_GITHUB_TOKEN }}docker build ./docker --file ./docker/Dockerfile.github --tag $IMAGE_NAME
 
 
   # Push image to GitHub Packages.
