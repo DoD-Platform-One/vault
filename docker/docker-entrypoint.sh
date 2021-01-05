@@ -46,8 +46,21 @@ fi
 
 # start cloudhsm client
 echo -n "* Starting CloudHSM client ... "
-/opt/cloudhsm/bin/cloudhsm_client /opt/cloudhsm/etc/cloudhsm_client.cfg &
-sleep 5
+
+/opt/cloudhsm/bin/cloudhsm_client /opt/cloudhsm/etc/cloudhsm_client.cfg &> /tmp/cloudhsm_client_start.log &
+
+# v DO WE NEED THIS? v
+# wait for startup
+while true
+do
+    if grep 'libevmulti_init: Ready ' /tmp/cloudhsm_client_start.log &> /dev/null
+    then
+        echo "[OK]"
+        break
+    fi
+    sleep 0.5
+done
+
 
 # If the user is trying to run Vault directly with some arguments, then
 # pass them to Vault.
@@ -103,7 +116,9 @@ if [ "$1" = 'vault' ]; then
     fi
 
     if [ "$(id -u)" = '0' ]; then
-      set -- su-exec vault "$@"
+
+      set -- vault "$@"
+
     fi
 fi
 
