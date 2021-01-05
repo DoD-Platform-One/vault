@@ -1,4 +1,5 @@
-#!/usr/bin/dumb-init /bin/sh
+#!/bin/bash
+
 set -e
 
 # Note above that we run dumb-init as PID 1 in order to reap zombie processes
@@ -42,6 +43,11 @@ VAULT_CONFIG_DIR=/vault/config
 if [ -n "$VAULT_LOCAL_CONFIG" ]; then
     echo "$VAULT_LOCAL_CONFIG" > "$VAULT_CONFIG_DIR/local.json"
 fi
+
+# start cloudhsm client
+echo -n "* Starting CloudHSM client ... "
+/opt/cloudhsm/bin/cloudhsm_client /opt/cloudhsm/etc/cloudhsm_client.cfg &
+sleep 5
 
 # If the user is trying to run Vault directly with some arguments, then
 # pass them to Vault.

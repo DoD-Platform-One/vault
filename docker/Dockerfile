@@ -81,16 +81,15 @@ RUN mkdir -p /tmp/source \
 
 # Convert entrypoint to run on UBI8
 # removes dumb-init
-# may break openshift deployments
-RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
-    && rm -rf /tmp/*
+# # may break openshift deployments
+# RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+#     && chmod +x /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
+#     && rm -rf /tmp/*
 
-COPY cloudhsm.sh /usr/local/bin
-
-RUN /bin/bash /usr/local/bin/cloudhsm.sh
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh 
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 
