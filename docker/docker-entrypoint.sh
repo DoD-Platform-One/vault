@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-#!/usr/bin/dumb-init /bin/sh
-=======
 #!/bin/bash
->>>>>>> 7019118f8129818a7582995039bc297b661f1a2a
+
 set -e
 
 # Note above that we run dumb-init as PID 1 in order to reap zombie processes
