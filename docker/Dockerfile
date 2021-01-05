@@ -31,7 +31,7 @@ RUN groupadd vault && \
 WORKDIR /opt
 ARG VAULT_VERSION="1.6.1"
 # Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
-RUN yum install ca-certificates wget libcap unzip tzdata -y \
+RUN yum install ca-certificates wget libcap unzip tzdata libtool-ltdl -y \
     && wget https://releases.hashicorp.com/vault/${VAULT_VERSION}+ent.hsm/vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip \
     && mkdir -p /tmp/binaries \
     && unzip vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip -d /tmp/binaries \ 
@@ -40,10 +40,11 @@ RUN yum install ca-certificates wget libcap unzip tzdata -y \
     && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
     && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y    
 
-COPY CA.crt /opt/cloudhsm/etc/
+COPY customerCA.crt /opt/cloudhsm/etc/
 
 ARG HSM_IP="10.122.8.27"
 
+RUN chmod -R 755 /opt/cloudhsm
 RUN /opt/cloudhsm/bin/configure -a ${HSM_IP} 
 
 # /vault/logs is made available to use as a location to store audit logs, if
