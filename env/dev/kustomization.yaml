@@ -9,7 +9,7 @@ namespace: vault
 
 bases:
   - ../../base
-  # - ./config-as-code
+  - ./config-as-code
   # - ./secrets
 
 resources:

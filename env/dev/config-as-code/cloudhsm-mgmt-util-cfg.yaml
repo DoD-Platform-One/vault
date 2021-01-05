@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudhsm-mgmt-util-cfg
+  namespace: vault
+data:
+  cloudhsm_mgmt_util.cfg: |-
+    {
+        "scard": {
+            "certificate": "cert-sc",
+            "enable": "no",
+            "pkey": "pkey-sc",
+            "port": 2225
+        },
+        "servers": [
+            {
+                "CAfile": "",
+                "CApath": "/opt/cloudhsm/etc/certs",
+                "certificate": "/opt/cloudhsm/etc/client.crt",
+                "e2e_encryption": {
+                    "enable": "yes",
+                    "owner_cert_path": "/opt/cloudhsm/etc/customerCA.crt"
+                },
+                "enable": "yes",
+                "hostname": "10.122.8.27",
+                "name": "10.122.8.27",
+                "pkey": "/opt/cloudhsm/etc/client.key",
+                "port": 2225,
+                "server_ssl": "yes",
+                "ssl_ciphers": ""
+            }
+        ]
+    }
