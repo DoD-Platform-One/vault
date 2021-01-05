@@ -190,6 +190,7 @@ spec:
                 key_label = "vault_dev_v2"
                 hmac_key_label = "vault_hmac_dev_v2"
                 generate_key = "true"  
+
             }
 
             service_registration "kubernetes" {}

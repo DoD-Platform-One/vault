@@ -40,11 +40,13 @@ RUN yum install ca-certificates wget libcap unzip tzdata libtool-ltdl -y \
     && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
     && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y    
 
+
 COPY customerCA.crt /opt/cloudhsm/etc/
 
 ARG HSM_IP="10.122.8.27"
 
 RUN chmod -R 755 /opt/cloudhsm
+
 RUN /opt/cloudhsm/bin/configure -a ${HSM_IP} 
 
 # /vault/logs is made available to use as a location to store audit logs, if
