@@ -41,9 +41,15 @@ RUN yum install ca-certificates wget libcap unzip tzdata -y \
     && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y    
 
 COPY CA.crt /opt/cloudhsm/etc/
+<<<<<<< HEAD
 
 ARG HSM_IP="10.122.8.27"
 
+=======
+
+ARG HSM_IP="10.122.8.27"
+
+>>>>>>> 7019118f8129818a7582995039bc297b661f1a2a
 RUN /opt/cloudhsm/bin/configure -a ${HSM_IP} 
 
 # /vault/logs is made available to use as a location to store audit logs, if
@@ -81,12 +87,15 @@ RUN mkdir -p /tmp/source \
 
 # Convert entrypoint to run on UBI8
 # removes dumb-init
-# may break openshift deployments
-RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
-    && rm -rf /tmp/*
+# # may break openshift deployments
+# RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+#     && chmod +x /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
+#     && rm -rf /tmp/*
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh 
 
 COPY cloudhsm.sh /usr/local/bin
 
