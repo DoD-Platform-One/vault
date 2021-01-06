@@ -9,7 +9,10 @@ terraform {
 
 # Set config using environment variables
 # See https://registry.terraform.io/providers/hashicorp/vault/latest/docs#provider-arguments
-provider "vault" {}
+provider "vault" {
+  address = "https://127.0.0.1:8200"
+  skip_tls_verify = true
+}
 # mount point for p1 root ca
 resource "vault_mount" "p1_pki_root" {
   path                  = "p1_pki_root"
@@ -43,7 +46,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "p1_pki_int" {
   key_bits    = "4096"
 }
 # sign p1 int with root ca
-resource "vault_pki_secret_backend_root_sign_intermediate" "p1_pki_root" {
+resource "vault_pki_secret_backend_root_sign_intermediate" "p1_pki_int" {
   backend = vault_mount.p1_pki_root.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.p1_pki_int.csr
@@ -73,7 +76,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "il2_p1_pki_int" {
   key_bits    = "4096"
 }
 # sign il2 csr with p1 int ca
-resource "vault_pki_secret_backend_root_sign_intermediate" "p1_pki_int" {
+resource "vault_pki_secret_backend_root_sign_intermediate" "il2_p1_pki_int" {
   backend = vault_mount.p1_pki_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.il2_p1_pki_int.csr
@@ -103,7 +106,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "il4_p1_pki_int" {
   key_bits    = "4096"
 }
 # sign il4 csr with p1 int ca
-resource "vault_pki_secret_backend_root_sign_intermediate" "p1_pki_int" {
+resource "vault_pki_secret_backend_root_sign_intermediate" "il4_p1_pki_int" {
   backend = vault_mount.p1_pki_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.il4_p1_pki_int.csr
@@ -133,7 +136,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "il5_p1_pki_int" {
   key_bits    = "4096"
 }
 # sign il5 csr with p1 int ca
-resource "vault_pki_secret_backend_root_sign_intermediate" "p1_pki_int" {
+resource "vault_pki_secret_backend_root_sign_intermediate" "il5_p1_pki_int" {
   backend = vault_mount.p1_pki_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.il5_p1_pki_int.csr
