@@ -192,6 +192,10 @@ spec:
                 generate_key = "true"  
             }
 
+            entropy "seal" {
+                mode = "augmentation"
+            }
+            
             service_registration "kubernetes" {}
 
     # Vault UI
