@@ -5,6 +5,22 @@ ARG BASE_TAG=8.3
 
 ARG UBI_IMAGE=${BASE_REGISTRY}/${BASE_IMAGE}:${BASE_TAG}
 
+
+# Multi-stage builder to avoid polluting users environment with wrong
+# architecture binaries.  Since this binary is used in an alpine container,
+# we're explicitly compiling for 'linux/amd64'
+ARG VERSION=1.15.3
+
+ARG CGO_ENABLED=0
+ARG BUILD_TAGS
+
+
+
+# RUN make bootstrap \
+#   && CGO_ENABLED=$CGO_ENABLED BUILD_TAGS='$BUILD_TAGS' VAULT_DEV_BUILD=1 XC_OSARCH='linux/amd64' sh -c "'./scripts/build.sh'"
+
+# Docker Image
+
 FROM ${UBI_IMAGE} AS base
 
 # Create a vault user and group first so the IDs get set the same way,
@@ -14,23 +30,24 @@ RUN groupadd vault && \
 
 WORKDIR /opt
 ARG VAULT_VERSION="1.6.1"
-
 # Set up certificates, our base tools, and pull latest Vault enterprise binaries and unzip them
-RUN yum install ca-certificates wget libcap unzip tzdata -y \
+RUN yum install ca-certificates wget libcap unzip tzdata libtool-ltdl -y \
     && wget https://releases.hashicorp.com/vault/${VAULT_VERSION}+ent.hsm/vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip \
     && mkdir -p /tmp/binaries \
     && unzip vault_${VAULT_VERSION}+ent.hsm_linux_amd64.zip -d /tmp/binaries \ 
     && cp /tmp/binaries/vault /bin/vault \
-    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta \
-    && wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm \
-    && wget https://downloads.redhat.com/redhat/rhel/rhel-8-beta/baseos/x86_64/Packages/compat-openssl10-1.0.2o-3.el8.x86_64.rpm \
-    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm \
-    && wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm \    
-    && yum install ./lksctp-tools-devel-1.0.18-3.el8.x86_64.rpm -y \
-    && yum install ./compat-openssl10-1.0.2o-3.el8.x86_64.rpm -y \
-    && yum install ./cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
-    && yum install ./cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y
+    && yum install http://mirror.centos.org/centos/8/AppStream/x86_64/os/Packages/compat-openssl10-1.0.2o-3.el8.x86_64.rpm --nogpgcheck -y \
+    && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-latest.el8.x86_64.rpm --nogpgcheck -y \
+    && yum install https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL8/cloudhsm-client-pkcs11-latest.el8.x86_64.rpm --nogpgcheck -y    
 
+
+COPY customerCA.crt /opt/cloudhsm/etc/
+
+ARG HSM_IP="10.122.8.27"
+
+RUN chmod -R 755 /opt/cloudhsm
+
+RUN /opt/cloudhsm/bin/configure -a ${HSM_IP} 
 
 # /vault/logs is made available to use as a location to store audit logs, if
 # desired; /vault/file is made available to use as a location with the file
@@ -67,12 +84,15 @@ RUN mkdir -p /tmp/source \
 
 # Convert entrypoint to run on UBI8
 # removes dumb-init
-# may break openshift deployments
-RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
-    && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
-    && rm -rf /tmp/*
+# # may break openshift deployments
+# RUN cp /tmp/source/scripts/docker/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+#     && chmod +x /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/^#\!.*/#\!\/bin\/sh/' /usr/local/bin/docker-entrypoint.sh \
+#     && sed -i 's/su-exec vault/vault/g' /usr/local/bin/docker-entrypoint.sh \
+#     && rm -rf /tmp/*
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh 
 
 
 ENTRYPOINT ["docker-entrypoint.sh"]
