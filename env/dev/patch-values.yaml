@@ -43,8 +43,8 @@ spec:
         # tag: "1.6.1"
 
         # Custom IB UBI8 Vault + HSM
-        repository: registry.dso.mil/kobayashi-maru/vault/vault_ent_hsm
-        tag: "v1.6.1"
+        repository: registry.il2.dso.mil/cnap/vault-dev/hsm-vault
+        tag: latest
         pullPolicy: Always
 
       # These Resource Limits are in line with node requirements in the
@@ -209,11 +209,16 @@ spec:
                 lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
                 slot = "1"
                 pin = "vault:hsmdevpasswordsarecool"
-                key_label = "hsm_dev"
-                hmac_key_label = "hsm_hmac_dev"
-                generate_key = "true"
+                key_label = "vault_dev_v2"
+                hmac_key_label = "vault_hmac_dev_v2"
+                generate_key = "true"  
+
             }
 
+            entropy "seal" {
+                mode = "augmentation"
+            }
+            
             service_registration "kubernetes" {}
 
     # Vault UI
