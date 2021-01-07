@@ -45,6 +45,12 @@ resource "vault_identity_entity" "gabe.scarberry" {
   disabled = false
 }
 
+resource "vault_identity_entity" "notary" {
+  name      = "notary"
+  policies  = ["p1_pki_int"]
+  disabled = false
+}
+
 resource "vault_identity_group" "admin" {
   name     = "admin"
   type     = "internal"
@@ -87,10 +93,24 @@ resource "vault_identity_group_policies" "dev" {
   group_id = vault_identity_group.internal.id
 }
 
+resource "vault_identity_group" "p1_pki_int" {
+  name     = "p1_pki_int"
+  type     = "internal"
+  policies = ["p1_pki_int"]
+}
+
+resource "vault_identity_group_policies" "p1_pki_int" {
+  policies = ["p1_pki_int"]
+
+  exclusive = false
+
+  group_id = vault_identity_group.p1_pki_int.id
+}
+
 
 data "vault_policy_document" "admin" {
   rule {
-    path         = "secret/*"
+    path         = ["secret/*", "pki/*"]
     capabilities = ["create", "read", "update", "delete", "list"]
     description  = "allow all on secrets under admin"
   }
@@ -124,5 +144,18 @@ data "vault_policy_document" "dev" {
 
 resource "vault_policy" "dev" {
   name     = "dev_policy"
+  policy   = data.vault_policy_document.vault_dev_secrets.hcl
+}
+
+data "vault_policy_document" "p1_pki_int" {
+  rule {
+    path         = ["pki/p1_pki_int/sign/*"]
+    capabilities = ["create", "read"]
+    description  = "allow csr submission/signing to DoD P1 Intermediate CA"
+  }
+}
+
+resource "vault_policy" "p1_pki_int" {
+  name     = "p1_pki_int_policy"
   policy   = data.vault_policy_document.vault_dev_secrets.hcl
 }
