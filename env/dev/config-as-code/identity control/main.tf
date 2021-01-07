@@ -6,12 +6,26 @@ terraform {
     }
   }
 }
+ 
 
+provider "aws" {
+      region  = "us-gov-west-1"
+      profile = "235856440647_LevelUpAdmins"
+
+  backend "s3" {
+    encrypt        = true
+    bucket         = "p1-cnap-vault-dev-tfstate-backend20210107181214364300000001"
+    dynamodb_table = "p1-cnap-vault-dev-tfstate-backend"
+    region         = "us-gov-west-1"
+    key            = "il2-vault-app-state/idm/terraform.tfstate"
+    profile        = "235856440647_LevelUpAdmins"
+  }
+}
 # Set config using environment variables
 # See https://registry.terraform.io/providers/hashicorp/vault/latest/docs#provider-arguments
 
-variable login_username {}
-variable login_password {}
+# variable login_username {}
+# variable login_password {}
 
 #this would go in main.tf
 #need to verify these are not stored in the tfstate file
@@ -27,19 +41,19 @@ provider "vault" {
   }
 }
 
-resource "vault_identity_entity" "cameron.banowsky" {
+resource "vault_identity_entity" "cameron_banowsky" {
   name      = "pidof"
   policies  = ["admin"]
   disabled = false
 }
 
-resource "vault_identity_entity" "israel.morales" {
+resource "vault_identity_entity" "israel_morales" {
   name      = "imorales"
   policies  = ["admin"]
   disabled = false
 }
 
-resource "vault_identity_entity" "gabe.scarberry" {
+resource "vault_identity_entity" "gabe_scarberry" {
   name      = "gscarberry"
   policies  = ["admin"]
   disabled = false
