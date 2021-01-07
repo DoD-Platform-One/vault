@@ -19,6 +19,7 @@ terraform {
   }
 }
 
+
 # Set config using environment variables
 # See https://registry.terraform.io/providers/hashicorp/vault/latest/docs#provider-arguments
 // provider "vault" {
