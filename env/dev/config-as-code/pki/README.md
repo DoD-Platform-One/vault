@@ -1,0 +1,1 @@
+this config as code is for the dev and will be moved to cnap terraform apps for prod
