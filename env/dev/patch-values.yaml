@@ -30,7 +30,7 @@ spec:
           limits:
             memory: 256Mi
             cpu: 250m
-
+      
     server:
       image:
         # Enterprise Image - license required
@@ -58,7 +58,29 @@ spec:
       #     memory: 16Gi
       #     cpu: 2000m
 
+    # Ingress allows ingress services to be created to allow external access
+      # from Kubernetes to access Vault pods.
+      # If deployment is on OpenShift, the following block is ignored.
+      # In order to expose the service, use the route section below
+      ingress:
+        enabled: true
+        labels: {}
+          # traffic: external
+        annotations: {}
+          # |
+          # kubernetes.io/ingress.class: nginx
+          # kubernetes.io/tls-acme: "true"
+          #   or
+          # kubernetes.io/ingress.class: nginx
+          # kubernetes.io/tls-acme: "true"
+        hosts:
+          - host: vault-dev.staging.dso.mil
+            paths: []
 
+        tls: []
+        #  - secretName: chart-example-tls
+        #    hosts:
+        #      - chart-example.local
       # dev resource limits
       resources:
         requests:
@@ -197,8 +219,8 @@ spec:
     # Vault UI
     ui:
       enabled: true
-      # serviceType: "LoadBalancer"
-      serviceType: "ClusterIP"
+      serviceType: "LoadBalancer"
+      # serviceType: "ClusterIP"
       serviceNodePort: null
       externalPort: 8200
 
