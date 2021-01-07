@@ -104,7 +104,7 @@ spec:
       # used to include variables required for auto-unseal.
       extraEnvironmentVars:
         VAULT_CACERT: /vault/userconfig/tls-ca/ca.crt
-        VAULT_API_ADDR:  https://$(HOSTNAME).vault-internal:8200   # TEST
+        VAULT_API_ADDR:  https://$(HOSTNAME).vault-dev.staging.dso.mil:8200   # TEST
 
       # extraVolumes is a list of extra volumes to mount. These will be exposed
       # to Vault in the path `/vault/userconfig/<name>/`.
@@ -156,8 +156,8 @@ spec:
             ui = true
             disable_mlock = true
 
-            cluster_addr = "https://HOSTNAME.vault-internal:8201" # TEST
-            api_addr = "https://HOSTNAME.vault-internal:8200" # TEST
+            cluster_addr = "https://HOSTNAME.vault-dev.staging.dso.mil:8201" # TEST
+            api_addr = "https://HOSTNAME.vault-dev.staging.dso.mil:8200" # TEST
             log_level = "Debug"
 
             listener "tcp" {
@@ -174,31 +174,31 @@ spec:
               path = "/vault/data"
               tls_skip_verify = "true"
               retry_join {
-                leader_api_addr = "https://vault-0.vault-internal:8200"
+                leader_api_addr = "https://vault-0.vault-dev.staging.dso.mil:8200"
                 leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
                 leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
                 leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
               }
               retry_join {
-                leader_api_addr = "https://vault-1.vault-internal:8200"
+                leader_api_addr = "https://vault-1.vault-dev.staging.dso.mil:8200"
                 leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
                 leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
                 leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
               }
               retry_join {
-                leader_api_addr = "https://vault-2.vault-internal:8200"
+                leader_api_addr = "https://vault-2.vault-dev.staging.dso.mil:8200"
                 leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
                 leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
                 leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
               }
               retry_join {
-                  leader_api_addr = "https://vault-3.vault-internal:8200"
+                  leader_api_addr = "https://vault-3.vault-dev.staging.dso.mil:8200"
                   leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
                   leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
                   leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
               }
               retry_join {
-                  leader_api_addr = "https://vault-4.vault-internal:8200"
+                  leader_api_addr = "https://vault-4.vault-dev.staging.dso.mil:8200"
                   leader_ca_cert_file = "/vault/userconfig/tls-ca/ca.crt"
                   leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
                   leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
