@@ -3,10 +3,8 @@ resource "vault_mount" "il4_p1_pki_int" {
   path                  = "il4_p1_pki_int"
   type                  = "pki"
   max_lease_ttl_seconds = 94608000 # 3 years
-  options               = {
-    seal_wrap                = true
-    external_entropy_access  = true
-  }
+  seal_wrap                = true
+  external_entropy_access  = true
 }
 # generate p1 il4 csr
 resource "vault_pki_secret_backend_intermediate_cert_request" "il4_p1_pki_int" {
