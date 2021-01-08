@@ -7,10 +7,10 @@ spec:
   gateways:
   - main.istio-system.svc.cluster.local
   hosts:
-  - vault.cnap.dso.mil
+  - vault.staging.dso.mil
   http:
   - route:
     - destination:
-        host: vault-ui
+        host: vault-ui.vault.svc.cluster.local
         port:
           number: 8200
