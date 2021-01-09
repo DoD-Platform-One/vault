@@ -46,8 +46,9 @@ spec:
         repository: registry.il2.dso.mil/cnap/vault-dev/hsm-vault
         tag: latest
         pullPolicy: Always
+        
 
-      # These Resource Limits are in line with node requirements in the
+      # The Following Resource Limits are in line with node requirements in the
       # Vault Reference Architecture for a Small Cluster
 
       # PROD
@@ -70,15 +71,6 @@ spec:
 
       ingress:
         enabled: false
-        labels: {}
-          # traffic: external
-        annotations: {}
-
-        hosts:
-          - host: vault-dev.staging.dso.mil
-            paths: []
-
-        tls: []
 
       # For HA configuration and because we need to manually init the vault,
       # we need to define custom readiness/liveness Probe settings
@@ -93,7 +85,12 @@ spec:
       # extraEnvironmentVars is a list of extra enviroment variables to set with the stateful set. These could be
       # used to include variables required for auto-unseal.
       extraEnvironmentVars:
-        VAULT_API_ADDR:  http://$(HOSTNAME).vault-internal:8200
+        # VAULT_API_ADDR:  http://$(HOSTNAME).vault-internal:8200
+        #VAULT_CLUSTER_ADDR:  http://$(HOSTNAME).vault-internal:8201
+        # VAULT_CLUSTER_ADDR:  http://127.0.0.1:8201
+        VAULT_API_ADDR: http://vault.vault-internal:8200
+        VAULT_ADDR:  http://127.0.0.1:8200
+
 
       # extraVolumes is a list of extra volumes to mount. These will be exposed
       # to Vault in the path `/vault/userconfig/<name>/`.
@@ -122,10 +119,6 @@ spec:
       auditStorage:
         enabled: true
 
-      # Dev mode - auto-unseal and non-persistent data
-      dev:
-        enabled: false
-
       # Run Vault in "HA" mode.
       ha:
         enabled: true
@@ -145,10 +138,9 @@ spec:
               cluster_address = "[::]:8201" 
               tls_disable = 1
             }
-
+           
             storage "raft" {
               path = "/vault/data"
-              tls_skip_verify = "true"
               retry_join {
                 leader_api_addr = "http://vault-0.vault-internal:8200"
               }
@@ -162,7 +154,7 @@ spec:
                 leader_api_addr = "http://vault-3.vault-internal:8200"
               }
             }
-
+            
             seal "pkcs11" {
                 lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
                 slot = "1"
