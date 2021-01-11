@@ -14,7 +14,7 @@ spec:
       enabled: true
       tlsDisable: true
       imagePullSecrets:
-        - name: private-registry
+        - name: private-git-registry
         
     injector:
       enabled: false
