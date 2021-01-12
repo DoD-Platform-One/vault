@@ -9,12 +9,12 @@ namespace: vault
 
 bases:
   - ../../base
-  - ./config-as-code
   - ./secrets
 
 resources:
   - virtualservice.yaml
   - peerauth.yaml
+  - ./hsm-client
 
 patchesStrategicMerge:
   - patch-values.yaml

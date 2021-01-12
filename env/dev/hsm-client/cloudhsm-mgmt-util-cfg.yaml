@@ -22,8 +22,8 @@ data:
                     "owner_cert_path": "/opt/cloudhsm/etc/customerCA.crt"
                 },
                 "enable": "yes",
-                "hostname": "10.122.8.27",
-                "name": "10.122.8.27",
+                "hostname": "10.122.14.22",
+                "name": "10.122.14.22",
                 "pkey": "/opt/cloudhsm/etc/client.key",
                 "port": 2225,
                 "server_ssl": "yes",

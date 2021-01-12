@@ -35,7 +35,7 @@ data:
             "sucess_rate_weight": 1
         },
         "server": {
-            "hostname": "10.122.8.27",
+            "hostname": "10.122.14.22",
             "port": 2223
         },
         "ssl": {
