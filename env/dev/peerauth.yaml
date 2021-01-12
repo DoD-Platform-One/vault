@@ -4,4 +4,5 @@ metadata:
   name: peer-auth-policy
 spec:
   mtls:
-    mode: STRICT
+    # mode: STRICT
+    mode: PERMISSIVE
