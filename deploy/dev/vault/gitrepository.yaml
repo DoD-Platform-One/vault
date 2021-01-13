@@ -11,7 +11,7 @@ spec:
     /**/*.md
     /**/*.sh
   interval: 10m
-  url: https://repo1.dso.mil/kobayashi-maru/vault.git
+  url: https://https://code.il2.dso.mil/cnap/vault-dev.git
   secretRef:
     name: private-git-registry
   ref:

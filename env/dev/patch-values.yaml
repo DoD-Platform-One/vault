@@ -43,14 +43,14 @@ spec:
         # tag: "1.6.1"
 
         # Custom IB UBI8 Vault + HSM - in house 
-        repository: registry.il2.dso.mil/cnap/vault-dev/hsm-vault
-        tag: latest
-        pullPolicy: Always
+        # repository: registry.il2.dso.mil/cnap/vault-dev/hsm-vault
+        # tag: latest
+        # pullPolicy: Always
 
         # Custom IB UBI8 Vault + HSM - hashi offical
-        # repository: registry.il2.dso.mil/cnap/vault-dev/vault_ent_hsm_ib
-        # tag: v1.6.1
-        # pullPolicy: Always
+        repository: registry.il2.dso.mil/cnap/vault-dev/vault_ent_hsm_ib
+        tag: v1.6.1
+        pullPolicy: Always
         
       # The Following Resource Limits are in line with node requirements in the
       # Vault Reference Architecture for a Small Cluster
@@ -126,7 +126,7 @@ spec:
       # Run Vault in "HA" mode.
       ha:
         enabled: true
-        replicas: 4
+        replicas: 5
 
         raft:
           enabled: true
@@ -156,6 +156,9 @@ spec:
               }
               retry_join {
                 leader_api_addr = "http://vault-3.vault-internal:8200"
+              }
+              retry_join {
+                leader_api_addr = "http://vault-4.vault-internal:8200"
               }
             }
             
