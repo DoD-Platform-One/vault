@@ -12,5 +12,7 @@ spec:
     /**/*.sh
   interval: 10m
   url: https://repo1.dso.mil/kobayashi-maru/vault.git
+  secretRef:
+    name: private-git-registry
   ref:
     tag: v0.1.0
