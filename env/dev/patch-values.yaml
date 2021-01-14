@@ -30,8 +30,14 @@ spec:
           limits:
             memory: 256Mi
             cpu: 250m
-      
+       
     server:
+
+      # the following annotations are requied to exempt traffic from the raft protocol 
+      # otherwise, envoy side-car will interrupt raft-member to raft-member tls communications
+      annotations:  
+        traffic.sidecar.istio.io/excludeInboundPorts: "8201"
+        traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
       image:
         # Enterprise Image - license required
         # repository: "hashicorp/vault-enterprise"
@@ -95,7 +101,6 @@ spec:
         VAULT_API_ADDR: http://vault-internal:8200
         VAULT_ADDR:  http://127.0.0.1:8200
 
-
       # extraVolumes is a list of extra volumes to mount. These will be exposed
       # to Vault in the path `/vault/userconfig/<name>/`.
       extraVolumes:
@@ -145,7 +150,7 @@ spec:
           config: |
             ui = true
             disable_mlock = true
-            log_level = "Debug"
+            log_level = "Trace"
 
             listener "tcp" {
                 address = "[::]:8200"
