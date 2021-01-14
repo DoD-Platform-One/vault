@@ -40,8 +40,8 @@ data:
         },
         "ssl": {
             "CApath": "/opt/cloudhsm/etc/certs",
-            "certificate": "/opt/cloudhsm/etc/client.crt",
-            "pkey": "/opt/cloudhsm/etc/client.key",
+            "certificate": "/opt/cloudhsm/etc/ssl-client.crt",
+            "pkey": "/opt/cloudhsm/etc/ssl-client.key",
             "server_ch_ssl_ciphers": "default",
             "server_ssl": "yes"
         }

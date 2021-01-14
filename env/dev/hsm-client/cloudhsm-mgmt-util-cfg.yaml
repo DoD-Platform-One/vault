@@ -16,7 +16,7 @@ data:
             {
                 "CAfile": "",
                 "CApath": "/opt/cloudhsm/etc/certs",
-                "certificate": "/opt/cloudhsm/etc/client.crt",
+                "certificate": "/opt/cloudhsm/etc/ssl-client.crt",
                 "e2e_encryption": {
                     "enable": "yes",
                     "owner_cert_path": "/opt/cloudhsm/etc/customerCA.crt"
@@ -24,7 +24,7 @@ data:
                 "enable": "yes",
                 "hostname": "10.122.14.22",
                 "name": "10.122.14.22",
-                "pkey": "/opt/cloudhsm/etc/client.key",
+                "pkey": "/opt/cloudhsm/etc/ssl-client.key",
                 "port": 2225,
                 "server_ssl": "yes",
                 "ssl_ciphers": ""
