@@ -3,10 +3,8 @@ resource "vault_mount" "p1_pki_root" {
   path                  = "p1_pki_root"
   type                  = "pki"
   max_lease_ttl_seconds = 94608000 # 3 years
-  options               = {
-    seal_wrap                = true
-    external_entropy_access  = true
-  }
+  seal_wrap                = true
+  external_entropy_access  = true
 }
 # generate p1 root ca
 resource "vault_pki_secret_backend_root_cert" "p1_pki_root" {
@@ -24,10 +22,8 @@ resource "vault_mount" "p1_pki_int" {
   path                  = "p1_pki_int"
   type                  = "pki"
   max_lease_ttl_seconds = 94608000 # 3 years
-  options               = {
-    seal_wrap                = true
-    external_entropy_access  = true
-  }
+  seal_wrap                = true
+  external_entropy_access  = true
 }
 # generate p1 int ca csr
 resource "vault_pki_secret_backend_intermediate_cert_request" "p1_pki_int" {
