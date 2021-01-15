@@ -4,4 +4,5 @@ kind: Kustomization
 resources: 
   - cloudhsm-client-cfg.yaml
   - cloudhsm-mgmt-util-cfg.yaml
-  - customer-ca-crt.yaml
+  - customer-ca-crt.enc.yaml
+  - cloudhsm-client-crt.enc.yaml

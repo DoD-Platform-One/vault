@@ -7,8 +7,8 @@ metadata:
 spec:
   interval: 5m0s
   dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
+    - name: istio
+      namespace: bigbang
   sourceRef:
     kind: GitRepository
     name: vault-deploy

@@ -9,11 +9,11 @@ namespace: vault
 
 bases:
   - ../../base
-  - ./config-as-code
-  # - ./secrets
+  - ./secrets
 
 resources:
-  - certs.yaml  
+  - ./hsm-client
+  - ./istio-config
 
 patchesStrategicMerge:
   - patch-values.yaml
