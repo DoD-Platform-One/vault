@@ -12,9 +12,8 @@ bases:
   - ./secrets
 
 resources:
-  - virtualservice.yaml
-  - peerauth.yaml
   - ./hsm-client
+  - ./istio-config
 
 patchesStrategicMerge:
   - patch-values.yaml

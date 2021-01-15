@@ -7,6 +7,10 @@ metadata:
 spec:
   # Increase reconciliation interval for dev
   interval: 1m0s
+  valuesFrom:
+  - name: vault-values
+    kind: Secret
+    optional: true
   values:
 
     # Vault Helm Chart Value Overrides
@@ -108,7 +112,7 @@ spec:
           name: cloudhsm-client-cfg
         - type: configMap
           name: cloudhsm-mgmt-util-cfg
-        - type: configMap
+        - type: secret
           name: customer-ca-crt
         - type: secret
           name: cloudhsm-client-crt
@@ -124,7 +128,7 @@ spec:
           mountPath:  /opt/cloudhsm/etc/customerCA.crt
           subPath: customerCA.crt
         - name: userconfig-customer-ca-crt
-          mountPath:  /opt/cloudhsm/etc/certs/e291ba35.0
+          mountPath:  /opt/cloudhsm/etc/certs/4395fb20.0
           subPath: customerCA.crt
         - name: userconfig-cloudhsm-client-crt
           mountPath:  /opt/cloudhsm/etc/ssl-client.crt
@@ -147,50 +151,7 @@ spec:
           enabled: true
           setNodeId: true
 
-          config: |
-            ui = true
-            disable_mlock = true
-            log_level = "Trace"
-
-            listener "tcp" {
-                address = "[::]:8200"
-                cluster_address = "[::]:8201" 
-                tls_disable = 1
-            }
-           
-            storage "raft" {
-                path = "/vault/data"
-                retry_join {
-                  leader_api_addr = "http://vault-0.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-1.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-2.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-3.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-4.vault-internal:8200"
-                }
-            }
-            
-            seal "pkcs11" {
-                lib = "/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"
-                slot = "1"
-                pin = "vault:hsmdevpasswordsarecool"
-                key_label = "vault_dev_v2"
-                hmac_key_label = "vault_hmac_dev_v2"
-                generate_key = "true"  
-            }
-
-            entropy "seal" {
-                mode = "augmentation"
-            }
-            
-            service_registration "kubernetes" {}
+          # config file encrypted in vault-values.enc.yaml 
 
     # Vault UI
     ui:
