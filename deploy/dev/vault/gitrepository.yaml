@@ -2,15 +2,17 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: bigbang
-  namespace: bigbang
+  name: vault-deploy
+  namespace: vault
 spec:
+  interval: 1m
   ignore: |
     # exclude file extensions
     /**/*.md
-    /**/*.txt
     /**/*.sh
   interval: 10m
-  url: https://repo1.dsop.io/platform-one/big-bang/umbrella.git
+  url: https://https://code.il2.dso.mil/cnap/vault-dev.git
+  secretRef:
+    name: private-git-registry
   ref:
-    tag: 1.0.0
+    tag: v0.1.0

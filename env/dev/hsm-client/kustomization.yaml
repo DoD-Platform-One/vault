@@ -5,3 +5,4 @@ resources:
   - cloudhsm-client-cfg.yaml
   - cloudhsm-mgmt-util-cfg.yaml
   - customer-ca-crt.yaml
+  - cloudhsm-client-crt.enc.yaml
