@@ -13,6 +13,7 @@ bases:
 
 resources:
   - ./istio-config
-  - patch-values.yaml
 
+patchesStrategicMerge:
+  - patch-values.yaml
   
