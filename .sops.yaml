@@ -7,8 +7,8 @@ creation_rules:
       kms: 'arn:aws-us-gov:kms:us-gov-west-1:235856440647:key/d9a89538-efd8-4ade-a5b6-dcc99c8ec471' # dev
       encrypted_regex: '^(data|stringData)$'
     - path_regex: .*/deploy/prod/*
-      kms: 'arn:aws-us-gov:kms:us-gov-west-1:526389029191:key/154xxxxxxxxxxxxxxxxxxxxxxxxxx642' # prod
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:526389029191:key/7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7' # prod
       encrypted_regex: '^(data|stringData)$' 
-    - path_regex: .*/env/dev/*
-      kms: 'arn:aws-us-gov:kms:us-gov-west-1:235856440647:key/d96f1bf1-b8ae-4ccb-b79c-da6e2234796d' # prod
+    - path_regex: .*/env/prod/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:526389029191:key/7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7' # prod
       encrypted_regex: '^(data|stringData)$'
