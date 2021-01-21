@@ -13,8 +13,6 @@ bases:
 
 resources:
   - ./istio-config
-
-patchesStrategicMerge:
   - patch-values.yaml
   - gitrepository.yaml
   
