@@ -4,7 +4,7 @@ resource "vault_mount" "pki_il2_p1_int" {
   type                  = "pki"
   max_lease_ttl_seconds = 94608000 # 3 years
   seal_wrap                = true
-  external_entropy_access  = true
+#  external_entropy_access  = true
 }
 
 # generate p1 il2 csr
@@ -24,7 +24,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "pki_il2_p1_int" {
 
 # sign il2 csr with p1 int ca
 resource "vault_pki_secret_backend_root_sign_intermediate" "pki_il2_p1_int" {
-  backend = vault_mount.pki_il5_p1_int.path
+  backend = vault_mount.pki_p1_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.pki_il2_p1_int.csr
   common_name          = "DoD P1 IL2 Intermediate Certificate Authority"
