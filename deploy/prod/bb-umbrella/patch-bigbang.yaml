@@ -36,7 +36,7 @@ spec:
       optional: true
   # HARDCODED VALUES
   values:
-    hostname: staging.dso.mil
+    hostname: cnap.dso.mil
 
     # Toggle sourcing from external repos
     # TODO: All this does right now is toggle GitRepositories, it is _not_ fully functional
@@ -140,8 +140,9 @@ spec:
       values: {}
 
     fluentbit:
-      enabled: true
+      enabled: false
       values: {}
+ 
 # ----------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------------------
