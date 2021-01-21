@@ -1,0 +1,54 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: vault-dest-rule1
+  namespace: vault
+spec:
+  host: vault
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: vault-dest-rule2
+  namespace: vault
+spec:
+  host: vault-active
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: vault-dest-rule3
+  namespace: vault
+spec:
+  host: vault-internal
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: vault-dest-rule4
+  namespace: vault
+spec:
+  host: vault-standby
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: vault-dest-rule5
+  namespace: vault
+spec:
+  host: vault-ui
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL

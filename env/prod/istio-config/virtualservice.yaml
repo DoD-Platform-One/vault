@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  gateways:
+  - main.istio-system.svc.cluster.local
+  hosts:
+  - cubbyhole.cnap.dso.mil
+  http:
+  - route:
+    - destination:
+        host: vault.vault.svc.cluster.local
+        port:
+          number: 8200
