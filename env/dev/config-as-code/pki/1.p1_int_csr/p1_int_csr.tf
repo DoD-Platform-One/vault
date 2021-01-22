@@ -3,7 +3,7 @@ resource "vault_mount" "pki_p1_int" {
   path                    = "pki/int/p1_int"
   type                    = "pki"
   max_lease_ttl_seconds   = 94608000 # 3 years
-  seal_wrap               = var.enable_seal_wrap
+  seal_wrap               = true
 #test if external entropy works with AWS KMS
   external_entropy_access  = true
 }
@@ -20,5 +20,5 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "pki_p1_int" {
   country      = "US"
   province     = "Colorado"
   locality     = "Colorado Springs"
-  organization = "Department of Defense"
+  organization = "DoD Platform One"
 }

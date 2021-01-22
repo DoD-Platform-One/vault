@@ -6,17 +6,17 @@ terraform {
     }
     aws = {
       region  = "us-gov-west-1"
-      profile = "235856440647_LevelUpAdmins"
+      profile = "arn:aws-us-gov:iam::526389029191:instance-profile/vault-bastion-profile"
     }
   }
   #need to update this
  backend "s3" {
     encrypt        = true
-    bucket         = "p1-cnap-vault-dev-tfstate-backend20210107181214364300000001"
-    dynamodb_table = "p1-cnap-vault-dev-tfstate-backend"
+    bucket         = "p1-cnap-vault-prod-tfstate-backend20210120202801559700000001"
+    dynamodb_table = "p1-cnap-vault-prod-tfstate-backend"
     region         = "us-gov-west-1"
     key            = "il2-vault-app-state/terraform.tfstate"
-    profile        = "235856440647_LevelUpAdmins"
+    profile        = "arn:aws-us-gov:iam::526389029191:instance-profile/vault-bastion-profile"
   }
 }
 
