@@ -73,8 +73,8 @@ spec:
       # PROD
       resources:
         requests:
-          memory: 8Gi
-          cpu: 2000m
+          memory: 4Gi
+          cpu: 1000m
         limits:
           memory: 16Gi
           cpu: 2000m
