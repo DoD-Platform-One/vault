@@ -9,6 +9,7 @@ terraform {
       profile = "235856440647_LevelUpAdmins"
     }
   }
+  #need to update this
  backend "s3" {
     encrypt        = true
     bucket         = "p1-cnap-vault-dev-tfstate-backend20210107181214364300000001"
