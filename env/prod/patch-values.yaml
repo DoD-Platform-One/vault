@@ -143,10 +143,10 @@ spec:
                 }
             }
             
-            seal "awskms" {
-              region     = "us-gov-west-1"
-              kms_key_id = "7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7"
-            }
+            # seal "awskms" {
+            #   region     = "us-gov-west-1"
+            #   kms_key_id = "7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7"
+            # }
             
             service_registration "kubernetes" {}
 
