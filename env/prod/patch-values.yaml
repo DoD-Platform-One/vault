@@ -58,13 +58,13 @@ spec:
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
       image:
         # Enterprise Image - license required
-        # repository: "hashicorp/vault-enterprise"
-        # tag: "1.6.1_ent"
+        repository: "hashicorp/vault-enterprise"
+        tag: "1.6.1_ent"
         # tag: "1.5.0_ent" 
 
         #IB-Enterprise 
-        repository: "registry1.dsop.io/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
-        tag: "1.5.3"
+        # repository: "registry1.dsop.io/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
+        # tag: "1.5.3"
 
         
       # The Following Resource Limits are in line with node requirements in the
