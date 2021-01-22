@@ -4,38 +4,38 @@
 
 ### network
 
-- [ ]  Vault VPC
-  - [ ]  transit gw attachment
-  - [ ]  private-subnet with route to transit-gw
-- [ ]  Vault TGW route
-- [ ]  Ingress TGW route
-- [ ]  connectivity to gitlab for flux
+- [x]  Vault VPC
+  - [x]  transit gw attachment
+  - [x]  private-subnet with route to transit-gw
+- [x]  Vault TGW route
+- [x]  Ingress TGW route
+- [x]  connectivity to gitlab for flux
 
 ### kube cluster
 
-- [ ]  keypair
-- [ ]  kms-sops-key
-- [ ]  kms-sops-policy
-- [ ]  rke_server nodes
-- [ ]  rke_worker nodes
-- [ ]  kms-policy-attachment
-- [ ]  bastion
-- [ ]  tag subnets with RKE generated cluster name - (done from the VPC resource which kubernetes runs on)
+- [x]  keypair
+- [x]  kms-sops-key
+- [x]  kms-sops-policy
+- [x]  rke_server nodes
+- [x]  rke_worker nodes
+- [x]  kms-policy-attachment
+- [x]  bastion
+- [x]  tag subnets with RKE generated cluster name - (done from the VPC resource which kubernetes runs on)
 
 ### vault backend
 
-- [ ]  s3 bucket
-- [ ]  dynamodb table
+- [x]  s3 bucket
+- [x]  dynamodb table
 
 ## kubernetes
 
-- [ ]  clone repo
+- [x]  clone repo
 
 ```bash
 git clone https://code.il5.dso.mil/cnap/cubbyhole.git
 ```
 
-- [ ]  taint kubernetes master nodes
+- [x]  taint kubernetes master nodes
 
 ```bash
 kubectl describe nodes |grep -i taint
@@ -43,7 +43,7 @@ kubectl taint nodes -l node-role.kubernetes.io/master=true  node-role.kubernetes
 kubectl describe nodes |grep -i taint
 ```
 
-- [ ]  patch build-in RKE2 pod security policy
+- [x]  patch build-in RKE2 pod security policy
 
 ```bash
 kubectl patch psp system-unrestricted-psp  -p '{"metadata": {"annotations":{"seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"}}}'
@@ -51,19 +51,19 @@ kubectl patch psp global-unrestricted-psp  -p '{"metadata": {"annotations":{"sec
 kubectl patch psp global-restricted-psp  -p '{"metadata": {"annotations":{"seccomp.security.alpha.kubernetes.io/allowedProfileNames": "*"}}}'
 ```
 
-- [ ]  ebs
+- [x]  ebs
 
 ```bash
 kubectl apply -f deploy/prod/ebs/gp2-storage-class.yaml
 ```
 
-- [ ]  flux
+- [x]  flux
 
 ```bash
 kubectl apply -f deploy/prod/flux/flux-install.yaml
 ```
 
-- [ ]  bigbang
+- [x]  bigbang
 
 ```bash
 kubectl create namespace bigbang
@@ -77,7 +77,7 @@ sops -i -e deploy/prod/bb-umbrella/secrets/repo-credentials.enc.yaml
 
 ```
 
-- [ ]  vault
+- [x]  vault
 
 ```bash
 
