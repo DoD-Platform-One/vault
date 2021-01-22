@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: vault-deploy
+  name: vault
   namespace: vault
 spec:
   interval: 1m
@@ -11,8 +11,8 @@ spec:
     /**/*.md
     /**/*.sh
   interval: 10m
-  url: https://https://code.il2.dso.mil/cnap/vault-dev.git
-  secretRef:
-    name: private-git-registry
+  url: https://code.il5.dso.mil/cnap/cubbyhole.git
   ref:
-    tag: v0.1.0
+    branch: production-live
+  secretRef:
+    name: repo-credential
