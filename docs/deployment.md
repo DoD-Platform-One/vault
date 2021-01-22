@@ -1,6 +1,6 @@
 # deployment-guide
 
-# terragrunt
+## terragrunt
 
 ### network
 
@@ -27,7 +27,7 @@
 [ ]  s3 bucket
 [ ]  dynamodb table
 
-# kubernetes
+## kubernetes
 
 [ ]  clone repo
 
@@ -91,7 +91,7 @@ kubectl apply -f deploy/prod/vault/flux-kustomization.yaml
 sops -i -e deploy/prod/vault/secrets/repo-credentials.enc.yaml
 ```
 
-# vault
+## vault configuration
 
 [ ]  cluster initialization
 
