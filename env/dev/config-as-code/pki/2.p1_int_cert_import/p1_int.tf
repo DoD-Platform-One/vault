@@ -1,22 +1,16 @@
-# mount point for p1 intermediate ca
-resource "vault_mount" "pki_p1_int" {
-  path                    = "pki/int/p1_int"
-  type                    = "pki"
-  max_lease_ttl_seconds   = 94608000 # 3 years
-  seal_wrap               = var.enable_seal_wrap
-  external_entropy_access  = true
-}
-
-#CA public cert will be appended to signed cert on line 16 below
+#CA public cert will be "appended" to signed cert on line 16 below
 
 # store signed p1 int ca
 resource "vault_pki_secret_backend_intermediate_set_signed" "pki_p1_int" {
   backend = vault_mount.pki_p1_int.path
 
-  certificate = <<EOT
-  "-----Begin Certificate-----
-  asdfasdfasdf
-  -----End Certificate-----"
+  certificate = <<-EOT
+  -----Begin Certificate-----
+  p1 int cert
+  -----End Certificate-----
+  -----Begin Certificate-----
+  p1 rootca cert
+  -----End Certificate-----
 EOT
 }
 
@@ -42,8 +36,8 @@ resource "vault_pki_secret_backend_role" "pki_p1_int_leaf" {
     "KeyEncipherment",
   ]
 
-  max_ttl = "2628000" # ~1 month
-  ttl     = "2628000"
+  max_ttl = "94608000" # 3 years
+  ttl     = "94608000" # 3 years
 }
 
 resource "vault_egp_policy" "p1_leaf_validate_common_name" {

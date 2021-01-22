@@ -58,6 +58,6 @@ resource "vault_pki_secret_backend_role" "pki_il4_p1_int_leaf" {
       "KeyAgreement",
       "KeyEncipherment",
   ]
-  max_ttl            = "2628000"         # ~1 month
-  ttl                = "2628000"
+  max_ttl            = "94608000" # 3 years
+  ttl                = "94608000" # 3 years
 }
