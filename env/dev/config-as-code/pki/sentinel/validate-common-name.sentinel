@@ -7,7 +7,7 @@ validate_common_name = func() {
 			return false
 		}
 	} else {
-		if request.path is "pk1/il5/p1_int/sign/p1-leaf-cert" {
+		if request.path is "pki/int/p1_int/sign/p1-leaf-cert" {
       print("No common name provided when signing CSR")
       return false
     }

@@ -1,8 +1,8 @@
-path "demo-kv/" {
+path "kv/" {
   capabilities = ["list"]
 }
 
-path "demo-kv/+" {
+path "kv/+" {
   capabilities = ["read"]
 
   control_group = {

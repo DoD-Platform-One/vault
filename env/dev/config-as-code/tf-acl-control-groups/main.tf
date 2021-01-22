@@ -11,22 +11,22 @@ resource "vault_auth_backend" "userpass" {
   type = "userpass"
 }
 
-module "userpass_shobs" {
+module "userpass_jeff" {
   depends_on = [vault_auth_backend.userpass]
   source     = "./modules/userpass-user"
 
   userpass_mount_accessor = vault_auth_backend.userpass.accessor
-  userpass_username       = "sshastri"
-  identity_entity_name    = "shobs"
+  userpass_username       = "megamind"
+  identity_entity_name    = "megamind"
 }
 
-module "userpass_johnny" {
+module "userpass_chad" {
   depends_on = [vault_auth_backend.userpass]
   source     = "./modules/userpass-user"
 
   userpass_mount_accessor = vault_auth_backend.userpass.accessor
-  userpass_username       = "johnny"
-  identity_entity_name    = "thejohnny"
+  userpass_username       = "chad.elkins"
+  identity_entity_name    = "chad"
 }
 
 module "userpass_cam" {
@@ -34,7 +34,7 @@ module "userpass_cam" {
   source     = "./modules/userpass-user"
 
   userpass_mount_accessor = vault_auth_backend.userpass.accessor
-  userpass_username       = "cam"
+  userpass_username       = "cameron.banowski"
   identity_entity_name    = "pidof"
 }
 
@@ -43,7 +43,7 @@ module "userpass_gabe" {
   source     = "./modules/userpass-user"
 
   userpass_mount_accessor = vault_auth_backend.userpass.accessor
-  userpass_username       = "gabe"
+  userpass_username       = "gabe.scarberry"
   identity_entity_name    = "gscarberry"
 }
 
@@ -65,6 +65,8 @@ resource "vault_identity_group" "sudoers" {
     module.userpass_cam.vault_identity_entity_id,
     module.userpass_gabe.vault_identity_entity_id,
     module.userpass_israel.vault_identity_entity_id,
+    module.userpass_jeff.vault_identity_entity_id,
+    module.userpass_chad.vault_identity_entity_id,
   ]
 }
 
@@ -74,8 +76,11 @@ resource "vault_identity_group" "kv-read" {
   policies = ["kv-read"]
 
   member_entity_ids = [
-    module.userpass_shobs.vault_identity_entity_id,
-    module.userpass_johnny.vault_identity_entity_id,
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+    module.userpass_jeff.vault_identity_entity_id,
+    module.userpass_chad.vault_identity_entity_id,
   ]
 }
 
@@ -98,11 +103,11 @@ resource "vault_policy" "change-userpass-password" {
   )
 }
 
-resource "vault_mount" "demo-kv" {
-  path = "demo-kv"
+resource "vault_mount" "kv" {
+  path = "kv"
   type = "kv"
 
-  # seal_wrap                = true
+  seal_wrap                = true
   # external_entropy_access  = true
 
   options = {

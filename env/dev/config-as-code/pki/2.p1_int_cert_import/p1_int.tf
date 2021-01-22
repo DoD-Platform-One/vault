@@ -4,10 +4,10 @@ resource "vault_mount" "pki_p1_int" {
   type                    = "pki"
   max_lease_ttl_seconds   = 94608000 # 3 years
   seal_wrap               = var.enable_seal_wrap
-#  external_entropy_access  = true
+  external_entropy_access  = true
 }
 
-#How do we import the CA chain?
+#CA public cert will be appended to signed cert on line 16 below
 
 # store signed p1 int ca
 resource "vault_pki_secret_backend_intermediate_set_signed" "pki_p1_int" {

@@ -32,13 +32,13 @@ path "sys/audit/*" {
 # -----------------------------------------------------------------------------
 # Deny use of root endpoints on PKI mounts
 # -----------------------------------------------------------------------------
-path "/pki/il5/p1_root/root/*" {
-  capabilities = ["deny"]
-}
+#path "/pki/il5/p1_root/root/*" {
+#  capabilities = ["deny"]
+#}
 
-path "/pki/il5/p1_int/root/*" {
-  capabilities = ["deny"]
-}
+#path "/pki/il5/p1_int/root/*" {
+#  capabilities = ["deny"]
+#}
 
 # -----------------------------------------------------------------------------
 # Deny all on any secret mounted under the secrets/ path, e.g.:
@@ -104,6 +104,10 @@ path "sys/internal/ui/mounts" {
   capabilities = ["read"]
 }
 
+path "/pki/int/*" {
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
 path "/pki/il5/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
@@ -113,6 +117,10 @@ path "/pki/il4/*" {
 }
 
 path "/pki/il2/*" {
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+path "/kv/int/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
