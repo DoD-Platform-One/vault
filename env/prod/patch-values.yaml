@@ -97,6 +97,8 @@ spec:
       extraEnvironmentVars:
         VAULT_API_ADDR: http://vault-internal:8200
         VAULT_ADDR:  http://127.0.0.1:8200
+        AWS_REGION: us-gov-west-1
+        VAULT_AWSKMS_SEAL_KEY_ID: 7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7
 
       # This configures the Vault Statefulset to create a PVC for audit logs.
       # See https://www.vaultproject.io/docs/audit/index.html to know more
@@ -143,10 +145,10 @@ spec:
                 }
             }
             
-            # seal "awskms" {
+            seal "awskms" {
             #   region     = "us-gov-west-1"
             #   kms_key_id = "7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7"
-            # }
+            }
             
             service_registration "kubernetes" {}
 
