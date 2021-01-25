@@ -90,7 +90,7 @@ EOT
 # See Create/Update Role API documentation for all options
 # https://www.vaultproject.io/api-docs/secret/pki#create-update-role
 resource "vault_pki_secret_backend_role" "pki_p1_int_leaf" {
-  backend            = vault_mount.pki_p1_int.path
+  backend            = "${module.p1_int.pki_p1_int_vault_mount}"
   name               = "p1-leaf-cert"
   allowed_domains    = ["dso.mil"]
   allow_subdomains   = true
