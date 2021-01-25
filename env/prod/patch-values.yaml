@@ -51,6 +51,12 @@ spec:
        
     server:
 
+      dataStorage:
+        enabled: true
+        size: 50Gi
+        mountPath: "/vault/data"
+        accessMode: ReadWriteOnce
+
       postStart:
       - /bin/sh
       - -c
