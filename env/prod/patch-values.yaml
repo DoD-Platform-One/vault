@@ -63,7 +63,7 @@ spec:
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
       image:
         # Enterprise Image - license required
-        repository: "registry1.dso.mil/ironbank/hashicorp/turbog"
+        repository: "registry1.dsop.io/ironbank/hashicorp/turbog"
         tag: "1.6.1-hsm-cloudhsm"
         # tag: "1.5.0_ent" 
 
