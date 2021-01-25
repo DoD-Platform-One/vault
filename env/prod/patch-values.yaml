@@ -51,6 +51,11 @@ spec:
        
     server:
 
+      postStart:
+      - /bin/sh
+      - -c
+      - 'echo "libevmulti_init: Ready " > /tmp/cloudhsm_client_start.log'
+
       # the following annotations are requied to exempt traffic from the raft protocol 
       # otherwise, envoy side-car will interrupt raft-member to raft-member tls communications
       annotations:  
