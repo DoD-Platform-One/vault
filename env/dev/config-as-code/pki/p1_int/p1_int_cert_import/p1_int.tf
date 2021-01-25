@@ -1,8 +1,14 @@
-#CA public cert will be "appended" to signed cert on line 16 below
 
 # store signed p1 int ca
+
+module "p1_int" {
+  source = ../
+}
+
 resource "vault_pki_secret_backend_intermediate_set_signed" "pki_p1_int" {
-  backend = vault_mount.pki_p1_int.path
+  backend = "${module.p1_int.pki_p1_int_vault_mount}"
+
+#CA public cert will be "appended" to signed cert on line 16 below
 
   certificate = <<-EOT
 -----BEGIN CERTIFICATE-----
