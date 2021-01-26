@@ -12,19 +12,18 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "pki_il2_p1_int" {
   backend = vault_mount.pki_il2_p1_int.path
 
   type        = "internal"
-  common_name = "DoD P1 IL2 Intermediate Certificate Authority"
+  common_name = "DoD P1 IL2 Intermediate CA"
   key_type    = "rsa"
   key_bits    = "4096"
 
   country      = "US"
-  province     = "Colorado"
-  locality     = "Colorado Springs"
-  organization = "Department of Defense"
+  organization = "U.S. Government"
+  ou           = "DoD PKI"
 }
 
 # sign il2 csr with p1 int ca
 resource "vault_pki_secret_backend_root_sign_intermediate" "pki_il2_p1_int" {
-  backend = vault_mount.pki_il2_p1_int.path
+  backend = vault_mount.pki_p1_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.pki_il2_p1_int.csr
   common_name          = "DoD P1 IL2 Intermediate Certificate Authority"

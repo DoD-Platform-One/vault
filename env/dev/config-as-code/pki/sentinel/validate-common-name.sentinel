@@ -1,21 +1,21 @@
-validate_common_name = func() {
-	if "common_name" in keys(request.data) {
+# validate_common_name = func() {
+# 	if "common_name" in keys(request.data) {
 
-		# Test for *.dso.mil
-		if request.data.common_name is "*.dso.mil" {
-			print("Wildcard certificates are not allowed")
-			return false
-		}
-	} else {
-		if request.path is "pki/int/p1_int/sign/p1-leaf-cert" {
-      print("No common name provided when signing CSR")
-      return false
-    }
-	}
+# 		# Test for *.dso.mil
+# 		if request.data.common_name is "*.dso.mil" {
+# 			print("Wildcard certificates are not allowed")
+# 			return false
+# 		}
+# 	} else {
+# 		if request.path is "pki/int/p1_int/sign/p1-leaf-cert" {
+#       print("No common name provided when signing CSR")
+#       return false
+#     }
+# 	}
 
-	return true
-}
+# 	return true
+# }
 
-main = rule {
-	validate_common_name()
-}
+# main = rule {
+# 	validate_common_name()
+# }
