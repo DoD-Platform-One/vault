@@ -12,10 +12,9 @@ bases:
   - ./secrets
 
 resources:
-  - ./hsm-client
   - ./istio-config
+  - gitrepository.yaml
 
 patchesStrategicMerge:
   - patch-values.yaml
-  - gitrepository.yaml
   

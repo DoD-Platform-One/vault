@@ -5,12 +5,26 @@ metadata:
   name: vault
   namespace: vault
 spec:
-  # Increase reconciliation interval for dev
-  interval: 1m0s
-  valuesFrom:
-  - name: vault-values
-    kind: Secret
-    optional: true
+  targetNamespace: vault
+  releaseName: vault
+  interval: 10m
+  chart:
+    spec:
+      chart: chart
+      sourceRef:
+        kind: GitRepository
+        name: vault
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
   values:
 
     # Vault Helm Chart Value Overrides
@@ -18,7 +32,7 @@ spec:
       enabled: true
       tlsDisable: true
       imagePullSecrets:
-        - name: private-git-registry
+        - name: private-registry
         
     injector:
       enabled: false
@@ -36,6 +50,17 @@ spec:
             cpu: 250m
        
     server:
+
+      dataStorage:
+        enabled: true
+        size: 10Gi
+        mountPath: "/vault/data"
+        accessMode: ReadWriteOnce
+
+      postStart:
+      - /bin/sh
+      - -c
+      - 'echo "libevmulti_init: Ready " > /tmp/cloudhsm_client_start.log'
 
       # the following annotations are requied to exempt traffic from the raft protocol 
       # otherwise, envoy side-car will interrupt raft-member to raft-member tls communications
@@ -58,8 +83,9 @@ spec:
         # pullPolicy: Always
 
         # Custom IB UBI8 Vault + HSM - hashi offical
-        repository: registry.il2.dso.mil/cnap/vault-dev/vault_ent_hsm_ib
-        tag: v1.6.1
+        repository: "registry1.dsop.io/ironbank/hashicorp/turbog"
+        tag: "1.6.1-hsm-cloudhsm"
+        # tag: "1.5.0_ent" 
         pullPolicy: Always
         
       # The Following Resource Limits are in line with node requirements in the
@@ -99,43 +125,8 @@ spec:
       # extraEnvironmentVars is a list of extra enviroment variables to set with the stateful set. These could be
       # used to include variables required for auto-unseal.
       extraEnvironmentVars:
-        # VAULT_API_ADDR:  http://$(HOSTNAME).vault-internal:8200
-        #VAULT_CLUSTER_ADDR:  http://$(HOSTNAME).vault-internal:8201
-        # VAULT_CLUSTER_ADDR:  http://127.0.0.1:8201
         VAULT_API_ADDR: http://vault-internal:8200
         VAULT_ADDR:  http://127.0.0.1:8200
-
-      # extraVolumes is a list of extra volumes to mount. These will be exposed
-      # to Vault in the path `/vault/userconfig/<name>/`.
-      extraVolumes:
-        - type: configMap
-          name: cloudhsm-client-cfg
-        - type: configMap
-          name: cloudhsm-mgmt-util-cfg
-        - type: secret
-          name: customer-ca-crt
-        - type: secret
-          name: cloudhsm-client-crt
-
-      volumeMounts:
-        - name: userconfig-cloudhsm-client-cfg
-          mountPath:  /opt/cloudhsm/etc/cloudhsm_client.cfg
-          subPath: cloudhsm_client.cfg
-        - name: userconfig-cloudhsm-mgmt-util-cfg
-          mountPath:  /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg
-          subPath: cloudhsm_mgmt_util.cfg
-        - name: userconfig-customer-ca-crt
-          mountPath:  /opt/cloudhsm/etc/customerCA.crt
-          subPath: customerCA.crt
-        - name: userconfig-customer-ca-crt
-          mountPath:  /opt/cloudhsm/etc/certs/4395fb20.0
-          subPath: customerCA.crt
-        - name: userconfig-cloudhsm-client-crt
-          mountPath:  /opt/cloudhsm/etc/ssl-client.crt
-          subPath: tls.crt
-        - name: userconfig-cloudhsm-client-crt
-          mountPath:  /opt/cloudhsm/etc/ssl-client.key
-          subPath: tls.key
 
       # This configures the Vault Statefulset to create a PVC for audit logs.
       # See https://www.vaultproject.io/docs/audit/index.html to know more
@@ -152,6 +143,47 @@ spec:
           setNodeId: true
 
           # config file encrypted in vault-values.enc.yaml 
+          config: |
+            ui = true
+            disable_mlock = true
+            log_level = "Trace"
+
+            listener "tcp" {
+                address = "[::]:8200"
+                cluster_address = "[::]:8201" 
+                tls_disable = 1
+            }
+            
+            storage "raft" {
+                path = "/vault/data"
+                retry_join {
+                  leader_api_addr = "http://vault-0.vault-internal:8200"
+                }
+                retry_join {
+                  leader_api_addr = "http://vault-1.vault-internal:8200"
+                }
+                retry_join {
+                  leader_api_addr = "http://vault-2.vault-internal:8200"
+                }
+                retry_join {
+                  leader_api_addr = "http://vault-3.vault-internal:8200"
+                }
+                retry_join {
+                  leader_api_addr = "http://vault-4.vault-internal:8200"
+                }
+            }
+            
+            seal "awskms" {
+                region     = "us-gov-west-1"
+                kms_key_id = "70f2ec40-3185-4dd7-a8d7-ebfc0aa56d04"
+                endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
+            }
+
+            entropy "seal" {
+              mode = "augmentation"
+            }
+            
+            service_registration "kubernetes" {}
 
     # Vault UI
     ui:
