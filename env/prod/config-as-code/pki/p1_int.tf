@@ -129,14 +129,3 @@ resource "vault_pki_secret_backend_role" "pki_p1_int_leaf" {
   max_ttl = "94608000" # 3 years
   ttl     = "94608000" # 3 years
 }
-
-# resource "vault_egp_policy" "p1_leaf_validate_common_name" {
-#   name = "p1-leaf-validate-common-name"
-#   paths = [
-#     "pki/int/p1_int/sign/p1-leaf-cert",
-#     "pki/int/p1_int/issue/p1-leaf-cert",
-#   ]
-#   enforcement_level = "hard-mandatory"
-
-#   policy = file("sentinel/validate-common-name.sentinel")
-# }

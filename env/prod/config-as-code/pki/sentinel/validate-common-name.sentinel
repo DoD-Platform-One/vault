@@ -1,21 +1,25 @@
-# validate_common_name = func() {
-# 	if "common_name" in keys(request.data) {
+validate_common_name = func() {
+	if "common_name" in keys(request.data) {
 
-# 		# Test for *.dso.mil
-# 		if request.data.common_name is "*.dso.mil" {
-# 			print("Wildcard certificates are not allowed")
-# 			return false
-# 		}
-# 	} else {
-# 		if request.path is "pki/int/p1_int/sign/p1-leaf-cert" {
-#       print("No common name provided when signing CSR")
-#       return false
-#     }
-# 	}
+		# Test for *.dso.mil
+		if request.data.common_name is "*.dso.mil" or "*.il2.dso.mil" or "*.il4.dso.mil" or "*.il5.dso.mil" {
+			print("Wildcard certificates are not allowed")
+			return false
+        } else {
+            if request.path is "pki/int/p1_int/sign/p1-leaf-cert" and request.data.common_name is "DoD P1 Ironbank Public CA" {
+                return true
+            } else {
+                    print("this is not a valid certificate endpoint")
+                    return false
+            }
+        # } else {
+        #     return true
+        }
 
-# 	return true
-# }
+	return true
+    }
+}
 
-# main = rule {
-# 	validate_common_name()
-# }
+main = rule {
+	validate_common_name()
+}
