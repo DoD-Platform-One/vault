@@ -4,22 +4,20 @@ terraform {
       source  = "hashicorp/vault"
       version = "2.17.0"
     }
+  } 
+  backend "s3" {
+    encrypt        = true
+    bucket         = "p1-cnap-vault-prod-tfstate-backend20210120202801559700000001"
+    dynamodb_table = "p1-cnap-vault-prod-tfstate-backend"
+    region         = "us-gov-west-1"
+    key            = "identity_control/terraform.tfstate"
   }
 }
  
-#need to update this
-provider "aws" {
-      region  = "us-gov-west-1"
-      profile = "235856440647_LevelUpAdmins"
-
-  backend "s3" {
-    encrypt        = true
-    bucket         = "p1-cnap-vault-dev-tfstate-backend20210107181214364300000001"
-    dynamodb_table = "p1-cnap-vault-dev-tfstate-backend"
-    region         = "us-gov-west-1"
-    key            = "il2-vault-app-state/idm/terraform.tfstate"
-    profile        = "235856440647_LevelUpAdmins"
-  }
+# Set config using environment variables
+# See https://registry.terraform.io/providers/hashicorp/vault/latest/docs#provider-arguments
+provider "vault" {
+  address = "https://cubbyhole.cnap.dso.mil"
 }
 # Set config using environment variables
 # See https://registry.terraform.io/providers/hashicorp/vault/latest/docs#provider-arguments
@@ -169,10 +167,10 @@ resource "vault_policy" "p1-int" {
 
 resource "vault_policy" "il4-p1-int" {
   name   = "il4-p1-int"
-  policy = file("policies/il4-p1-int")
+  policy = file("policies/il4-p1-int.hcl")
 }
 
-resource "vault_policy" "il2-p1-int {
+resource "vault_policy" "il2-p1-int" {
   name   = "il2-p1-int"
   policy = file("policies/il2-p1-int.hcl")
 }
