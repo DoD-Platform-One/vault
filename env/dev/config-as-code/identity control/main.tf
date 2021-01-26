@@ -7,7 +7,7 @@ terraform {
   }
 }
  
-
+#need to update this
 provider "aws" {
       region  = "us-gov-west-1"
       profile = "235856440647_LevelUpAdmins"
@@ -82,10 +82,10 @@ module "userpass_israel" {
   identity_entity_policies = ["change-userpass-password"]
 }
 
-resource "vault_identity_group" "il5-p1-int-notaries" {
-  name     = "il5-p1-int-notaries"
+resource "vault_identity_group" "notary" {
+  name     = "notary"
   type     = "internal"
-  policies = ["il5-p1-int-notaries"]
+  policies = ["p1-int"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -94,10 +94,10 @@ resource "vault_identity_group" "il5-p1-int-notaries" {
   ]
 }
 
-resource "vault_identity_group" "il4-p1-int-notaries" {
-  name     = "il4-p1-int-notaries"
+resource "vault_identity_group" "il5-p1-int" {
+  name     = "il5-p1-int"
   type     = "internal"
-  policies = ["il4-p1-int-notaries"]
+  policies = ["il5-p1-int"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -106,10 +106,22 @@ resource "vault_identity_group" "il4-p1-int-notaries" {
   ]
 }
 
-resource "vault_identity_group" "il2-p1-int-notaries" {
-  name     = "il2-p1-int-notaries"
+resource "vault_identity_group" "il4-p1-int" {
+  name     = "il4-p1-int"
   type     = "internal"
-  policies = ["il2-p1-int-notaries"]
+  policies = ["il4-p1-int"]
+
+  member_entity_ids = [
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+  ]
+}
+
+resource "vault_identity_group" "il2-p1-int" {
+  name     = "il2-p1-int"
+  type     = "internal"
+  policies = ["il2-p1-int"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -150,19 +162,19 @@ resource "vault_identity_group" "vault-security-officers" {
   ]
 }
 
-resource "vault_policy" "il5-p1-int-notary" {
-  name   = "il5-p1-int-notary"
-  policy = file("policies/il5-p1-int-notary.hcl")
+resource "vault_policy" "p1-int" {
+  name   = "p1-int"
+  policy = file("policies/p1-int.hcl")
 }
 
-resource "vault_policy" "il4-p1-int-notary" {
-  name   = "il4-p1-int-notary"
-  policy = file("policies/il4-p1-int-notary.hcl")
+resource "vault_policy" "il4-p1-int" {
+  name   = "il4-p1-int"
+  policy = file("policies/il4-p1-int")
 }
 
-resource "vault_policy" "il2-p1-int-notary" {
-  name   = "il2-p1-int-notary"
-  policy = file("policies/il2-p1-int-notary.hcl")
+resource "vault_policy" "il2-p1-int {
+  name   = "il2-p1-int"
+  policy = file("policies/il2-p1-int.hcl")
 }
 
 resource "vault_policy" "control-group-authority" {

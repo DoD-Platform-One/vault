@@ -32,26 +32,34 @@ path "sys/audit/*" {
 # -----------------------------------------------------------------------------
 # Deny use of root endpoints on PKI mounts
 # -----------------------------------------------------------------------------
-path "/pki/il5/p1_root/root/*" {
+path "/pki/int/p1_int/root/*" {
+  capabilities = ["deny"]
+}
+
+path "/pki/il2/p1_int/root/*" {
+  capabilities = ["deny"]
+}
+
+path "/pki/il4/p1_int/root/*" {
   capabilities = ["deny"]
 }
 
 path "/pki/il5/p1_int/root/*" {
   capabilities = ["deny"]
 }
-
+#will be added in phase 2
 # -----------------------------------------------------------------------------
 # Deny all on any secret mounted under the secrets/ path, e.g.:
 #   secrets/kv/app-1
 #   secrets/aws/iam-admin
 # -----------------------------------------------------------------------------
-path "secrets/*" {
-  capabilities = ["deny"]
-}
+#path "secrets/*" {
+#  capabilities = ["deny"]
+#}
 
-path "+/secrets/*" {
-  capabilities = ["deny"]
-}
+#path "+/secrets/*" {
+#  capabilities = ["deny"]
+#}
 
 # -----------------------------------------------------------------------------
 # Manage identity secrets broadly across Vault (root namespace)
@@ -104,6 +112,10 @@ path "sys/internal/ui/mounts" {
   capabilities = ["read"]
 }
 
+path "/pki/int/*" {
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
 path "/pki/il5/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
@@ -113,6 +125,10 @@ path "/pki/il4/*" {
 }
 
 path "/pki/il2/*" {
+  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+}
+
+path "/kv/int/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 

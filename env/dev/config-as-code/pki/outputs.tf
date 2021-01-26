@@ -1,15 +1,19 @@
-output "p1_pki_int_leaf" {
+output "pki_p1_int_leaf" {
   value = "genertate cert with `vault write pki_int/issue/leaf-cert common_name=dso.mil`"
 }
 
-output "il2_p1_pki_int_leaf" {
+output "il2_pki_p1_int_leaf" {
   value = "genertate cert with `vault write pki_int/issue/leaf-cert common_name=il2.dso.mil`"
 }
 
-output "il4_p1_pki_int_leaf" {
+output "il4_pki_p1_int_leaf" {
   value = "genertate cert with `vault write pki_int/issue/leaf-cert common_name=il4.dso.mil`"
 }
 
-output "il5_p1_pki_int_leaf" {
+output "il5_pki_p1_int_leaf" {
   value = "genertate cert with `vault write pki_int/issue/leaf-cert common_name=il5.dso.mil`"
+}
+
+output "pki_p1_csr" {
+  value = vault_pki_secret_backend_intermediate_cert_request.pki_p1_int.csr
 }
