@@ -1,0 +1,18 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: fluentbit
+  namespace: fluentbit
+spec:
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.txt
+    /**/*.sh
+  interval: 10m
+  url: https://repo1.dso.mil/platform-one/private/cnap/argocd-apps.git
+  ref:
+    branch: fluent-bit-helm
+  secretRef:
+    name: repo-credential
