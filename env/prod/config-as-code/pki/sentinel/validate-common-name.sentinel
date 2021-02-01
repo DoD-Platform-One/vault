@@ -1,11 +1,12 @@
 validate_common_name = func() {
 	if "common_name" in keys(request.data) {
 
-		# disallow wildcard certs
-		if request.data.common_name is "*.dso.mil" or "*.il2.dso.mil" or "*.il4.dso.mil" or "*.il5.dso.mil" {
+		# block wildcard certs
+		if request.data.common_name is "*.dso.mil" or request.data.common_name is "*.il2.dso.mil" or request.data.common_name is "*.il4.dso.mil" or request.data.common_name is "*.il5.dso.mil" {
 			print("Wildcard certificates are not allowed")
 			return false
         }
+        #move this to a separate policy specifically focused on intermediate CA
         # if request.path is "pki/int/p1_int/sign/p1-leaf-cert" and request.data.common_name is "DoD P1 Ironbank Public CA" {
         #     return true
         # }
