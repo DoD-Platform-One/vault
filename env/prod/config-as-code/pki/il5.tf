@@ -26,7 +26,7 @@ resource "vault_pki_secret_backend_root_sign_intermediate" "pki_il5_p1_int" {
   backend = vault_mount.pki_p1_int.path
 
   csr                  = vault_pki_secret_backend_intermediate_cert_request.pki_il5_p1_int.csr
-  common_name          = "DoD P1 IL5 Intermediate Certificate Authority"
+  common_name          = "DoD P1 IL5 Intermediate CA"
   ttl                  = "43800h"
   exclude_cn_from_sans = true
 }

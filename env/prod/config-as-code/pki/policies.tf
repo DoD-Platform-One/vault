@@ -1,8 +1,9 @@
 resource "vault_egp_policy" "p1_leaf_validate_common_name" {
   name = "p1-leaf-validate-common-name"
   paths = [
-    "pki/int/p1_int/issue/p1-leaf-cert",
-    "pki/int/p1_int/sign/p1-leaf-cert",
+    # will add these restrictions to a separate policy
+    # "pki/int/p1_int/issue/p1-leaf-cert",
+    # "pki/int/p1_int/sign/p1-leaf-cert",
     "pki/il5/p1_int/issue/il5-p1-leaf-cert",
     "pki/il5/p1_int/sign/il5-p1-leaf-cert",
     "pki/il4/p1_int/issue/il4-p1-leaf-cert",
