@@ -162,27 +162,27 @@ resource "vault_identity_group" "vault-security-officers" {
 
 resource "vault_policy" "p1-int" {
   name   = "p1-int"
-  policy = file("policies/p1-int.hcl")
+  policy = file("acl_policies/p1-int.hcl")
 }
 
 resource "vault_policy" "il4-p1-int" {
   name   = "il4-p1-int"
-  policy = file("policies/il4-p1-int.hcl")
+  policy = file("acl_policies/il4-p1-int.hcl")
 }
 
 resource "vault_policy" "il2-p1-int" {
   name   = "il2-p1-int"
-  policy = file("policies/il2-p1-int.hcl")
+  policy = file("acl_policies/il2-p1-int.hcl")
 }
 
 resource "vault_policy" "control-group-authority" {
   name   = "control-group-authority"
-  policy = file("policies/control-group-authority.hcl")
+  policy = file("acl_policies/control-group-authority.hcl")
 }
 
 resource "vault_policy" "change-userpass-password" {
   name = "change-userpass-password"
-  policy = templatefile("policies/change-userpass-password.hcl.tpl",
+  policy = templatefile("acl_policies/change-userpass-password.hcl.tpl",
     {
       userpass_mount_accessor = vault_auth_backend.userpass.accessor
     }
@@ -191,12 +191,12 @@ resource "vault_policy" "change-userpass-password" {
 
 resource "vault_policy" "vault-operator" {
   name   = "vault-operator"
-  policy = file("policies/vault-operator.hcl")
+  policy = file("acl_policies/vault-operator.hcl")
 }
 
 resource "vault_policy" "vault-security-officer" {
   name = "vault-security-officer"
-  policy = templatefile("policies/vault-security-officer.hcl.tpl",
+  policy = templatefile("acl_policies/vault-security-officer.hcl.tpl",
     {
       policy_name = "vault-security-officer"
       group_name  = vault_identity_group.vault-security-officers.name

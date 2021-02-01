@@ -13,7 +13,7 @@ resource "vault_pki_secret_backend_intermediate_cert_request" "pki_p1_int" {
   backend = vault_mount.pki_p1_int.path
 
   type        = "internal"
-  common_name = "DoD P1 Intermediate CA 1"
+  common_name = "DoD P1 Intermediate CA"
   key_type    = "rsa"
   key_bits    = "4096"
 
