@@ -12,7 +12,7 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  path        = "sys/storage/raft/snapshot-auto/local"
+  path        = "sys/storage/raft/snapshot-auto/config/s3"
   data_json = <<EOF
 {
   "interval": "12h",
