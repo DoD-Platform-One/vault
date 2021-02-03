@@ -106,7 +106,7 @@ spec:
       # extraEnvironmentVars is a list of extra enviroment variables to set with the stateful set. These could be
       # used to include variables required for auto-unseal.
       extraEnvironmentVars:
-        VAULT_API_ADDR: http://vault-internal:8200
+        VAULT_API_ADDR: http://vault-active:8200
         VAULT_ADDR:  http://127.0.0.1:8200
 
       # This configures the Vault Statefulset to create a PVC for audit logs.
