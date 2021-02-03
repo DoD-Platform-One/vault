@@ -11,6 +11,6 @@ spec:
   http:
   - route:
     - destination:
-        host: vault-ui.vault.svc.cluster.local
+        host: vault-active.vault.svc.cluster.local
         port:
           number: 8200
