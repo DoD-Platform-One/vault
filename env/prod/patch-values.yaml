@@ -19,6 +19,7 @@ spec:
       retries: 5
   forceUpgrade: true
   upgrade:
+    force: true
     remediation:
       retries: 5
       remediateLastFailure: true
@@ -26,6 +27,7 @@ spec:
   rollback:
     timeout: 10m
     cleanupOnFail: false
+    force: true
   values:
 
     # Vault Helm Chart Value Overrides
