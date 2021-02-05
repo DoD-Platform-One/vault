@@ -1,7 +1,0 @@
-{
-    "interval": "12h",
-    "retain": 2190,
-    "storage_type": "aws-s3",
-    "aws_s3_region": "us-gov-west-1",
-    "aws_s3_bucket": "p1-cnap-vault-prod-backups20210202192403215100000001"
-}
