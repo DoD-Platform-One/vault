@@ -58,6 +58,9 @@ spec:
         mountPath: "/vault/data"
         accessMode: ReadWriteOnce
 
+      auditStorage:
+        enabled: true
+
       postStart:
       - /bin/sh
       - -c
@@ -68,21 +71,12 @@ spec:
       annotations:  
         traffic.sidecar.istio.io/excludeInboundPorts: "8201"
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
+
       image:
-        # Enterprise Image - license required
         repository: "registry1.dsop.io/ironbank/hashicorp/turbog"
         tag: "1.6.1-hsm-cloudhsm"
-        # tag: "1.5.0_ent" 
 
-        #IB-Enterprise 
-        # repository: "registry1.dsop.io/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
-        # tag: "1.5.3"
-
-        
-      # The Following Resource Limits are in line with node requirements in the
-      # Vault Reference Architecture for a Small Cluster
-
-      # PROD
+      # PROD Specs
       resources:
         requests:
           memory: 8Gi
@@ -94,28 +88,20 @@ spec:
       ingress:
         enabled: false
 
-      # For HA configuration and because we need to manually init the vault,
-      # we need to define custom readiness/liveness Probe settings
+      # probes disabled due to fails
       readinessProbe:
         enabled: false
-        path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" #orinal setting
+        path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" 
       livenessProbe:
         enabled: false
         path: "/v1/sys/health?standbyok=true"
         initialDelaySeconds: 60
 
-      # extraEnvironmentVars is a list of extra enviroment variables to set with the stateful set. These could be
-      # used to include variables required for auto-unseal.
       extraEnvironmentVars:
         # VAULT_API_ADDR: http://vault-internal:8200
         VAULT_API_ADDR: https://cubbyhole.cnap.dso.mil  #istio GW
         VAULT_CLUSTER_ADDR: http://vault-internal:8201
         VAULT_ADDR:  http://127.0.0.1:8200
-
-      # This configures the Vault Statefulset to create a PVC for audit logs.
-      # See https://www.vaultproject.io/docs/audit/index.html to know more
-      auditStorage:
-        enabled: true
 
       # Run Vault in "HA" mode.
       ha:
@@ -168,7 +154,6 @@ spec:
             }
             
             service_registration "kubernetes" {}
-
 
     # Vault UI
     ui:
