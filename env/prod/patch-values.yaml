@@ -17,7 +17,6 @@ spec:
   install:
     remediation:
       retries: 5
-  forceUpgrade: true
   upgrade:
     remediation:
       retries: 5
