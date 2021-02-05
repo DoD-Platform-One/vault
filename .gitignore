@@ -1,7 +1,7 @@
 #  Local .terraform directories
 **/.terraform/*
 **/.terragrunt-cache/*
-**/.terraform.lock.hcl
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
@@ -10,3 +10,5 @@
 *.pem
 
 .idea/
+# terraform locks
+.terraform.lock.hcl
