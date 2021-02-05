@@ -10,3 +10,5 @@
 *.pem
 
 .idea/
+# terraform locks
+.terraform.lock.hcl
