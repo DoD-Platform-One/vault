@@ -1,7 +1,10 @@
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "/Users/gabe/Workspace/terraform-modules/vault/intermediate_ca_cert"
+  # Gabe development
+  #source = "/Users/gabe/Workspace/terraform-modules/vault/intermediate_ca_cert"
+  # Cam development
+  source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/intermediate_ca_cert"
 }
 
 # Include all settings from the root terragrunt.hcl file
