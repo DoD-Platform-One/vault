@@ -3,7 +3,8 @@
 terraform {
   # Gabe dev
   #source = "/Users/gabe/Workspace/terraform-modules/vault/intermediate_ca_csr"
-   source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/pki_secret_backend_intermediate_cert_request"
+  //  source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/pki_secret_backend_intermediate_cert_request"
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_intermediate_cert_request?ref=vault"
 }
 
 # Include all settings from the root terragrunt.hcl file

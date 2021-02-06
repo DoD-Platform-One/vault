@@ -3,7 +3,8 @@
 terraform {
   # Gabe
   #source = "/Users/gabe/Workspace/terraform-modules/vault/mount"
-  source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/mount"
+  // source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/mount"
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/mount?ref=vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
