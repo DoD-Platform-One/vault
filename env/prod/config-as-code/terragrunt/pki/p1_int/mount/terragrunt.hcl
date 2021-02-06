@@ -1,4 +1,4 @@
-# Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
+/* # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
   # Gabe
@@ -19,4 +19,4 @@ inputs = {
   default_mount_ttl = "94608000" # 3 years
   seal_wrap         = true
   external_entropy  = true
-}
+} */

@@ -4,7 +4,7 @@ terraform {
   # Gabe development
   #source = "/Users/gabe/Workspace/terraform-modules/vault/intermediate_ca_cert"
   # Cam development
-  source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault/pki_secret_backend_root_sign_intermediate"
+  source = "/Users/cameron.banowsky/infrastructure/dev/repo1/cnap/terraform-modules/vault//pki_secret_backend_root_sign_intermediate"
 }
 
 # Include all settings from the root terragrunt.hcl file

@@ -13,7 +13,7 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  mount_path        = "pki/tf-test/int/dso_int"
+  mount_path        = "pki/dso/int"
   mount_type        = "pki"
   max_mount_ttl     = "94608000" # 3 years
   default_mount_ttl = "94608000" # 3 years
