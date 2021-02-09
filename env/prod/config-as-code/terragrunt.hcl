@@ -10,7 +10,7 @@ remote_state {
   config = {
     encrypt        = true
     bucket         = "p1-cnap-vault-prod-tfstate-backend20210120202801559700000001"
-    key            = "pki/${path_relative_to_include()}/terraform.tfstate"
+    key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "us-gov-west-1"
     dynamodb_table = "p1-cnap-vault-prod-tfstate-backend"
   }
