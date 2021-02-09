@@ -1,20 +1,20 @@
 # -----------------------------------------------------------------------------
-# List PKI roles on pki/il4/p1_int engine
+# List PKI roles on pki/il2/npe engine
 # -----------------------------------------------------------------------------
-path "pki/il4/p1_int/roles" {
+path "pki/il2/npe/roles" {
   capabilities = ["list", "read"]
 }
 
 # -----------------------------------------------------------------------------
-# Issue certificates from the p1-leaf-cert PKI role
+# Issue certificates from the il2-npe-leaf PKI role
 # -----------------------------------------------------------------------------
-#path "pki/il4/p1_int/issue/p1-leaf-cert" {
+#path "pki/il2/npe/issue/il2-npe-leaf" {
 #  capabilities = ["update"]
 
 #  control_group = {
 #    factor "authorizer" {
 #      identity {
-#        group_names = [ "il4-p1-int" ]
+#        group_names = [ "il2-npe-ca" ]
 #        approvals   = 2
 #      }
 #    }
@@ -22,15 +22,15 @@ path "pki/il4/p1_int/roles" {
 #}
 
 # -----------------------------------------------------------------------------
-# Sign CSRs with the p1-leaf-cert PKI role
+# Sign CSRs with the il2-npe-leaf PKI role
 # -----------------------------------------------------------------------------
-path "pki/il4/p1_int/sign/p1-leaf-cert" {
+path "pki/il2/npe/sign/il2-npe-leaf" {
   capabilities = ["update"]
 
   control_group = {
     factor "authorizer" {
       identity {
-        group_names = [ "il4-p1-int" ]
+        group_names = [ "il2-npe-ca" ]
         approvals   = 2
       }
     }

@@ -80,10 +80,10 @@ module "userpass_israel" {
   identity_entity_policies = ["change-userpass-password"]
 }
 
-resource "vault_identity_group" "notary" {
-  name     = "notary"
+resource "vault_identity_group" "il5-int-ca" {
+  name     = "il5-int-ca"
   type     = "internal"
-  policies = ["p1-int"]
+  policies = ["il5-int-ca"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -92,10 +92,10 @@ resource "vault_identity_group" "notary" {
   ]
 }
 
-resource "vault_identity_group" "il5-p1-int" {
-  name     = "il5-p1-int"
+resource "vault_identity_group" "il4-int-ca" {
+  name     = "il4-int-ca"
   type     = "internal"
-  policies = ["il5-p1-int"]
+  policies = ["il4-int-ca"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -104,10 +104,10 @@ resource "vault_identity_group" "il5-p1-int" {
   ]
 }
 
-resource "vault_identity_group" "il4-p1-int" {
-  name     = "il4-p1-int"
+resource "vault_identity_group" "il2-int-ca" {
+  name     = "il2-int-ca"
   type     = "internal"
-  policies = ["il4-p1-int"]
+  policies = ["il2-int-ca"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -116,10 +116,46 @@ resource "vault_identity_group" "il4-p1-int" {
   ]
 }
 
-resource "vault_identity_group" "il2-p1-int" {
-  name     = "il2-p1-int"
+resource "vault_identity_group" "dso-ca" {
+  name     = "dso-ca"
   type     = "internal"
-  policies = ["il2-p1-int"]
+  policies = ["dso-ca"]
+
+  member_entity_ids = [
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+  ]
+}
+
+resource "vault_identity_group" "il5-npe-ca" {
+  name     = "il5-npe-ca"
+  type     = "internal"
+  policies = ["il5-npe-ca"]
+
+  member_entity_ids = [
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+  ]
+}
+
+resource "vault_identity_group" "il4-npe-ca" {
+  name     = "il4-npe-ca"
+  type     = "internal"
+  policies = ["il4-npe-ca"]
+
+  member_entity_ids = [
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+  ]
+}
+
+resource "vault_identity_group" "il2-npe-ca" {
+  name     = "il2-npe-ca"
+  type     = "internal"
+  policies = ["il2-npe-ca"]
 
   member_entity_ids = [
     module.userpass_cam.vault_identity_entity_id,
@@ -172,19 +208,39 @@ resource "vault_identity_group" "sudo" {
   ]
 }
 
-resource "vault_policy" "p1-int" {
-  name   = "p1-int"
-  policy = file("acl_policies/p1-int.hcl")
+resource "vault_policy" "p1-int-ca" {
+  name   = "p1-int-ca"
+  policy = file("acl_policies/p1-int-ca.hcl")
 }
 
-resource "vault_policy" "il4-p1-int" {
-  name   = "il4-p1-int"
-  policy = file("acl_policies/il4-p1-int.hcl")
+resource "vault_policy" "il4-int-ca" {
+  name   = "il4-int-ca"
+  policy = file("acl_policies/il4-int-ca.hcl")
 }
 
-resource "vault_policy" "il2-p1-int" {
-  name   = "il2-p1-int"
-  policy = file("acl_policies/il2-p1-int.hcl")
+resource "vault_policy" "il2-int-ca" {
+  name   = "il2-int-ca"
+  policy = file("acl_policies/il2-int-ca.hcl")
+}
+
+resource "vault_policy" "dso-ca" {
+  name   = "dso-ca"
+  policy = file("acl_policies/dso-ca.hcl")
+}
+
+resource "vault_policy" "il5-npe-ca" {
+  name   = "il5-npe-ca"
+  policy = file("acl_policies/il5-npe-ca.hcl")
+}
+
+resource "vault_policy" "il4-npe-ca" {
+  name   = "il4-npe-ca"
+  policy = file("acl_policies/il4-npe-ca.hcl")
+}
+
+resource "vault_policy" "il2-npe-ca" {
+  name   = "il2-npe-ca"
+  policy = file("acl_policies/il2-npe-ca.hcl")
 }
 
 resource "vault_policy" "control-group-authority" {
