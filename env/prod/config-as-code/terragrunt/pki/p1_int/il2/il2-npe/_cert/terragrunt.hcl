@@ -16,14 +16,14 @@ dependency mount {
   }
 }
 
-dependency signed_cert {
+dependency cert {
   config_path = "../_cert_sign"
   mock_outputs = {
-    path = "abc-123"
+    signed_cert = "-----BEGIN CERTIFICATE-----"
   }
 }
 
 inputs = {
   mount_path = dependency.mount.outputs.path
-  signed_cert_and_ca_chain = dependency.signed_cert.outputs.crt
+  signed_cert_and_ca_chain = dependency.cert.outputs.signed_cert
 }

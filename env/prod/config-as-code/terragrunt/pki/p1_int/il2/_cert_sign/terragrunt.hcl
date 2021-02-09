@@ -24,7 +24,7 @@ dependency csr {
 }
 
 inputs = {
-  sub_ca_csr_cn = "il2.dso.mil"
+  sub_ca_csr_cn = "DoD P1 IL2 Intermediate CA"
   int_mount_path = dependency.p1_int_mount.outputs.path
   csr = dependency.csr.outputs.csr
 }

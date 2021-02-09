@@ -1,7 +1,7 @@
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_intermediate_set_signed?ref=vault"
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_intermediate_cert_request?ref=vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -16,14 +16,9 @@ dependency mount {
   }
 }
 
-dependency cert {
-  config_path = "../_cert_sign"
-  mock_outputs = {
-    signed_cert = "-----BEGIN CERTIFICATE-----"
-  }
-}
 
+# These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  mount_path = dependency.mount.outputs.path
-  signed_cert_and_ca_chain = dependency.cert.outputs.signed_cert
+  mount_path        = dependency.mount.outputs.path
+  intermediate_ca_csr_cn  = "DoD P1 IL4 Intermediate CA"
 }

@@ -19,7 +19,8 @@ dependency mount {
 inputs = {
     mount_path = dependency.mount.outputs.path
     name = "il2-npe-leaf"
-    allowed_domains = ["npe.il2.dso.mil"]
+    allowed_domains = ["il2.npe.dso.mil"]
+    allow_subdomains = false
     max_ttl = 31556926 #annual lease
     ttl = 31556926 #annual lease
     key_usage = ["DigitalSignature", "KeyAgreement", "KeyEncipherment"]
