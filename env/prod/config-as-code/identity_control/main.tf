@@ -160,6 +160,18 @@ resource "vault_identity_group" "vault-security-officers" {
   ]
 }
 
+resource "vault_identity_group" "sudo" {
+  name     = "sudo"
+  type     = "internal"
+  policies = ["sudo"]
+
+  member_entity_ids = [
+    module.userpass_cam.vault_identity_entity_id,
+    module.userpass_gabe.vault_identity_entity_id,
+    module.userpass_israel.vault_identity_entity_id,
+  ]
+}
+
 resource "vault_policy" "p1-int" {
   name   = "p1-int"
   policy = file("acl_policies/p1-int.hcl")
@@ -187,6 +199,11 @@ resource "vault_policy" "change-userpass-password" {
       userpass_mount_accessor = vault_auth_backend.userpass.accessor
     }
   )
+}
+
+resource "vault_policy" "sudo" {
+  name   = "sudo"
+  policy = file("acl_policies/sudo.hcl")
 }
 
 resource "vault_policy" "vault-operator" {
