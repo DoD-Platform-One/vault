@@ -64,7 +64,7 @@ module "userpass_gabe" {
 
   userpass_mount_accessor  = vault_auth_backend.userpass.accessor
   userpass_username        = "gabe"
-  userpass_password        = "hunter2"
+  userpass_password        = "boogers"
   identity_entity_name     = "gscarberry"
   identity_entity_policies = ["change-userpass-password"]
 }
