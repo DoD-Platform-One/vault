@@ -1,7 +1,7 @@
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_crl_config?ref=vault"
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_config_urls?ref=vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -19,4 +19,6 @@ dependency mount {
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   mount_path        = dependency.mount.outputs.path
+  crl_url           = ["https://cubbyhole.cnap.dso.mil/v1/${dependency.mount.outputs.path}/crl"]
+  ocsp_svrs         = ["https://deathstar.cnap.dso.mil"]
 }
