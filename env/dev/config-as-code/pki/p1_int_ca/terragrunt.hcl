@@ -20,7 +20,6 @@ inputs = {
   ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
   vault_signed_CA           = false #toggle to true once signed cert is received from offline root ca & input below
   vault_signed_cert         = true #will always remain false because vault is not signing the certificate
-  csr                       = "vault_pki_secret_backend_intermediate_cert_request.this.csr"
 
   signed_cert_and_ca_chain  = <<-EOT
 -----BEGIN CERTIFICATE-----
