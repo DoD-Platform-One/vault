@@ -1,7 +1,7 @@
 # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 terraform {
-  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/pki_secret_backend_intermediate_set_signed?ref=vault"
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/int_ca?ref=vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -9,16 +9,17 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency mount {
-  config_path = "../_mount"
-  mock_outputs = {
-    path = "abc-123"
-  }
-}
-
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  mount_path        = dependency.mount.outputs.path
+  mount_path                = "pki/p1_int_ca/int"
+  mount_type                = "pki"
+  max_mount_ttl             = "94608000" # 3 years
+  default_mount_ttl         = "94608000" # 3 years
+  intermediate_ca_csr_cn    = "DoD P1 Intermediate CA"
+  crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/${vault_mount.this.path}/crl"]
+  ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
+  vault_signed_CA           = false #toggle to true once signed cert is received from offline root ca & input below
+  vault_signed_cert         = false #will always remain false because vault is not signing the certificate
   signed_cert_and_ca_chain  = <<-EOT
 -----BEGIN CERTIFICATE-----
 MIIGLTCCBBWgAwIBAgICEAYwDQYJKoZIhvcNAQENBQAwgaQxCzAJBgNVBAYTAlVT
@@ -94,3 +95,9 @@ RNCnPJho9SqU7IYoCdLuYO2rSmEcuaz8INlRw4PAkBhaqKbr6BbYuQrhU16RcvyH
 -----END CERTIFICATE-----
 EOT
 }
+
+
+
+
+} 
+
