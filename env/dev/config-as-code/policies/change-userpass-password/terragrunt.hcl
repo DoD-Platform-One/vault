@@ -11,44 +11,16 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  name   = "dso-ca"
+  name   = "change-userpass-password"
   policy = <<EOT
 # -----------------------------------------------------------------------------
-# List PKI roles on pki/dso engine
+# Allow users to change their own userpass password
 # -----------------------------------------------------------------------------
-path "pki/dso/roles" {
-  capabilities = ["list", "read"]
-}
+path "auth/userpass/users/{{ identity.entity.aliases.${userpass_mount_accessor}.name }}/password" {
+  capabilities = [ "update" ]
 
-# -----------------------------------------------------------------------------
-# Issue certificates from the dso-leaf PKI role
-# -----------------------------------------------------------------------------
-#path "pki/dso/issue/dso-leaf" {
-#  capabilities = ["update"]
-
-#  control_group = {
-#    factor "authorizer" {
-#      identity {
-#        group_names = [ "dso-ca" ]
-#        approvals   = 1
-#      }
-#    }
-#  }
-#}
-
-# -----------------------------------------------------------------------------
-# Sign CSRs with the dso-leaf PKI role
-# -----------------------------------------------------------------------------
-path "pki/dso/sign/dso-leaf" {
-  capabilities = ["update"]
-
-  control_group = {
-    factor "authorizer" {
-      identity {
-        group_names = [ "dso-ca" ]
-        approvals   = 1
-      }
-    }
+  allowed_parameters = {
+    "password" = []
   }
 }
 
