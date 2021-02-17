@@ -33,4 +33,3 @@ inputs = {
   ttl = 31556926 #annual lease
   key_usage = ["DigitalSignature", "KeyAgreement", "KeyEncipherment"]
 }
-
