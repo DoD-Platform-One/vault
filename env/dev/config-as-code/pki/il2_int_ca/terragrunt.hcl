@@ -9,7 +9,7 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency p1_int_mount {
+dependency int_ca_mount {
   config_path = "../p1_int_ca"
   mock_outputs = {
     path = "abc-123"
@@ -23,7 +23,7 @@ inputs = {
   max_mount_ttl             = "94608000" # 3 years
   default_mount_ttl         = "94608000" # 3 years
   intermediate_ca_csr_cn    = "DoD P1 IL2 Intermediate CA"
-  int_mount_path            = dependency.p1_int_mount.outputs.path
+  int_mount_path            = dependency.int_ca_mount.outputs.path
   crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/pki/il2/int/crl"]
   ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
 }
