@@ -15,6 +15,6 @@ inputs = {
   max_lease_ttl             = "60m"
   default_lease_ttl         = "30m"
   identity_entity_name      = "cameron.banowsky"
-  #identity_entity_policies  = ["change-userpass-password"]
+  identity_entity_policies  = ["change-userpass-password"]
   userpass_username         = "cam"
 }
