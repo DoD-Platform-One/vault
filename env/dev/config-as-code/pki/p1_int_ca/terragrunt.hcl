@@ -16,10 +16,10 @@ inputs = {
   max_mount_ttl             = "94608000" # 3 years
   default_mount_ttl         = "94608000" # 3 years
   intermediate_ca_csr_cn    = "DoD P1 Intermediate CA"
+  vault_signed_cert         = true  #toggle to true once signed cert is received from offline root ca & input below
   crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/pki/p1_int_ca/int/crl"]
   ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
-  vault_signed_CA           = false #toggle to true once signed cert is received from offline root ca & input below
-  vault_signed_cert         = true #will always remain false because vault is not signing the certificate
+  vault_signed_CA           = false #will always remain false because vault is not signing the certificate
 
   signed_cert_and_ca_chain  = <<-EOT
 -----BEGIN CERTIFICATE-----
