@@ -11,5 +11,10 @@ include {
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-
+  type                      = "userpass"
+  max_lease_ttl             = "60m"
+  default_lease_ttl         = "30m"
+  identity_entity_name      = "cameron.banowsky"
+  identity_entity_policies  = ["change-userpass-password"]
+  userpass_username         = "cam"
 }
