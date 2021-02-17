@@ -22,15 +22,14 @@ inputs = {
   mount_type                = "pki"
   max_mount_ttl             = "94608000" # 3 years
   default_mount_ttl         = "94608000" # 3 years
-  sub_ca_csr_cn             = "DoD P1 IL2 NPE CA"
+  ca_csr_cn                 = "DoD P1 IL2 NPE CA"
   int_mount_path            = dependency.int_ca_mount.outputs.path
-  crl_url           = ["https://cubbyhole.cnap.dso.mil/v1/pki/il2/npe/crl"]
-  ocsp_svrs         = ["https://deathstar.cnap.dso.mil"]
-  name = "il2-npe-leaf"
-  allowed_domains = ["npe.il2.dso.mil"]
-  allow_subdomains = false
-  max_ttl = 31556926 #annual lease
-  ttl = 31556926 #annual lease
-  key_usage = ["DigitalSignature", "KeyAgreement", "KeyEncipherment"]
+  crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/pki/il2/npe/crl"]
+  ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
+  name                      = "il2-npe-leaf"
+  allowed_domains           = ["npe.il2.dso.mil"]
+  allow_subdomains          = false
+  max_ttl                   = 31556926 #annual lease
+  ttl                       = 31556926 #annual lease
+  key_usage                 = ["DigitalSignature", "KeyAgreement", "KeyEncipherment"]
 }
-
