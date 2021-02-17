@@ -9,24 +9,21 @@ include {
   path = find_in_parent_folders()
 }
 
+dependency int_ca_mount {
+  config_path = "../p1_int_ca"
+  mock_outputs = {
+    path = "abc-123"
+  }
+}
+
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  mount_path                = "pki/p1_int_ca/int"
+  mount_path                = "pki/il5/int"
   mount_type                = "pki"
   max_mount_ttl             = "94608000" # 3 years
   default_mount_ttl         = "94608000" # 3 years
-  intermediate_ca_csr_cn    = "DoD P1 Intermediate CA"
-  signed_cert               = false  #toggle to true once signed cert is received from offline root ca & input below
-  crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/pki/p1_int_ca/int/crl"]
+  intermediate_ca_csr_cn    = "DoD P1 IL5 Intermediate CA"
+  int_mount_path            = dependency.int_ca_mount.outputs.path
+  crl_url                   = ["https://cubbyhole.cnap.dso.mil/v1/pki/il5/int/crl"]
   ocsp_svrs                 = ["https://deathstar.cnap.dso.mil"]
-  vault_signed_CA           = false #will always remain false because vault is not signing the certificate
-
-  signed_cert_and_ca_chain  = <<-EOT
------BEGIN CERTIFICATE-----
-vault int ca
------END CERTIFICATE-----
------BEGIN CERTIFICATE-----
-offline rootca
------END CERTIFICATE-----
-EOT
 }
