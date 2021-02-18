@@ -14,7 +14,7 @@ path "sys/policies/acl/vault-security-officer" {
 # -----------------------------------------------------------------------------
 # Read-only access to the vault-security-officers identity group
 # -----------------------------------------------------------------------------
-path "identity/group/name/${group_name}" {
+path "identity/group/name/security_officer" {
   capabilities = ["read"]
 }
 
