@@ -9,11 +9,16 @@ include {
   path = find_in_parent_folders()
 }
 
+dependency userpass_auth_backend {
+  config_path = "../../userpass_auth_backend"
+  mock_outputs = {
+    path = "abc-123"
+  }
+}
+
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
-  type                      = "userpass"
-  max_lease_ttl             = "60m"
-  default_lease_ttl         = "30m"
+  auth_backend              = dependency.userpass_auth_backend.outputs.accessor
   identity_entity_name      = "gabe.scarberry"
   identity_entity_policies  = ["change-userpass-password"]
   userpass_username         = "gabe"
