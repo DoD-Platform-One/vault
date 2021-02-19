@@ -9,34 +9,18 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency cam_identity_id {
-  config_path = "../../users/cam"
-  mock_outputs = {
-    id = "abc-123"
-  }
-}
-
-dependency gabe_identity_id {
-  config_path = "../../users/gabe"
-  mock_outputs = {
-    id = "abc-123"
-  }
-}
-
-dependency israel_identity_id {
-  config_path = "../../users/israel"
-  mock_outputs = {
-    id = "abc-123"
-  }
-}
+# dependency <user>_identity_id {
+#   config_path = "../../users/<user>"
+#   mock_outputs = {
+#     id = "abc-123"
+#   }
+# }
 
 # These are the variables we have to pass in to use the module specified in the terragrunt configuration above
 inputs = {
   name                = "security-officer"
   policies            = ["vault-security-officer"]
   member_entity_ids   = [
-    dependency.cam_identity_id.outputs.id,
-    dependency.gabe_identity_id.outputs.id,
-    dependency.israel_identity_id.outputs.id,
+#    dependency.<user>_identity_id.outputs.id,
   ]
 }

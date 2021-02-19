@@ -12,21 +12,21 @@ include {
 dependency cam_identity_id {
   config_path = "../../users/cam"
   mock_outputs = {
-    id = "abc-123"
+    member_entity_ids = "abc-123"
   }
 }
 
 dependency gabe_identity_id {
   config_path = "../../users/gabe"
   mock_outputs = {
-    id = "abc-123"
+    member_entity_ids = "abc-123"
   }
 }
 
 dependency israel_identity_id {
   config_path = "../../users/israel"
   mock_outputs = {
-    id = "abc-123"
+    member_entity_ids = "abc-123"
   }
 }
 
