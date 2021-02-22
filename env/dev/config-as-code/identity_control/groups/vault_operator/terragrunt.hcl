@@ -9,22 +9,8 @@
 #   path = find_in_parent_folders()
 # }
 
-# dependency cam_identity_id {
-#   config_path = "../../users/cam"
-#   mock_outputs = {
-#     id = "abc-123"
-#   }
-# }
-
-# dependency gabe_identity_id {
-#   config_path = "../../users/gabe"
-#   mock_outputs = {
-#     id = "abc-123"
-#   }
-# }
-
-# dependency israel_identity_id {
-#   config_path = "../../users/israel"
+# dependency <user>_identity_id {
+#   config_path = "../../users/<user>"
 #   mock_outputs = {
 #     id = "abc-123"
 #   }
@@ -35,8 +21,6 @@
 #   name                = "vault_operator"
 #   policies            = ["vault-operator"]
 #   member_entity_ids   = [
-#     dependency.cam_identity_id.outputs.id,
-#     dependency.gabe_identity_id.outputs.id,
-#     dependency.israel_identity_id.outputs.id,
+#     dependency.<user>_identity_id.outputs.id,
 #   ]
 # }
