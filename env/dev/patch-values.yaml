@@ -159,3 +159,4 @@ spec:
       serviceType: "ClusterIP"
       serviceNodePort: null
       externalPort: 8200
+      
