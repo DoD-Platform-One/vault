@@ -38,7 +38,7 @@ spec:
       enabled: false
       # Use the Vault K8s Image https://github.com/hashicorp/vault-k8s/
       image:
-        repository: "hashicorp/vault-k8s"
+        repository: "registry1.dsop.io/ironbank/hashicorp/vault/vault-k8s"
         tag:  v0.6.0
 
       resources:
@@ -53,9 +53,12 @@ spec:
 
       dataStorage:
         enabled: true
-        size: 10Gi
+        size: 50Gi
         mountPath: "/vault/data"
         accessMode: ReadWriteOnce
+
+      auditStorage:
+        enabled: true
 
       postStart:
       - /bin/sh
@@ -67,40 +70,12 @@ spec:
       annotations:  
         traffic.sidecar.istio.io/excludeInboundPorts: "8201"
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
+
       image:
-        # Enterprise Image - license required
-        # repository: "hashicorp/vault-enterprise"
-        # tag: "1.6.1_ent"
-        # tag: "1.5.0_ent" 
+        repository: "registry1.dsop.io/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
+        tag: "1.6.1"
 
-        # Non-Enterprise - no license required
-        # repository: "hashicorp/vault"
-        # tag: "1.6.1"
-
-        # Custom IB UBI8 Vault + HSM - in house 
-        # repository: registry.il2.dso.mil/cnap/vault-dev/hsm-vault
-        # tag: latest
-        # pullPolicy: Always
-
-        # Custom IB UBI8 Vault + HSM - hashi offical
-        repository: "registry1.dsop.io/ironbank/hashicorp/turbog"
-        tag: "1.6.1-hsm-cloudhsm"
-        # tag: "1.5.0_ent" 
-        pullPolicy: Always
-        
-      # The Following Resource Limits are in line with node requirements in the
-      # Vault Reference Architecture for a Small Cluster
-
-      # PROD
-      # resources:
-      #   requests:
-      #     memory: 8Gi
-      #     cpu: 2000m
-      #   limits:
-      #     memory: 16Gi
-      #     cpu: 2000m
-
-      # DEV
+      # PROD Specs
       resources:
         requests:
           memory: 2Gi
@@ -112,26 +87,20 @@ spec:
       ingress:
         enabled: false
 
-      # For HA configuration and because we need to manually init the vault,
-      # we need to define custom readiness/liveness Probe settings
+      # probes disabled due to fails
       readinessProbe:
         enabled: false
-        path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" #orinal setting
+        path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" 
       livenessProbe:
         enabled: false
         path: "/v1/sys/health?standbyok=true"
         initialDelaySeconds: 60
 
-      # extraEnvironmentVars is a list of extra enviroment variables to set with the stateful set. These could be
-      # used to include variables required for auto-unseal.
       extraEnvironmentVars:
-        VAULT_API_ADDR: http://vault-internal:8200
+        #VAULT_API_ADDR: http://vault-internal:8200
+        VAULT_API_ADDR: https://cubbyhole.cnap.dso.mil  #istio GW
+        #VAULT_CLUSTER_ADDR: http://vault-internal:8201
         VAULT_ADDR:  http://127.0.0.1:8200
-
-      # This configures the Vault Statefulset to create a PVC for audit logs.
-      # See https://www.vaultproject.io/docs/audit/index.html to know more
-      auditStorage:
-        enabled: true
 
       # Run Vault in "HA" mode.
       ha:
@@ -191,4 +160,3 @@ spec:
       serviceType: "ClusterIP"
       serviceNodePort: null
       externalPort: 8200
-      
