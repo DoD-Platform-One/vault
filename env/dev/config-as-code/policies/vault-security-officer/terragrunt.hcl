@@ -1,3 +1,26 @@
+# Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
+# working directory, into a temporary folder, and execute your Terraform commands in that folder.
+terraform {
+  source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/policy?ref=vault"
+}
+
+# Include all settings from the root terragrunt.hcl file
+include {
+  path = find_in_parent_folders()
+}
+
+dependency group_id {
+  config_path = "../../identity_control/groups/security_officer"
+  mock_outputs = {
+    group_id = "abc-123"
+  }
+}
+
+# These are the variables we have to pass in to use the module specified in the terragrunt configuration above
+inputs = {
+  name   = "vault-security officer"
+  policy = <<EOT
+
 # Permissions for cluster-level security concerns of the Vault service, such
 # as managing administrative auth methods and associated policies, 
 # revoking/generating `root` tokens, and rekey/rotate operations.
@@ -18,7 +41,7 @@ path "identity/group/name/security_officer" {
   capabilities = ["read"]
 }
 
-path "identity/group/id/${group_id}" {
+path "identity/group/id/${dependency.group_id.outputs.group_id}" {
   capabilities = ["read"]
 }
 
@@ -32,22 +55,35 @@ path "sys/audit/*" {
 # -----------------------------------------------------------------------------
 # Deny use of root endpoints on PKI mounts
 # -----------------------------------------------------------------------------
-path "/pki/int/p1_int/root/*" {
+path "/pki/p1_int_ca/int/root/*" {
   capabilities = ["deny"]
 }
 
-path "/pki/il2/p1_int/root/*" {
+path "/pki/il2/int/root/*" {
   capabilities = ["deny"]
 }
 
-path "/pki/il4/p1_int/root/*" {
+path "/pki/il4/int/root/*" {
   capabilities = ["deny"]
 }
 
-path "/pki/il5/p1_int/root/*" {
+path "/pki/il5/int/root/*" {
   capabilities = ["deny"]
 }
-#will be added in phase 2
+
+path "/pki/il2/npe/root/*" {
+  capabilities = ["deny"]
+}
+
+path "/pki/il4/npe/root/*" {
+  capabilities = ["deny"]
+}
+
+path "/pki/il5/npe/root/*" {
+  capabilities = ["deny"]
+}
+
+#future policy considerations
 # -----------------------------------------------------------------------------
 # Deny all on any secret mounted under the secrets/ path, e.g.:
 #   secrets/kv/app-1
@@ -112,37 +148,50 @@ path "sys/internal/ui/mounts" {
   capabilities = ["read"]
 }
 
-path "/pki/int/*" {
+path "/pki/p1_int_ca/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/pki/il5/*" {
+path "/pki/il5/int/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/pki/il4/*" {
+path "/pki/il4/int/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/pki/il2/*" {
+path "/pki/il2/int/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/kv/int/*" {
+path "/pki/il5/npe/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/kv/il5/*" {
+path "/pki/il4/npe/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/kv/il4/*" {
+path "/pki/il2/npe/*" {
   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
 }
 
-path "/kv/il2/*" {
-  capabilities = ["create", "read", "update", "delete", "list", "sudo"]
-}
+#future use case
+# path "/kv/int/*" {
+#   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# }
+
+# path "/kv/il5/*" {
+#   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# }
+
+# path "/kv/il4/*" {
+#   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# }
+
+# path "/kv/il2/*" {
+#   capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+# }
 
 
 # -----------------------------------------------------------------------------
@@ -175,4 +224,7 @@ path "sys/health" {
 # -----------------------------------------------------------------------------
 path "sys/capabilities" {
   capabilities = ["update"]
+}
+
+EOT
 }
