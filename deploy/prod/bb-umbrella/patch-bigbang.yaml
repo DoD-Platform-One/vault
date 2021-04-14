@@ -69,13 +69,13 @@ spec:
       rollback:
         timeout: 5m
         cleanupOnFail: true
- 
+
 # ----------------------------------------------------------------------------------------------------------------------
 # Istio
 #
     istio:
       enabled: true
-      values: 
+      values:
         kiali:
           dashboard:
             auth:
@@ -104,7 +104,7 @@ spec:
 # OPA Gatekeeper
 #
     gatekeeper:
-      enabled: true   
+      enabled: true
       values:
         replicas: 1
 
@@ -115,7 +115,7 @@ spec:
 #
     logging:
       enabled: false
-      values: 
+      values:
       # Directly modify chart values for dev workloads
         elasticsearch:
           master:
@@ -142,7 +142,7 @@ spec:
     fluentbit:
       enabled: false
       values: {}
- 
+
 # ----------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -157,8 +157,8 @@ spec:
 # Twistlock
 #
     twistlock:
-      enabled: true
-      values: 
+      enabled: false
+      values:
         console:
           persistence:
             size: 5Gi
@@ -175,4 +175,62 @@ spec:
       authservice:
         enabled: false
         values: {}
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Minio Operator and Instance
+#
+      minioOperator:
+        # -- Toggle deployment of minio operator and instance.
+        enabled: false
+        values: {}
+
+      minio:
+        enabled: false
+        values: {}
+
+      gitlab:
+        # -- Toggle deployment of Gitlab.
+        enabled: false
+        values: {}
+
+      gitlabRunner:
+        # -- Toggle deployment of Gitlab Runner.
+        enabled: false
+        values: {}
+
+      sonarqube:
+        # -- Toggle deployment of SonarQube.
+        enabled: false
+        values: {}
+
+      haproxy:
+        # -- Toggle deployment of HAProxy.
+        enabled: false
+        values: {}
+
+      anchore:
+        # -- Toggle deployment of Anchore.
+        enabled: false
+        values: {}
+
+  # ----------------------------------------------------------------------------------------------------------------------
+  # Mattermost Operator and Instance
+  #
+      mattermostoperator:
+        enabled: false
+        values: {}
+
+      mattermost:
+        # -- Toggle deployment of Mattermost.
+        enabled: false
+        values: {}
+
+      velero:
+        # -- Toggle deployment of Velero.
+        enabled: false
+        values:
+          # Requires at least one plugin installed. Current supported values: aws, azure
+          plugins: []
+
+
 # ----------------------------------------------------------------------------------------------------------------------
