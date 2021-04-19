@@ -10,7 +10,7 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: ./
+      chart: chart
       sourceRef:
         kind: GitRepository
         name: vault
@@ -97,8 +97,8 @@ spec:
         initialDelaySeconds: 60
 
       extraEnvironmentVars:
-        VAULT_API_ADDR: http://vault-internal:8200
-        #VAULT_API_ADDR: https://cubbyhole.cnap.dso.mil  #istio GW
+        #VAULT_API_ADDR: http://vault-internal:8200
+        VAULT_API_ADDR: https://cubbyhole.staging.dso.mil  #istio GW
         #VAULT_CLUSTER_ADDR: http://vault-internal:8201
         VAULT_ADDR:  http://127.0.0.1:8200
 

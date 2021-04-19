@@ -5,11 +5,12 @@ metadata:
   name: vault
   namespace: vault
 spec:
-  ignore: |
+  interval: 1m
+  ignore:
     # exclude file extensions
     /**/*.md
     /**/*.sh
   interval: 10m
-  url: https://github.com/hashicorp/vault-helm
+  url: https://code.il5.dso.mil/cnap/cubbyhole.git
   ref:
-    tag: v0.11.0
+    branch: staging
