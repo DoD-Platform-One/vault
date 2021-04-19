@@ -10,7 +10,7 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: chart
+      chart: ./
       sourceRef:
         kind: GitRepository
         name: vault
@@ -38,8 +38,8 @@ spec:
       enabled: false
       # Use the Vault K8s Image https://github.com/hashicorp/vault-k8s/
       image:
-        repository: "registry1.dsop.io/ironbank/hashicorp/vault/vault-k8s"
-        tag:  v0.6.0
+        repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
+        tag:  v0.9.0
 
       resources:
           requests:
@@ -72,7 +72,7 @@ spec:
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
 
       image:
-        repository: "registry1.dsop.io/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
+        repository: "registry1.dso.mil/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
         tag: "1.6.1"
 
       # PROD Specs
@@ -97,8 +97,8 @@ spec:
         initialDelaySeconds: 60
 
       extraEnvironmentVars:
-        #VAULT_API_ADDR: http://vault-internal:8200
-        VAULT_API_ADDR: https://cubbyhole.cnap.dso.mil  #istio GW
+        VAULT_API_ADDR: http://vault-internal:8200
+        #VAULT_API_ADDR: https://cubbyhole.cnap.dso.mil  #istio GW
         #VAULT_CLUSTER_ADDR: http://vault-internal:8201
         VAULT_ADDR:  http://127.0.0.1:8200
 
@@ -144,7 +144,7 @@ spec:
             
             seal "awskms" {
                 region     = "us-gov-west-1"
-                kms_key_id = "70f2ec40-3185-4dd7-a8d7-ebfc0aa56d04"
+                kms_key_id = "c5566fd8-0942-4463-99d3-c06ac4bdb2da"
                 endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
             }
 

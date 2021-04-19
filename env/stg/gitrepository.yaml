@@ -12,4 +12,4 @@ spec:
   interval: 10m
   url: https://github.com/hashicorp/vault-helm
   ref:
-    tag: v0.8.0
+    tag: v0.11.0
