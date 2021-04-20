@@ -53,6 +53,8 @@ template logic.
 {{- define "vault.mode" -}}
   {{- if .Values.injector.externalVaultAddr -}}
     {{- $_ := set . "mode" "external" -}}
+  {{- else if ne (.Values.server.enabled | toString) "true" -}}
+    {{- $_ := set . "mode" "external" -}}
   {{- else if eq (.Values.server.dev.enabled | toString) "true" -}}
     {{- $_ := set . "mode" "dev" -}}
   {{- else if eq (.Values.server.ha.enabled | toString) "true" -}}
@@ -104,18 +106,6 @@ extra volumes the user may have specified (such as a secret with TLS).
 {{- end -}}
 
 {{/*
-Set's a command to override the entrypoint defined in the image
-so we can make the user experience nicer.  This works in with
-"vault.args" to specify what commands /bin/sh should run.
-*/}}
-{{- define "vault.command" -}}
-  {{ if or (eq .mode "standalone") (eq .mode "ha") }}
-          - "/bin/sh"
-          - "-ec"
-  {{ end }}
-{{- end -}}
-
-{{/*
 Set's the args for custom command to render the Vault configuration
 file with IP addresses to make the out of box experience easier
 for users looking to use this chart with Consul Helm.
@@ -131,6 +121,9 @@ for users looking to use this chart with Consul Helm.
             [ -n "${TRANSIT_ADDR}" ] && sed -Ei "s|TRANSIT_ADDR|${TRANSIT_ADDR?}|g" /tmp/storageconfig.hcl;
             [ -n "${RAFT_ADDR}" ] && sed -Ei "s|RAFT_ADDR|${RAFT_ADDR?}|g" /tmp/storageconfig.hcl;
             /usr/local/bin/docker-entrypoint.sh vault server -config=/tmp/storageconfig.hcl {{ .Values.server.extraArgs }}
+   {{ else if eq .mode "dev" }}
+          - |
+            /usr/local/bin/docker-entrypoint.sh vault server -dev {{ .Values.server.extraArgs }}
   {{ end }}
 {{- end -}}
 
@@ -140,7 +133,9 @@ Set's additional environment variables based on the mode.
 {{- define "vault.envs" -}}
   {{ if eq .mode "dev" }}
             - name: VAULT_DEV_ROOT_TOKEN_ID
-              value: "root"
+              value: {{ .Values.server.dev.devRootToken }}
+            - name: VAULT_DEV_LISTEN_ADDRESS
+              value: "[::]:8200"
   {{ end }}
 {{- end -}}
 
@@ -299,6 +294,21 @@ Sets extra injector pod annotations
         {{- else }}
           {{- toYaml .Values.injector.annotations | nindent 8 }}
         {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Sets extra injector service annotations
+*/}}
+{{- define "injector.service.annotations" -}}
+  {{- if .Values.injector.service.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.injector.service.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.injector.service.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.injector.service.annotations | nindent 4 }}
+    {{- end }}
   {{- end }}
 {{- end -}}
 
@@ -465,6 +475,61 @@ Sets the container resources if the user has set any.
           resources:
 {{ toYaml .Values.injector.resources | indent 12}}
   {{ end }}
+{{- end -}}
+
+{{/*
+Sets the container resources if the user has set any.
+*/}}
+{{- define "csi.resources" -}}
+  {{- if .Values.csi.resources -}}
+          resources:
+{{ toYaml .Values.csi.resources | indent 12}}
+  {{ end }}
+{{- end -}}
+
+{{/*
+Sets extra CSI daemonset annotations
+*/}}
+{{- define "csi.daemonSet.annotations" -}}
+  {{- if .Values.csi.daemonSet.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.csi.daemonSet.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.csi.daemonSet.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.csi.daemonSet.annotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Sets extra CSI provider pod annotations
+*/}}
+{{- define "csi.pod.annotations" -}}
+  {{- if .Values.csi.pod.annotations }}
+      annotations:
+      {{- $tp := typeOf .Values.csi.pod.annotations }}
+      {{- if eq $tp "string" }}
+        {{- tpl .Values.csi.pod.annotations . | nindent 8 }}
+      {{- else }}
+        {{- toYaml .Values.csi.pod.annotations | nindent 8 }}
+      {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Sets extra CSI service account annotations
+*/}}
+{{- define "csi.serviceAccount.annotations" -}}
+  {{- if .Values.csi.serviceAccount.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.csi.serviceAccount.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.csi.serviceAccount.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.csi.serviceAccount.annotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
 {{- end -}}
 
 {{/*
