@@ -105,7 +105,7 @@ spec:
       # Run Vault in "HA" mode.
       ha:
         enabled: true
-        replicas: 5
+        replicas: 3
 
         raft:
           enabled: true
@@ -133,12 +133,6 @@ spec:
                 }
                 retry_join {
                   leader_api_addr = "http://vault-2.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-3.vault-internal:8200"
-                }
-                retry_join {
-                  leader_api_addr = "http://vault-4.vault-internal:8200"
                 }
             }
             
