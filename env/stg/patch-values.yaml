@@ -76,8 +76,9 @@ spec:
         tag: "1.6.1"
 
       tolerations:
-      - key: node-role.kubernetes.io/master
+      - key: SelinuxOnly
         effect: NoSchedule
+        value: "true"
      
       # PROD Specs
       resources:
