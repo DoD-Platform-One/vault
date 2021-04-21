@@ -75,11 +75,6 @@ spec:
         repository: "registry1.dso.mil/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
         tag: "1.6.1"
 
-      tolerations:
-      - key: SelinuxOnly
-        effect: NoSchedule
-        value: "true"
-     
       # PROD Specs
       resources:
         requests:
