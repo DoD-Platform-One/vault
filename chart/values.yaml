@@ -796,15 +796,7 @@ csi:
 # istio:
 #   # Toggle istio integration
 #   enabled: false
-#   gitlab:
-#     # Toggle vs creation
-#     enabled: true
-#     annotations: {}
-#     labels: {}
-#     gateways:
-#       - istio-system/main
-#     # hosts:  no hosts key supported here because the upstream chart has global.hosts
-#   registry:
+#   vault:
 #     # Toggle vs creation
 #     enabled: true
 #     annotations: {}
