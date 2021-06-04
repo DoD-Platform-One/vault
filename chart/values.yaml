@@ -1,3 +1,20 @@
+hostname: bigbang.dev
+
+istio:
+  # Toggle istio integration
+  enabled: true
+  vault:
+    # Toggle vs creation
+    enabled: true
+    annotations: {}
+    labels: {}
+    gateways:
+      - istio-system/main
+    hosts:
+      - vault.{{ .Values.hostname }}
+
+# Upstream Vault Values
+# -----------------------
 # Available parameters and their default values for the Vault chart.
 
 global:
@@ -781,25 +798,4 @@ csi:
   debug: false
 
   # Pass arbitrary additional arguments to vault-csi-provider.
-  extraArgs: []# Big Bang Additions
-
-# BIG BANG EXTRA SHIT???
-
-# hostname: bigbang.dev
-istio:
-  # Toggle istio integration
-  enabled: true
-  vault:
-    # Toggle vs creation
-    enabled: true
-    annotations: {}
-    labels: {}
-    gateways:
-      - istio-system/main
-    # hosts:  no hosts key supported here because the upstream chart has global.hosts
-
-# networkPolicies:
-#   enabled: false
-#   ingressLabels:
-#     app: istio-ingressgateway
-#     istio: ingressgateway
+  extraArgs: []
