@@ -613,12 +613,6 @@ server:
             retry_join {
               leader_api_addr = "http://vault-2.vault-internal:8200"
             }
-            retry_join {
-              leader_api_addr = "http://vault-3.vault-internal:8200"
-            }
-            retry_join {
-              leader_api_addr = "http://vault-4.vault-internal:8200"
-            }
         }
         # For autounseal fill in the following block and see https://www.vaultproject.io/docs/configuration/seal/awskms
         # seal "awskms" {
@@ -626,7 +620,6 @@ server:
         #     kms_key_id = "" #
         #     endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
         # }
-
 
         service_registration "kubernetes" {}
 
@@ -640,6 +633,7 @@ server:
     # such as passwords should be either mounted through extraSecretEnvironmentVars
     # or through a Kube secret.  For more information see:
     # https://www.vaultproject.io/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
+    config: |
 
 
     # A disruption budget limits the number of pods of a replicated application
