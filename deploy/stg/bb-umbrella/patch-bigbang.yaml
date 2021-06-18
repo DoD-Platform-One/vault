@@ -16,14 +16,6 @@ spec:
         name: bigbang
   test:
     enable: false
-  install:
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
-      remediateLastFailure: true
-    cleanupOnFail: true
   rollback:
     timeout: 10m
     cleanupOnFail: false
@@ -59,17 +51,6 @@ spec:
         username: ""
         password: ""
 
-    # Flux reconciliation parameters
-    flux:
-      interval: 1m
-      install:
-        retries: 3
-      upgrade:
-        retries: 3
-      rollback:
-        timeout: 5m
-        cleanupOnFail: true
- 
 # ----------------------------------------------------------------------------------------------------------------------
 # Istio
 #

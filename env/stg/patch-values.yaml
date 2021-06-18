@@ -14,14 +14,6 @@ spec:
       sourceRef:
         kind: GitRepository
         name: vault
-  install:
-    remediation:
-      retries: 5
-  upgrade:
-    remediation:
-      retries: 5
-      remediateLastFailure: true
-    cleanupOnFail: true
   rollback:
     timeout: 10m
     cleanupOnFail: false
@@ -35,11 +27,10 @@ spec:
         - name: private-registry
         
     injector:
-      enabled: false
-      # Use the Vault K8s Image https://github.com/hashicorp/vault-k8s/
+      enabled: true
       image:
         repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-        tag:  v0.9.0
+        tag:  "0.10.2"
 
       resources:
           requests:
@@ -72,8 +63,8 @@ spec:
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
 
       image:
-        repository: "registry1.dso.mil/ironbank/hashicorp/secure-secrets-management/vault-enterprise"
-        tag: "1.6.1"
+        repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
+        tag: "1.7.3"
 
       # PROD Specs
       resources:
