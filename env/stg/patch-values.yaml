@@ -132,12 +132,12 @@ spec:
                 kms_key_id = "c5566fd8-0942-4463-99d3-c06ac4bdb2da"
                 endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
             }
-
-            entropy "seal" {
-              mode = "augmentation"
-            }
+#commented out to test open source vault in cnap-stg
+            # entropy "seal" {
+            #   mode = "augmentation"
+            # }
             
-            service_registration "kubernetes" {}
+            # service_registration "kubernetes" {}
 
     # Vault UI
     ui:
