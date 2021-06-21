@@ -5,7 +5,7 @@ metadata:
   namespace: vault
 spec:
   gateways:
-  - main.istio-system.svc.cluster.local
+  - istio-system/main
   hosts:
   - cubbyhole.staging.dso.mil
   http:
