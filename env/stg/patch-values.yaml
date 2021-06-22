@@ -50,11 +50,11 @@ spec:
 
       auditStorage:
         enabled: true
-
-      postStart:
-      - /bin/sh
-      - -c
-      - 'echo "libevmulti_init: Ready " > /tmp/cloudhsm_client_start.log'
+#needed for aws cloudhsm
+      # postStart:
+      # - /bin/sh
+      # - -c
+      # - 'echo "libevmulti_init: Ready " > /tmp/cloudhsm_client_start.log'
 
       # the following annotations are requied to exempt traffic from the raft protocol 
       # otherwise, envoy side-car will interrupt raft-member to raft-member tls communications
@@ -79,13 +79,13 @@ spec:
         enabled: false
 
       # probes disabled due to fails
-      readinessProbe:
-        enabled: false
-        path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" 
-      livenessProbe:
-        enabled: false
-        path: "/v1/sys/health?standbyok=true"
-        initialDelaySeconds: 60
+      # readinessProbe:
+      #   enabled: false
+      #   path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" 
+      # livenessProbe:
+      #   enabled: false
+      #   path: "/v1/sys/health?standbyok=true"
+      #   initialDelaySeconds: 60
 
       extraEnvironmentVars:
         VAULT_API_ADDR: https://cubbyhole.staging.dso.mil:8200
