@@ -1,0 +1,5 @@
+resources:
+  - namespace.yaml
+  - gitrepository.yaml
+  - patch-bigbang.yaml
+  - secrets.yaml

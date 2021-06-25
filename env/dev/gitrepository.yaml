@@ -1,0 +1,15 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.sh
+  interval: 10m
+  url: https://github.com/hashicorp/vault-helm
+  ref:
+    tag: v0.8.0

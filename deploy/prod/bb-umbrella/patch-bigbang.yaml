@@ -1,0 +1,236 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bigbang
+  namespace: bigbang
+spec:
+  targetNamespace: bigbang
+  releaseName: bigbang
+  interval: 10m
+  chart:
+    spec:
+      chart: chart
+      sourceRef:
+        kind: GitRepository
+        name: bigbang
+  test:
+    enable: false
+  install:
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+      remediateLastFailure: true
+    cleanupOnFail: true
+  rollback:
+    timeout: 10m
+    cleanupOnFail: false
+  valuesFrom:
+    - name: bigbang-values
+      kind: ConfigMap
+      optional: true
+    - name: bigbang-values
+      kind: Secret
+      optional: true
+  # HARDCODED VALUES
+  values:
+    hostname: cnap.dso.mil
+
+    # Toggle sourcing from external repos
+    # TODO: All this does right now is toggle GitRepositories, it is _not_ fully functional
+    offline: false
+
+    # Registry credentials to use from pulling images from private registry, will create an appropriate imagePullSecret in all relevant namespaces
+    # ** MOVED TO secrets/private-registry.yaml **
+
+    # Global git values
+    # Order of precedence is:
+    #   1. existingSecret
+    #   2. http credentials (username/password)
+    git:
+      # Existing secret to use for git credentials, must be in the appropriate format: https://toolkit.fluxcd.io/components/source/gitrepositories/#https-authentication
+      existingSecret: ""
+
+      # Chart created secrets with user defined values
+      credentials:
+        # HTTP git credentials, both username and password must be provided
+        username: ""
+        password: ""
+
+    # Flux reconciliation parameters
+    flux:
+      interval: 1m
+      install:
+        retries: 3
+      upgrade:
+        retries: 3
+      rollback:
+        timeout: 5m
+        cleanupOnFail: true
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Istio
+#
+    istio:
+      enabled: true
+      values:
+        kiali:
+          dashboard:
+            auth:
+              strategy: "anonymous"     # Turn off authentication for kiali dashboard
+        ingressGateway:
+          serviceAnnotations:
+            # Ensure mission apps have internal load balancer only
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+            # Enable cross zone load balancing
+            service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+
+    istiooperator:
+      enabled: true
+      values: {}
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Cluster Auditor
+#
+    clusterAuditor:
+      enabled: false
+      values: {}
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# OPA Gatekeeper
+#
+    gatekeeper:
+      enabled: true
+      values:
+        replicas: 1
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Logging
+#
+    logging:
+      enabled: false
+      values:
+      # Directly modify chart values for dev workloads
+        elasticsearch:
+          master:
+            count: 1
+            persistence:
+              size: 5Gi
+            resources:
+              limits:
+                cpu: 2
+                memory: 4Gi
+          data:
+            count: 1
+            persistence:
+              size: 5Gi
+            resources:
+              limits:
+                cpu: 2
+                memory: 4Gi
+
+    eckoperator:
+      enabled: false
+      values: {}
+
+    fluentbit:
+      enabled: false
+      values: {}
+
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Monitoring
+#
+    monitoring:
+      enabled: true
+      values: {}
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Twistlock
+#
+    twistlock:
+      enabled: false
+      values:
+        console:
+          persistence:
+            size: 5Gi
+# ----------------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Add-Ons
+#
+    addons:
+      argocd:
+        enabled: false
+        values: {}
+
+      authservice:
+        enabled: false
+        values: {}
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Minio Operator and Instance
+#
+      minioOperator:
+        # -- Toggle deployment of minio operator and instance.
+        enabled: false
+        values: {}
+
+      minio:
+        enabled: false
+        values: {}
+
+      gitlab:
+        # -- Toggle deployment of Gitlab.
+        enabled: false
+        values: {}
+
+      gitlabRunner:
+        # -- Toggle deployment of Gitlab Runner.
+        enabled: false
+        values: {}
+
+      sonarqube:
+        # -- Toggle deployment of SonarQube.
+        enabled: false
+        values: {}
+
+      haproxy:
+        # -- Toggle deployment of HAProxy.
+        enabled: false
+        values: {}
+
+      anchore:
+        # -- Toggle deployment of Anchore.
+        enabled: false
+        values: {}
+
+  # ----------------------------------------------------------------------------------------------------------------------
+  # Mattermost Operator and Instance
+  #
+      mattermostoperator:
+        enabled: false
+        values: {}
+
+      mattermost:
+        # -- Toggle deployment of Mattermost.
+        enabled: false
+        values: {}
+
+      velero:
+        # -- Toggle deployment of Velero.
+        enabled: false
+        values:
+          # Requires at least one plugin installed. Current supported values: aws, azure
+          plugins: []
+
+
+# ----------------------------------------------------------------------------------------------------------------------

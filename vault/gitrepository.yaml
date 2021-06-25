@@ -1,0 +1,17 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  interval: 1m
+  ignore: |
+    # exclude file extensions
+    /**/*.md
+    /**/*.sh
+  url: https://repo1.something
+  ref:
+    branch: staging
+  secretRef:
+    name: repo-credential

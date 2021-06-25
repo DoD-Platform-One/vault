@@ -438,6 +438,17 @@
                 "enabled": {
                     "type": "boolean"
                 },
+                "enterpriseLicense": {
+                    "type": "object",
+                    "properties": {
+                        "secretKey": {
+                            "type": "string"
+                        },
+                        "secretName": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "extraArgs": {
                     "type": "string"
                 },
@@ -484,7 +495,10 @@
                                     "type": "boolean"
                                 },
                                 "maxUnavailable": {
-                                    "type": "null"
+                                    "type": [
+                                        "null",
+                                        "integer"
+                                    ]
                                 }
                             }
                         },
@@ -775,7 +789,10 @@
                     "type": "boolean"
                 },
                 "serviceNodePort": {
-                    "type": "null"
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
                 },
                 "serviceType": {
                     "type": "string"

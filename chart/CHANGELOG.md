@@ -1,5 +1,17 @@
 ## Unreleased
 
+## 0.13.0 (June 17th, 2021)
+
+Improvements:
+* Added a helm test for vault server [GH-531](https://github.com/hashicorp/vault-helm/pull/531)
+* Added server.enterpriseLicense option [GH-547](https://github.com/hashicorp/vault-helm/pull/547)
+* Added OpenShift overrides [GH-549](https://github.com/hashicorp/vault-helm/pull/549)
+
+Bugs:
+* Fix ui.serviceNodePort schema [GH-537](https://github.com/hashicorp/vault-helm/pull/537)
+* Fix server.ha.disruptionBudget.maxUnavailable schema [GH-535](https://github.com/hashicorp/vault-helm/pull/535)
+* Added webhook-certs volume mount to sidecar injector [GH-545](https://github.com/hashicorp/vault-helm/pull/545)
+
 ## 0.12.0 (May 25th, 2021)
 
 Features:

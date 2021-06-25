@@ -1,0 +1,20 @@
+creation_rules:
+    # when adding DNSSEC keys use this file to encrypt and decrypt key data 
+    - path_regex: .*/deploy/dev/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:235856440647:key/d9a89538-efd8-4ade-a5b6-dcc99c8ec471' # dev
+      encrypted_regex: '^(data|stringData)$' 
+    - path_regex: .*/env/dev/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:235856440647:key/d9a89538-efd8-4ade-a5b6-dcc99c8ec471' # dev
+      encrypted_regex: '^(data|stringData)$'
+    - path_regex: .*/deploy/prod/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:526389029191:key/7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7' # prod
+      encrypted_regex: '^(data|stringData)$' 
+    - path_regex: .*/env/prod/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:526389029191:key/7b3e43e2-f412-4d00-a20f-cce3b4a7c3b7' # prod
+      encrypted_regex: '^(data|stringData)$'
+    - path_regex: .*/deploy/stg/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:235668867212:key/c5566fd8-0942-4463-99d3-c06ac4bdb2da' # stg
+      encrypted_regex: '^(data|stringData)$' 
+    - path_regex: .*/env/stg/*
+      kms: 'arn:aws-us-gov:kms:us-gov-west-1:235668867212:key/c5566fd8-0942-4463-99d3-c06ac4bdb2da' # stg
+      encrypted_regex: '^(data|stringData)$'
