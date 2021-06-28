@@ -1,7 +1,7 @@
 # # Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
 # # working directory, into a temporary folder, and execute your Terraform commands in that folder.
 # terraform {
-#   source = "git::https://repo1.dso.mil/platform-one/private/cnap/terraform-modules.git//vault/identity_group"
+#   source = "../../../terraform-modules/identity_group"
 # }
 
 # # Include all settings from the root terragrunt.hcl file
