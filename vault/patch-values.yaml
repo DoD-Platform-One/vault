@@ -27,7 +27,7 @@ spec:
         - name: private-registry
 
     injector:
-      enabled: true
+      enabled: false
       image:
         repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
         tag:  "0.10.2"
@@ -91,7 +91,7 @@ spec:
       #   initialDelaySeconds: 60
 
       extraEnvironmentVars:
-        VAULT_API_ADDR: https://vault.bb.dev:8200
+        VAULT_API_ADDR: https://cubbyhole.staging.dso.mil:8200
         VAULT_ADDR:  http://127.0.0.1:8200
         # there is now a vault-ui addr that can be added
       # Run Vault in "HA" mode.
@@ -130,7 +130,7 @@ spec:
 
             seal "awskms" {
                 region     = "us-gov-west-1"
-                kms_key_id = "blah"
+                kms_key_id = "c5566fd8-0942-4463-99d3-c06ac4bdb2da"
                 endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
             }
             entropy "seal" {
