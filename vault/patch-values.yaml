@@ -25,9 +25,9 @@ spec:
       tlsDisable: true
       imagePullSecrets:
         - name: private-registry
-        
+
     injector:
-      enabled: true
+      enabled: false
       image:
         repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
         tag:  "0.10.2"
@@ -39,9 +39,12 @@ spec:
           limits:
             memory: 256Mi
             cpu: 250m
-       
-    server:
 
+
+
+    server:
+      readinessProbe:
+        enabled: false
       dataStorage:
         enabled: true
         size: 50Gi
@@ -56,9 +59,9 @@ spec:
       # - -c
       # - 'echo "libevmulti_init: Ready " > /tmp/cloudhsm_client_start.log'
 
-      # the following annotations are requied to exempt traffic from the raft protocol 
+      # the following annotations are requied to exempt traffic from the raft protocol
       # otherwise, envoy side-car will interrupt raft-member to raft-member tls communications
-      annotations:  
+      annotations:
         traffic.sidecar.istio.io/excludeInboundPorts: "8201"
         traffic.sidecar.istio.io/excludeOutboundPorts: "8201"
 
@@ -81,14 +84,14 @@ spec:
       # probes disabled due to fails
       # readinessProbe:
       #   enabled: false
-      #   path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204" 
+      #   path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
       # livenessProbe:
       #   enabled: false
       #   path: "/v1/sys/health?standbyok=true"
       #   initialDelaySeconds: 60
 
       extraEnvironmentVars:
-        VAULT_API_ADDR: https://vault.bb.dev:8200
+        VAULT_API_ADDR: https://cubbyhole.staging.dso.mil:8200
         VAULT_ADDR:  http://127.0.0.1:8200
         # there is now a vault-ui addr that can be added
       # Run Vault in "HA" mode.
@@ -100,7 +103,7 @@ spec:
           enabled: true
           setNodeId: true
 
-          # config file encrypted in vault-values.enc.yaml 
+          # config file encrypted in vault-values.enc.yaml
           config: |
             ui = true
             disable_mlock = true
@@ -108,10 +111,10 @@ spec:
 
             listener "tcp" {
                 address = "[::]:8200"
-                cluster_address = "[::]:8201" 
+                cluster_address = "[::]:8201"
                 tls_disable = 1
             }
-            
+
             storage "raft" {
                 path = "/vault/data"
                 retry_join {
@@ -124,16 +127,16 @@ spec:
                   leader_api_addr = "http://vault-2.vault-internal:8200"
                 }
             }
-            
+
             seal "awskms" {
                 region     = "us-gov-west-1"
-                kms_key_id = "blah"
+                kms_key_id = "c5566fd8-0942-4463-99d3-c06ac4bdb2da"
                 endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
             }
             entropy "seal" {
               mode = "augmentation"
             }
-            
+
             service_registration "kubernetes" {}
 
     # Vault UI

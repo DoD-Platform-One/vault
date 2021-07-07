@@ -8,7 +8,7 @@ commonLabels:
 namespace: vault
 
 bases:
-  - ../../base
+  - ../base
   - ./secrets
 
 resources:
@@ -17,4 +17,3 @@ resources:
 
 patchesStrategicMerge:
   - patch-values.yaml
-  
