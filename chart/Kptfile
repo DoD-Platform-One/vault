@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: vault-helm
+upstream:
+  type: git
+  git:
+    commit: c820454dd5ac0d0e73968e24eddd053fb07b105f
+    repo: https://github.com/hashicorp/vault-helm
+    directory: /
+    ref: master
