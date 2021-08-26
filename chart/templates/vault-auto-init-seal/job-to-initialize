@@ -1,8 +1,8 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: vault-init-job
-  namespace: default
+  name: {{ template "vault.fullname" . }}-job-init
+  namespace: {{ .Release.Namespace }}
 spec:
   template:
     spec:
@@ -19,7 +19,7 @@ spec:
       volumes:
       - name: vault-keys
         persistentVolumeClaim:
-          claimName: data-vault-tools-0 
+          claimName: {{ template "vault.fullname" . }}-token-claim
       - name: vault-data
         configMap:
           name: vault-init-cm
