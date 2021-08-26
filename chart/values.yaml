@@ -38,7 +38,7 @@ injector:
   leaderElector:
     enabled: true
     image:
-      repository: "gcr.io/google_containers/leader-elector"
+      repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector"
       tag: "0.4"
     ttl: 60s
 
@@ -52,16 +52,16 @@ injector:
 
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
-    repository: "hashicorp/vault-k8s"
-    tag: "0.12.0"
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
+    tag: "0.11.0"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
   # containers.  This should be set to the official Vault image.  Vault 1.3.1+ is
   # required.
   agentImage:
-    repository: "hashicorp/vault"
-    tag: "1.8.1"
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
+    tag: "1.7.3"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -230,8 +230,8 @@ server:
   # By default no direct resource request is made.
 
   image:
-    repository: "hashicorp/vault"
-    tag: "1.8.1"
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault:1.7.3"
+    tag: "1.7.3"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -732,7 +732,7 @@ csi:
   enabled: false
 
   image:
-    repository: "hashicorp/vault-csi-provider"
+    repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"
     tag: "0.3.0"
     pullPolicy: IfNotPresent
 
