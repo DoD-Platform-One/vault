@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vault-init-job
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+      - name: vault-init-job
+        image:  registry1.dso.mil/ironbank/hashicorp/vault/vault:1.7.3
+        command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
+        volumeMounts:
+        - name: vault-keys
+          mountPath: "/vault/data"
+        - name: vault-data
+          mountPath: "/vault/data/init"
+      restartPolicy: OnFailure
+      volumes:
+      - name: vault-keys
+        persistentVolumeClaim:
+          claimName: data-vault-tools-0 
+      - name: vault-data
+        configMap:
+          name: vault-init-cm
+  backoffLimit: 10
+  activeDeadlineSeconds: 360

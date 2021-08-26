@@ -230,7 +230,7 @@ server:
   # By default no direct resource request is made.
 
   image:
-    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault:1.7.3"
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
     tag: "1.7.3"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
@@ -567,10 +567,7 @@ server:
         cluster_address = "[::]:8201"
       }
 
-      seal "awskms" {
-        region     = "us-gov-west-1"
-        kms_key_id = "f131e19c-a804-4185-b75f-69b995eb9e6a"
-      }
+      
       storage "file" {
         path = "/vault/data"
       }
