@@ -1,6 +1,6 @@
 describe("Verify vault ui is accessible", function () {
   it("Access Vault", function () {
-    cy.visit(Cypress.env('https://vault.bigbang.devl'))
+    cy.visit(Cypress.env('https://vault.bigbang.dev'))
   
   });
   //Going any further leads to Kibana not loading properly, probably because of browser within Cypress, shows "Kibana did not load properly. Check the server output for more information"
