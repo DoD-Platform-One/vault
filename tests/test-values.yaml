@@ -5,7 +5,7 @@ global:
 hostname: bigbang.dev
 istio: 
   vault:
-    enabled: true
+    enabled: false
   gateways: 
     - istio-system/main
   hosts: 
