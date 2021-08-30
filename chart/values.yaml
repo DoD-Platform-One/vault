@@ -816,4 +816,12 @@ csi:
   # Pass arbitrary additional arguments to vault-csi-provider.
   extraArgs: []
 hostname: bigbang.dev
-
+istio:
+  # Toggle istio interaction
+  vault:
+    enabled: false
+  
+    gateways:
+      - istio-system/main
+    hosts:
+      - vault.{{ .Values.hostname }}

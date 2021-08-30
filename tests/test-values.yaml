@@ -4,7 +4,8 @@ global:
     - private-registry
 hostname: bigbang.dev
 istio: 
-  enabled: false
+  vault:
+    enabled: false
   gateways: 
     - istio-system/main
   hosts: 
