@@ -1,0 +1,31 @@
+{{- if and .Values.istio.vault.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vault
+  namespace: {{ .Release.Namespace }}
+  {{- if .Values.istio.kibana.labels }}
+  labels:
+{{ toYaml .Values.istio.kibana.labels | indent 4 }}
+  {{- end }}
+  {{- if .Values.istio.kibana.annotations }}
+  annotations:
+{{ toYaml .Values.istio.kibana.annotations | indent 4 }}
+  {{- end }}
+
+spec:
+  gateways:
+  {{- range .Values.istio.vault.gateways }}
+    - {{ . }}
+  {{- end }}
+  hosts: 
+  {{- range .Values.istio.vault.hosts }}
+    - {{ tpl . $}}
+  {{- end }}
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8200
+            host: {{ .Release.Name }}
+{{- end }}
