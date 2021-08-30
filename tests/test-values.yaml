@@ -1,3 +1,12 @@
 global:  
   imagePullSecrets:
     - private-registry
+hostname: bigbang.dev
+istio:
+  # Toggle istio interaction
+  enabled: false
+  
+    gateways:
+      - istio-system/main
+    hosts:
+      - vault.{{ .Values.hostname }}    
