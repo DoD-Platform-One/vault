@@ -1,16 +1,16 @@
-{{- if and .Values.istio.vault.enabled -}}
+{{- if  .Values.istio.vault.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: vault
   namespace: {{ .Release.Namespace }}
-  {{- if .Values.istio.kibana.labels }}
+  {{- if .Values.istio.vault.labels }}
   labels:
-{{ toYaml .Values.istio.kibana.labels | indent 4 }}
+{{ toYaml .Values.istio.vault.labels | indent 4 }}
   {{- end }}
-  {{- if .Values.istio.kibana.annotations }}
+  {{- if .Values.istio.vault.annotations }}
   annotations:
-{{ toYaml .Values.istio.kibana.annotations | indent 4 }}
+{{ toYaml .Values.istio.vault.annotations | indent 4 }}
   {{- end }}
 
 spec:
