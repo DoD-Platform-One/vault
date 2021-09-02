@@ -9,7 +9,10 @@ data:
     
     VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
     MASTER_KEYS=$(vault operator init -address="http://vault-0.vault-internal:8200" -recovery-shares=5 -recovery-threshold=3 | grep -e "2:\|3:\|4:\|Token:" |  awk '{print $4}')
+    echo $MASTER_KEYS
     KEY_NUMBER=1
+    TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
+    echo "token is $TOKEN"
     for key in $MASTER_KEYS
     do
         echo '{"key": "'"$key"'"}' > "$KEYS_FOLDER/master_keys_$KEY_NUMBER.json"
@@ -17,6 +20,24 @@ data:
         KEY_NUMBER=$(( $KEY_NUMBER + 1 ))
     done
     export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
+     $(vault login -address="http://vault-0.vault-internal:8200" $TOKEN)
+     echo "logged in"
+     mkdir  tmp
+
+     cat  >>  /tmp/policy.hcl  << EOF
+      path "sys/metrics*"
+          {
+           capabilities = ["read", "list"]
+          }
+     EOF
+    $(pwd)
+    $(ls)
+    $ echo $(ls -la)
+    $(vault policy write prometheus  /tmp/policy.hcl)
+    $(vault write auth/kubernetes/role/prometheus \ 
+     bound_service_account_names=prometheus\
+      bound_service_account_namespaces=monitoring \
+      policies=prometheus ttl=1h)
 kind: ConfigMap
 metadata:
   name: vault-init-cm

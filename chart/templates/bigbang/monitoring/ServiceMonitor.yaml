@@ -1,0 +1,23 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vault
+  namespace: {{ .Release.Namespace }}
+  labels:
+    release: monitoring
+spec:
+  selector:
+    matchLabels:
+      name: vault
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - interval: 30s
+      path: /v1/sys/metrics
+      port: 8200
+      scheme: http
+     bearerTokenFile: '/etc/prometheus/config_out/.vault-token'
+  jobLabel: vault-metrics
+{{- end }}

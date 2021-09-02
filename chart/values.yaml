@@ -821,6 +821,8 @@ csi:
   # Pass arbitrary additional arguments to vault-csi-provider.
   extraArgs: []
 hostname: bigbang.dev
+monitoring:
+  enabled: false
 istio:
   # Toggle istio interaction
   vault:
