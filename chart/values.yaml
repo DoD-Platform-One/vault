@@ -567,10 +567,22 @@ server:
         cluster_address = "[::]:8201"
       }
 
-      
+      {{- if .Values.server.dataStorage.enabled }}
       storage "file" {
         path = "/vault/data"
       }
+      {{- end }}
+
+      {{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}
+      storage "s3" {
+          access_key = "{{ .Values.minio.accessKey }}"
+          secret_key = "{{ .Values.minio.secretKey }}"
+          endpoint = "{{ .Values.minio.endpoint }}"
+          bucket = "{{ .Values.minio.bucketName }}"
+          s3_force_path_style = "true"
+          disable_ssl = "{{ .Values.minio.disableSSL }}"
+      }
+      {{- end }}
 
       # Example configuration for using auto-unseal, using Google Cloud KMS. The
       # GKMS keys must already exist, and the cluster must have a service account
@@ -832,3 +844,11 @@ istio:
       - istio-system/main
     hosts:
       - vault.{{ .Values.hostname }}
+
+minio:
+  enabled: false
+  # disableSSL: false
+  # endpoint: minio.minio.svc.cluster.local
+  # accessKey: ""
+  # secretKey: ""
+  # bucketName: vault-data

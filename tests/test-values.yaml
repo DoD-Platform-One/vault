@@ -10,3 +10,14 @@ istio:
     - istio-system/main
   hosts: 
     - "vault.{{ .Values.hostname }}"
+server:
+  dataStorage:
+    enabled: false
+
+minio:
+  enabled: true
+  disableSSL: true
+  endpoint: minio.minio.svc.cluster.local
+  accessKey: "minio"
+  secretKey: "minio123"
+  bucketName: vault-data
