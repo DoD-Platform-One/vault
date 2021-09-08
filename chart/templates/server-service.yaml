@@ -34,6 +34,9 @@ spec:
     - name: https-internal
       port: 8201
       targetPort: 8201
+    - name: metricsl
+      port: 9125
+      targetPort: 9125
   selector:
     app.kubernetes.io/name: {{ include "vault.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
