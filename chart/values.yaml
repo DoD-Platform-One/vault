@@ -637,7 +637,8 @@ server:
         }
 
         telemetry {
-          statsd_address: localhost:9125
+          prometheus_retention_time = "24h"
+          disable_hostname = true
         }
 
         service_registration "kubernetes" {}

@@ -18,7 +18,7 @@ spec:
       path: /v1/sys/metrics
       port: '8200'
       scheme: http
-      bearerTokenFile: 's.wnkKo1LQRB2AtxPkE12RvlPL'
+      bearerTokenSecret:  vault-token
 
       
 
