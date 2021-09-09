@@ -17,7 +17,7 @@ spec:
         - name: vault-data
           mountPath: "/vault/data/init"
       restartPolicy: OnFailure
-      serviceAccount: vault
+      serviceAccount: vault-root-token-secret
       volumes:
       - name: vault-keys
         persistentVolumeClaim:
