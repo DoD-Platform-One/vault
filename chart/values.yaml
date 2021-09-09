@@ -833,7 +833,7 @@ csi:
   extraArgs: []
 hostname: bigbang.dev
 monitoring:
-  enabled: false
+  enabled: true
 istio:
   # Toggle istio interaction
   vault:

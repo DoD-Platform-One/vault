@@ -12,7 +12,7 @@ data:
     echo $MASTER_KEYS
     KEY_NUMBER=1
     export TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
-    echo $TOKEN > /vault/data/key.txt
+    
     for key in $MASTER_KEYS
     do
         
@@ -23,23 +23,15 @@ data:
     export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
     export VAULT_ADDR=http://vault-0.vault-internal:8200
     echo "output for masterkeys"
+    cd /home/vault
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    mkdir -p ~/.local/bin/kubectl
+    mv ./kubectl ~/.local/bin/kubectl
+    export PATH=~/.local/bin/kubectl
+    echo $TOKEN
+    kubectl create secret generic vault-token --from-literal=key="$TOKEN"
     
-    echo $(cat /vault/data/key.txt)
-     $(vault login  $TOKEN)
-     echo "logged in"
-   
-     export  VAULT_ADDR=http://vault-0.vault-internal:8200
-     echo $VAULT_ADDR
-     sleep 10
-     touch  /home/vault/policy.hcl 
-     echo 'path "sys/metrics*"'  >> /home/vault/policy.hcl 
-    echo  '{ capabilities = ["read", "list"] }'  >> /home/vault/policy.hcl 
-     cat  /home/vault/policy.hcl 
-      
-    $(vault  policy write prometheus /home/vault/policy.hcl)
-    echo "vault policy written"
-    $(vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h)
-    echp "vault monitoring auth enabled"
 kind: ConfigMap
 metadata:
   name: vault-init-cm

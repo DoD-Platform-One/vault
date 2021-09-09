@@ -16,8 +16,11 @@ spec:
   endpoints:
     - interval: 30s
       path: /v1/sys/metrics
-      port: 8200
+      port: '8200'
       scheme: http
-     bearerTokenFile: '/etc/prometheus/config_out/.vault-token'
+      bearerTokenFile: 's.wnkKo1LQRB2AtxPkE12RvlPL'
+
+      
+
   jobLabel: vault-metrics
 {{- end }}
