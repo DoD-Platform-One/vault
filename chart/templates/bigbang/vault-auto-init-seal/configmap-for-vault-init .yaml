@@ -13,6 +13,7 @@ data:
     KEY_NUMBER=1
     export TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
     
+    
     for key in $MASTER_KEYS
     do
         
@@ -23,6 +24,16 @@ data:
     export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
     export VAULT_ADDR=http://vault-0.vault-internal:8200
     echo "output for masterkeys"
+    $(vault login $TOKEN)
+    $(vault auth enable kubernetes)
+    touch  /home/vault/policy.hcl 
+    echo 'path "sys/metrics*"'  >> /home/vault/policy.hcl 
+    echo  '{ capabilities = ["read", "list"] }'  >> /home/vault/policy.hcl 
+     cat  /home/vault/policy.hcl 
+     $(vault  policy write prometheus /home/vault/policy.hcl)
+    echo "vault policy written"
+    $(vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h)
+    echo "vault monitoring auth enabled"
     cd /home/vault
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
