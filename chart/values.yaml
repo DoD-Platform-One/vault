@@ -635,13 +635,13 @@ server:
         storage "raft" {
           path = "/vault/data"
         }
-       listener "tcp" {
+       
          telemetry {
           prometheus_retention_time = "24h"
           disable_hostname = true
           unauthenticated_metrics_access = true
           }
-        }
+      
 
         service_registration "kubernetes" {}
 
