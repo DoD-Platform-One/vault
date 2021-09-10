@@ -23,9 +23,12 @@ spec:
     - {{ tpl . $}}
   {{- end }}
   http:
+  - match:
+    - uri:
+        prefix: "/v1/sys/storage"  
     - route:
         - destination:
             port:
               number: 8200
-            host: {{ .Release.Name }}
+            host: {{ .Release.Name }}.vault.svc.cluster.local
 {{- end }}
