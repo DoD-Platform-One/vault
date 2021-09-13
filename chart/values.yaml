@@ -247,14 +247,14 @@ server:
   # Supported log formats include: standard, json
   logFormat: ""
 
-  resources: {}
-  # resources:
-  #   requests:
-  #     memory: 256Mi
-  #     cpu: 250m
-  #   limits:
-  #     memory: 256Mi
-  #     cpu: 250m
+  #resources: {}
+   resources:
+     requests:
+       memory: 256Mi
+       cpu: 250m
+     limits:
+       memory: 256Mi
+       cpu: 250m
 
   # Ingress allows ingress services to be created to allow external access
   # from Kubernetes to access Vault pods.
@@ -768,14 +768,14 @@ csi:
   #   mountPath: "/vault/tls"
   #   readOnly: true
 
-  resources: {}
-  # resources:
-  #   requests:
-  #     cpu: 50m
-  #     memory: 128Mi
-  #   limits:
-  #     cpu: 50m
-  #     memory: 128Mi
+  #resources: {}
+   resources:
+     requests:
+       cpu: 50m
+       memory: 128Mi
+     limits:
+       cpu: 50m
+       memory: 128Mi
 
   # Settings for the daemonSet used to run the provider.
   daemonSet:
