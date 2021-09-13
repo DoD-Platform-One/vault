@@ -141,14 +141,14 @@ injector:
     certName: tls.crt
     keyName: tls.key
 
-  resources: {}
-  # resources:
-  #   requests:
-  #     memory: 256Mi
-  #     cpu: 250m
-  #   limits:
-  #     memory: 256Mi
-  #     cpu: 250m
+  #resources: {}
+   resources:
+     requests:
+       memory: 256Mi
+       cpu: 250m
+     limits:
+       memory: 256Mi
+       cpu: 250m
 
   # extraEnvironmentVars is a list of extra environment variables to set in the
   # injector deployment.
