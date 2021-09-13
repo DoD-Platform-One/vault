@@ -1,0 +1,88 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "vault.fullname" . }}-root-token-secret
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-root-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts/token
+  - secrets
+  verbs:
+  - create
+  - get
+  - watch
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "vault.fullname" . }}-root-token-secret
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-root-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "vault.fullname" . }}-root-token-secret
+subjects:
+- kind: ServiceAccount
+  name: {{ template "vault.fullname" . }}-root-token-secret
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "vault.fullname" . }}-root-token-secret
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-root-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  {{- if .Values.autoInit.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "vault.fullname" . }}-job-init
+  namespace: {{ .Release.Namespace }}
+  annotations:
+     "helm.sh/hook": "post-install"
+    
+spec:
+  template:
+    metadata:
+      name: {{ template "vault.fullname" . }}-job-init
+      annotations:
+        sidecar.istio.io/inject: 'false'
+      labels:
+        app.kubernetes.io/name:  vault-job-init
+
+    spec:
+      {{- include "imagePullSecrets" . | nindent 6 }}
+      containers:
+      - name: vault-init-job
+        image:  {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
+        command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
+        volumeMounts:
+        - name: vault-keys
+          mountPath: "/vault/data"
+        - name: vault-data
+          mountPath: "/vault/data/init"
+      restartPolicy: OnFailure
+      serviceAccount: vault-root-token-secret
+      volumes:
+      - name: vault-keys
+        persistentVolumeClaim:
+          claimName: {{ template "vault.fullname" . }}-token-claim
+      - name: vault-data
+        configMap:
+          name: vault-init-cm
+  backoffLimit: 10
+  activeDeadlineSeconds: 360
+  {{- end }}

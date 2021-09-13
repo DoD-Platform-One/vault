@@ -837,6 +837,8 @@ csi:
 hostname: bigbang.dev
 monitoring:
   enabled: false
+autoInit:
+  enabled: true
 istio:
   # Toggle istio interaction
   vault:
