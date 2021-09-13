@@ -15,7 +15,7 @@ server:
     enabled: false
 
 minio:
-  enabled: true
+  enabled: false
   disableSSL: true
   endpoint: minio.minio.svc.cluster.local
   accessKey: "minio"
