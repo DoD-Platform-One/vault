@@ -12,7 +12,7 @@ istio:
     - "vault.{{ .Values.hostname }}"
 server:
   dataStorage:
-    enabled: false
+    enabled: true
 
 minio:
   enabled: false
