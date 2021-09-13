@@ -248,7 +248,7 @@ server:
   logFormat: ""
 
   #resources: {}
-   resources:
+  resources:
      requests:
        memory: 256Mi
        cpu: 250m
@@ -769,7 +769,7 @@ csi:
   #   readOnly: true
 
   #resources: {}
-   resources:
+  resources:
      requests:
        cpu: 50m
        memory: 128Mi
