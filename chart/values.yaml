@@ -142,7 +142,7 @@ injector:
     keyName: tls.key
 
   #resources: {}
-   resources:
+  resources:
      requests:
        memory: 256Mi
        cpu: 250m
