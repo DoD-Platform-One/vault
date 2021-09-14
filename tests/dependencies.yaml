@@ -1,6 +1,8 @@
 minio-operator:
   git: "https://repo1.dso.mil/platform-one/big-bang/apps/application-utilities/minio-operator.git"
   namespace: "minio-operator"
+  condition: minio.enabled
 minio:
   git: "https://repo1.dso.mil/platform-one/big-bang/apps/application-utilities/minio.git"
   namespace: "minio"
+  condition: minio.enabled
