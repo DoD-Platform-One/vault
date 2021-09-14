@@ -1,0 +1,23 @@
+--- 
+global: 
+  imagePullSecrets: 
+    - private-registry
+hostname: bigbang.dev
+istio: 
+  vault:
+    enabled: false
+  gateways: 
+    - istio-system/main
+  hosts: 
+    - "vault.{{ .Values.hostname }}"
+server:
+  dataStorage:
+    enabled: true
+
+minio:
+  enabled: false
+  disableSSL: true
+  endpoint: minio.minio.svc.cluster.local
+  accessKey: "minio"
+  secretKey: "minio123"
+  bucketName: vault-data
