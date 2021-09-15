@@ -52,9 +52,7 @@ kind: Job
 metadata:
   name: {{ template "vault.fullname" . }}-job-init
   namespace: {{ .Release.Namespace }}
-  annotations:
-     "helm.sh/hook": "post-install"
-    
+  
 spec:
   template:
     metadata:

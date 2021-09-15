@@ -4,7 +4,7 @@ data:
     #!/bin/sh
     ## Use following container vault:1.4.0
     ## Make sure folder name is not ending with /
-    sleep 20
+    sleep 30
     KEYS_FOLDER="/vault/data"
     
     VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
