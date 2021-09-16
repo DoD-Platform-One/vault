@@ -570,8 +570,14 @@ server:
         cluster_address = "[::]:8201"
       }
 
+       telemetry {
+          prometheus_retention_time = "24h"
+          disable_hostname = true
+          unauthenticated_metrics_access = true
+          }
+     
       {{- if .Values.server.dataStorage.enabled }}
-      storage "file" {
+      storage "raft" {
         path = "/vault/data"
       }
       {{- end }}
@@ -839,7 +845,7 @@ csi:
   extraArgs: []
 hostname: bigbang.dev
 monitoring:
-  enabled: false
+  enabled: true
 autoInit:
   enabled: true
 istio:

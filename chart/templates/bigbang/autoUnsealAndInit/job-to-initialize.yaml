@@ -52,7 +52,7 @@ kind: Job
 metadata:
   name: {{ template "vault.fullname" . }}-job-init
   namespace: {{ .Release.Namespace }}
-  
+    
 spec:
   template:
     metadata:

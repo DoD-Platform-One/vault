@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: vault
+  name: vault-servicemonitor
   namespace: {{ .Release.Namespace }}
   labels:
     release: monitoring
@@ -16,8 +16,11 @@ spec:
   endpoints:
     - interval: 30s
       path: /v1/sys/metrics
+      params:
+        format: 
+          - prometheus
       port: '8200'
       scheme: http
-      bearerTokenSecret:  vault-token
+      
   jobLabel: vault-metrics
 {{- end }}
