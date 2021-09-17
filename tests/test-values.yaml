@@ -3,6 +3,8 @@ global:
   imagePullSecrets: 
     - private-registry
 hostname: bigbang.dev
+monitoring:
+  enabled: false
 istio: 
   vault:
     enabled: false
