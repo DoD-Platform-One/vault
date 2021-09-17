@@ -1,0 +1,6 @@
+dependencies:
+- name: minio-instance
+  repository: file://./deps/minio
+  version: 4.2.3-bb.1
+digest: sha256:b483750fbaa4fbc17e8032f991dbe961b9bcf2db35f47aad933393894922f208
+generated: "2021-09-17T11:24:28.331911-04:00"
