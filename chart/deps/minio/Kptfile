@@ -1,0 +1,11 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: minio
+upstream:
+  type: git
+  git:
+    commit: 0484d3143db454b4d769ac8e501aac748b09c1d7
+    repo: https://repo1.dso.mil/platform-one/big-bang/apps/application-utilities/minio
+    directory: /chart
+    ref: 4.2.3-bb.1

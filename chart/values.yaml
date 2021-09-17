@@ -846,6 +846,7 @@ csi:
 hostname: bigbang.dev
 monitoring:
   enabled: true
+  namespace: monitoring
 autoInit:
   enabled: true
 istio:

@@ -21,6 +21,9 @@ spec:
           - prometheus
       port: '8200'
       scheme: http
-      
+      tlsConfig:
+        insecureSkipVerify: true 
+      bearerTokenSecret:
+        name: vault-token
   jobLabel: vault-metrics
 {{- end }}
