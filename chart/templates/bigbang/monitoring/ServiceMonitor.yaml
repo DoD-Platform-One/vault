@@ -23,7 +23,8 @@ spec:
       scheme: http
       tlsConfig:
         insecureSkipVerify: true 
-      bearerTokenSecret:
-        name: vault-token
+      bearerTokenSecret: 
+         name: vault-token
+         key: data
   jobLabel: vault-metrics
 {{- end }}

@@ -32,6 +32,7 @@ data:
      cat  /home/vault/policy.hcl 
      $(vault  policy write prometheus /home/vault/policy.hcl)
     echo "vault policy written"
+    
     $(vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h)
     echo "vault monitoring auth enabled"
     cd /home/vault
