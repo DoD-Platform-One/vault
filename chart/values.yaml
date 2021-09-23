@@ -455,7 +455,7 @@ server:
            -  169.254.169.254/32
       ports:
       -  protocol: TCP
-         port: 1502
+         port: 15021
       
 
   # Priority class for server pods
