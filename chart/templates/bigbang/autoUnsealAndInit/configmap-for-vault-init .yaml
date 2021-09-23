@@ -12,8 +12,8 @@ data:
     echo $status
     if [[ $status  == "ERROR" ]]
     then
-    echo "waiting for 90 seconds"
-    sleep 90
+    echo "waiting for 180 seconds"
+    sleep 180
     fi
 
     #VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
