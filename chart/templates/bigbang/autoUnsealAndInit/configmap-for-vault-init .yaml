@@ -8,6 +8,12 @@ data:
     KEYS_FOLDER="/vault/data"
     VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.vault-internal:8200/v1/sys/unseal
     VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.vault-internal:8200
+    status=`curl $VAULT_ADDR  -k -s -f -o /dev/null && echo "SUCCESS" || echo "ERROR"`
+    if [[ $status  == "ERROR" ]]
+    then
+    sleep 60
+    fi
+
     #VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
     MASTER_KEYS=$(vault operator init -address=$VAULT_ADDR  -recovery-shares=5 -recovery-threshold=3 | grep -e "2:\|3:\|4:\|Token:" |  awk '{print $4}')
     echo $MASTER_KEYS
