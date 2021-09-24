@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: vault-servicemonitor
-  {{- with .Values.serviceMonitor.namespace }}
+  {{- with .Values.monitoring.namespace }}
   namespace: {{ . }}
   {{- end }}
   labels:
