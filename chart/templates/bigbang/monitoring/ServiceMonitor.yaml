@@ -7,7 +7,9 @@ metadata:
   namespace: {{ . }}
   {{- end }}
   labels:
-    release: monitoring
+    app.kubernetes.io/name: {{ include "vault.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   selector:
     matchLabels:
