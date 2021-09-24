@@ -1,16 +1,21 @@
 {{- if .Values.monitoring.enabled }}
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: {{ include "vault.fullname" . }}
-  labels:
-    app.kubernetes.io/name: {{ include "vault.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: {{ include "vault.fullname" . }}
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+   name: {{ include "vault.fullname" . }}
+    namespace: {{ .Release.Name }}
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: {{ include "vault.fullname" . }}
+  subjects:
+  - kind: ServiceAccount
+    name: monitoring-monitoring-kube-prometheus
+    namespace: monitoring
+kind: RoleBindingList
+
 {{- end }}
 
 
