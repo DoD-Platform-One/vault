@@ -25,10 +25,11 @@ spec:
   http:
   - match:
     - uri:
-        prefix: "/v1/sys/storage"  
-    - route:
-        - destination:
-            port:
-              number: 8200
-            host: {{ .Release.Name }}.vault.svc.cluster.local
+        prefix: "/v1/sys/storage"  #totes not cool
+        prefix: "/v1/sys/metrics"  
+    route:
+    - destination:
+        host: {{ .Release.Name }}.vault.svc.cluster.local
+        port:
+          number: 8200
 {{- end }}
