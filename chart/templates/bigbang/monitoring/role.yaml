@@ -3,6 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: {{ include "vault.fullname" . }}
+  namespace: {{ .Release.Name }}
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

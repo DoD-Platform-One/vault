@@ -5,7 +5,7 @@ items:
   kind: RoleBinding
   metadata:
     name: {{ include "vault.fullname" . }}
-    namespace: {{ .Release.Name }}
+    namespace:  {{ .Release.Namespace }}
   roleRef:
     apiGroup: rbac.authorization.k8s.io
     kind: Role
