@@ -3,13 +3,15 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: vault-servicemonitor
-  namespace: {{ .Release.Namespace }}
+  {{- with .Values.serviceMonitor.namespace }}
+  namespace: {{ . }}
+  {{- end }}
   labels:
     release: monitoring
 spec:
   selector:
     matchLabels:
-      name: vault
+      app.kubernetes.io/name: {{ template "vault.name" . }}
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
