@@ -3,9 +3,8 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: vault-servicemonitor
-  {{- with .Values.monitoring.namespace }}
-  namespace: {{ . }}
-  {{- end }}
+  namespace: {{ .Release.Namespace }}
+
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
