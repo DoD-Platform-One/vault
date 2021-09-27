@@ -845,14 +845,14 @@ csi:
   extraArgs: []
 hostname: bigbang.dev
 monitoring:
-  enabled: true
+  enabled: false
   namespace: monitoring
 autoInit:
   enabled: true
 istio:
   # Toggle istio interaction
   vault:
-    enabled: false
+    enabled: true
   
     gateways:
       - istio-system/main
