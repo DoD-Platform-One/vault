@@ -1,0 +1,27 @@
+
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/sh
+    ## Use following container vault:1.4.0
+    ## Make sure folder name is not ending with /
+    sleep 30
+    touch  /home/vault/vault-agent.hcl
+    echo 'pid_file="/home/vault/profile"'  >>   /home/vault/vault-agent.hcl
+    cat  /home/vault/vault-agent.hcl
+    echo 'auto_auth{ method "kubernetes"{ mount-path = "auth/kubernetes" config = { role = "prometheus"} }  sink "file" {  config = {  config= { path = "/home/vault/config-out/.vault-token"}}}'  >>  /home/vault/vault-agent.hcl
+    cat  /home/vault/vault-agent.hcl
+    cd /home/vault
+    cd /home/vault
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    mkdir -p ~/.local/bin/kubectl
+    mv ./kubectl ~/.local/bin/kubectl
+    export PATH=~/.local/bin/kubectl
+    echo "kubectl installled"
+    
+    kubectl create configmap -n monitoring vault-agent-config  --from-file=/home/vault/vault-agent.hcl
+    echo "configmap created"
+kind: ConfigMap
+metadata:
+  name: vault-monitoring

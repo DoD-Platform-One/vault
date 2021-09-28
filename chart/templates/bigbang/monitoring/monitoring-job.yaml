@@ -1,0 +1,88 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ template "vault.fullname" . }}-token-secret
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts/token
+  - secrets
+  verbs:
+  - create
+  - get
+  - watch
+  - list
+--- 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ template "vault.fullname" . }}-token-secret
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ template "vault.fullname" . }}-token-secret
+subjects:
+- kind: ServiceAccount
+  name: {{ template "vault.fullname" . }}-token-secret
+  namespace: monitoring
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ template "vault.fullname" . }}-token-secret
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}-token-secret
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "vault.fullname" . }}-monitoring
+  namespace: monitoring
+    
+spec:
+  template:
+    metadata:
+      name: {{ template "vault.fullname" . }}-monitoring
+      annotations:
+        sidecar.istio.io/inject: 'false'
+        "helm.sh/hook": post-install
+      labels:
+        app.kubernetes.io/name:  vault-job-init
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+     
+
+    spec:
+      {{- include "imagePullSecrets" . | nindent 6 }}
+      containers:
+      - name: vault-monitoring
+        image:  {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
+        command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
+        volumeMounts:
+       
+        - name: vault-data
+          mountPath: "/vault/data/init"
+      restartPolicy: OnFailure
+      serviceAccount: {{ template "vault.fullname" . }}-token-secret
+      volumes:
+      
+      - name: vault-data
+        configMap:
+          name: vault-monitoring
+  backoffLimit: 10
+  activeDeadlineSeconds: 500
+  {{- end }}
