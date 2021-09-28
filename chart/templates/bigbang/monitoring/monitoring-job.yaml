@@ -13,6 +13,8 @@ rules:
   resources:
   - serviceaccounts/token
   - secrets
+  - configmaps
+  - configmap
   verbs:
   - create
   - get
