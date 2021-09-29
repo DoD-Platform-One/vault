@@ -25,4 +25,4 @@ data:
 kind: ConfigMap
 metadata:
   name: vault-monitoring
-  namespace: monitoring
+  namespace: {{.Values.monitoring.enabled}}
