@@ -845,7 +845,7 @@ csi:
   extraArgs: []
 hostname: bigbang.dev
 monitoring:
-  enabled: true
+  enabled: false
   namespace: monitoring
 networkPolicies:
   enabled: true
