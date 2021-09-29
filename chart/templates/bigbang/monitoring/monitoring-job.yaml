@@ -36,13 +36,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "vault.fullname" . }}-token-secret
-  namespace: monitoring
+  namespace: {{.Values.monitoring.namespace}}
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ template "vault.fullname" . }}-token-secret
-  namespace: monitoring
+  namespace: {{.Values.monitoring.namespace}}
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}-token-secret
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -53,7 +53,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ template "vault.fullname" . }}-monitoring
-  namespace: monitoring
+  namespace: {{.Values.monitoring.namespace}}
     
 spec:
   template:
