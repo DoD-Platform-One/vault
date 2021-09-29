@@ -857,13 +857,17 @@ autoInit:
   enabled: true
 istio:
   # Toggle istio interaction
-  vault:
+  enabled: true
+  console:
+    # Toggle vs creation
     enabled: true
-  
+    annotations: {}
+    labels: {}
     gateways:
       - istio-system/main
     hosts:
-      - vault.{{ .Values.hostname }}
+      -  vault.{{ .Values.hostname }}
+
 
 minio:
   enabled: false
