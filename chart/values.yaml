@@ -849,12 +849,12 @@ monitoring:
   namespace: monitoring
 networkPolicies:
   enabled: true
-  ingressLabels: 
-    app: istio-ingressgateway
-    istio: ingressgateway
-  # See `kubectl cluster-info` and then resolve to IP
-  controlPlaneCidr: 0.0.0.0/0
+  ingressLabels:
+    {{- $gateway := default "public" .Values.monitoring.ingress.gateway }}
+    {{- $default := dict "app" (dig "gateways" $gateway "ingressGateway" nil .Values.istio) "istio" nil }}
+    {{- toYaml (dig "values" "gateways" $gateway "selector" $default .Values.istio) | nindent 4 }}
 
+  
 autoInit:
   enabled: true
 istio:
