@@ -850,11 +850,9 @@ monitoring:
 networkPolicies:
   enabled: true
   ingressLabels:
-    {{- $gateway := default "public" .Values.monitoring.ingress.gateway }}
-    {{- $default := dict "app" (dig "gateways" $gateway "ingressGateway" nil .Values.istio) "istio" nil }}
-    {{- toYaml (dig "values" "gateways" $gateway "selector" $default .Values.istio) | nindent 4 }}
+    app: istio-ingressgateway
+    istio: ingressgateway
 
-  
 autoInit:
   enabled: true
 istio:
