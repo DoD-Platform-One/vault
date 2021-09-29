@@ -53,7 +53,7 @@ data:
     export PATH=~/.local/bin/kubectl
     echo $TOKEN
     kubectl create secret generic vault-token --from-literal=key="$TOKEN"
-    kubectl create secret generic vault-token  -n monitoring --from-literal=key="$TOKEN"
+   
     
 kind: ConfigMap
 metadata:
