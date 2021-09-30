@@ -11,11 +11,11 @@ metadata:
     app.kubernetes.io/component: vault
 spec:
   gateways:
-  {{- range .Values.istio.vault.gateways }}
+  {{- range .Values.istio.gateways }}
     - {{ . }}
   {{- end }}
   hosts:
-  {{- range .Values.istio.vault.hosts }}
+  {{- range .Values.istio.hosts }}
     - {{ tpl . $}}
   {{- end }}
   http:
