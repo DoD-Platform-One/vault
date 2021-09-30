@@ -858,7 +858,7 @@ autoInit:
 istio:
   # Toggle istio interaction
   vault:
-    enabled: true
+    enabled: false
   
     gateways:
       - istio-system/main
