@@ -857,7 +857,7 @@ autoInit:
   enabled: true
 istio:
   # Toggle istio interaction
-  enabled: true
+  enabled: false
   gateways:
   -  istio-system/main
   hosts:
