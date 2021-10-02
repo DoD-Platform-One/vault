@@ -34,7 +34,6 @@ spec:
     - name: https-internal
       port: 8201
       targetPort: 8201
-   
   selector:
     app.kubernetes.io/name: {{ include "vault.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
