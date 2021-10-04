@@ -848,7 +848,7 @@ monitoring:
   enabled: false
   namespace: monitoring
 networkPolicies:
-  enabled: true
+  enabled: false
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -858,10 +858,11 @@ autoInit:
 istio:
   # Toggle istio interaction
   enabled: false
-  gateways:
-  -  istio-system/main
-  hosts:
-  -  vault.{{ .Values.hostname }}
+  vault:
+    gateways:
+    -  istio-system/main
+    hosts:
+    -  vault.{{ .Values.hostname }}
 
 
 minio:
