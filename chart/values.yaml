@@ -843,7 +843,7 @@ csi:
 
   # Pass arbitrary additional arguments to vault-csi-provider.
   extraArgs: []
-hostname: bigbang.dev
+domain: bigbang.dev
 monitoring:
   enabled: false
   namespace: monitoring
@@ -862,7 +862,7 @@ istio:
     gateways:
     -  istio-system/main
     hosts:
-    -  vault.{{ .Values.hostname }}
+    -  vault.{{ .Values.domain }}
 
 
 minio:
