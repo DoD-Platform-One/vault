@@ -5,7 +5,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/part-of: vault
-    app.kubernetes.io/component: {{ .Values.server.name }}
 {{- end }}
 ---
 {{- include "gluon.tests.script-runner.overrides" (list . "vault-test.script-runner") -}}
@@ -15,5 +14,4 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     app.kubernetes.io/part-of: vault
-    app.kubernetes.io/component: {{ .Values.server.name }}
 {{- end }}
