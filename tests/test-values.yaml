@@ -22,4 +22,4 @@ bbtests:
   cypress:
     artifacts: true
     envs:
-      cypress_vault_url: "https://vault.vault.svc:8200/ui"
+      cypress_vault_url: "https://vault.vault.svc:8200"
