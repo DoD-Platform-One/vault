@@ -570,11 +570,11 @@ server:
         cluster_address = "[::]:8201"
       }
 
-       telemetry {
-          prometheus_retention_time = "24h"
-          disable_hostname = true
-          unauthenticated_metrics_access = true
-          }
+      telemetry {
+        prometheus_retention_time = "24h"
+        disable_hostname = true
+        unauthenticated_metrics_access = true
+      }
      
       {{- if .Values.server.dataStorage.enabled }}
       storage "raft" {
