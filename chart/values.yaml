@@ -231,7 +231,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.7.3"
+    tag: "1.8.3"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
