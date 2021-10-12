@@ -18,7 +18,7 @@ data:
 
     #VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
     MASTER_KEYS=$(vault operator init -address=$VAULT_ADDR  -recovery-shares=5 -recovery-threshold=3 | grep -e "2:\|3:\|4:\|Token:" |  awk '{print $4}')
-    echo $MASTER_KEYS
+   
     KEY_NUMBER=1
     export TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
     
@@ -33,7 +33,7 @@ data:
     export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
     #export VAULT_ADDR=http://vault-0.vault-internal:8200
     export VAULT_ADDR=$VAULT_ADDR
-    echo "output for masterkeys"
+  
     $(vault login $TOKEN)
     $(vault auth enable kubernetes)
     touch  /home/vault/policy.hcl 
@@ -51,7 +51,7 @@ data:
     mkdir -p ~/.local/bin/kubectl
     mv ./kubectl ~/.local/bin/kubectl
     export PATH=~/.local/bin/kubectl
-    echo $TOKEN
+   
     kubectl create secret generic vault-token --from-literal=key="$TOKEN"
    
     
