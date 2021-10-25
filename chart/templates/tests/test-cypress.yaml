@@ -1,0 +1,17 @@
+{{- include "gluon.tests.cypress-configmap.overrides" (list . "vault-test.cypress-configmap") }}
+{{- define "vault-test.cypress-configmap" }}
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: vault
+{{- end }}
+---
+{{- include "gluon.tests.cypress-runner.overrides" (list . "vault-test.cypress-runner") -}}
+{{- define "vault-test.cypress-runner" -}}
+metadata:
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: vault
+{{- end }}

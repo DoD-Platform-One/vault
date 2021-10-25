@@ -1,5 +1,0 @@
-resources:
-  - namespace.yaml
-  - gitrepository.yaml
-  - patch-fluentbit.yaml
-  # - ./secrets

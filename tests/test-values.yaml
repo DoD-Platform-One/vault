@@ -1,0 +1,25 @@
+global: 
+  imagePullSecrets: 
+    - private-registry
+monitoring:
+  enabled: false
+server:
+  dataStorage:
+    enabled: true
+networkPolicies:
+  enabled: true
+  controlPlaneCidr: 172.16.0.0/12
+minio:
+  enabled: false
+  disableSSL: true
+  endpoint: minio.minio.svc.cluster.local
+  accessKey: "minio"
+  secretKey: "minio123"
+  bucketName: vault-data
+
+bbtests:
+  enabled: true
+  cypress:
+    artifacts: true
+    envs:
+      cypress_vault_url: "http://vault.vault.svc:8200"

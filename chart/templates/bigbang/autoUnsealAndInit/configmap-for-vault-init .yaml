@@ -1,0 +1,60 @@
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/sh
+    ## Use following container vault:1.4.0
+    ## Make sure folder name is not ending with /
+    sleep 30
+    KEYS_FOLDER="/vault/data"
+    VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
+    VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200
+    status=`curl $VAULT_ADDR  -k -s -f -o /dev/null && echo "SUCCESS" || echo "ERROR"`
+    echo $status
+    if [[ $status  == "ERROR" ]]
+    then
+    echo "waiting for 180 seconds"
+    sleep 180
+    fi
+
+    #VAULT_ENDPOINT="http://vault-0.vault-internal:8200/v1/sys/unseal"
+    MASTER_KEYS=$(vault operator init -address=$VAULT_ADDR  -recovery-shares=5 -recovery-threshold=3 | grep -e "2:\|3:\|4:\|Token:" |  awk '{print $4}')
+   
+    KEY_NUMBER=1
+    export TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
+    
+    
+    for key in $MASTER_KEYS
+    do
+        
+        echo '{"key": "'"$key"'"}' > "$KEYS_FOLDER/master_keys_$KEY_NUMBER.json"
+        curl --request PUT --data @"$KEYS_FOLDER/master_keys_$KEY_NUMBER.json" "$VAULT_ENDPOINT"
+        KEY_NUMBER=$(( $KEY_NUMBER + 1 ))
+    done
+    export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
+    #export VAULT_ADDR=http://vault-0.vault-internal:8200
+    export VAULT_ADDR=$VAULT_ADDR
+  
+    $(vault login $TOKEN)
+    $(vault auth enable kubernetes)
+    touch  /home/vault/policy.hcl 
+    echo 'path "sys/metrics*"'  >> /home/vault/policy.hcl 
+    echo  '{ capabilities = ["read", "list"] }'  >> /home/vault/policy.hcl 
+     cat  /home/vault/policy.hcl 
+     $(vault  policy write prometheus /home/vault/policy.hcl)
+    echo "vault policy written"
+    
+    $(vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h)
+    echo "vault monitoring auth enabled"
+    cd /home/vault
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    mkdir -p ~/.local/bin/kubectl
+    mv ./kubectl ~/.local/bin/kubectl
+    export PATH=~/.local/bin/kubectl
+   
+    kubectl create secret generic vault-token --from-literal=key="$TOKEN"
+   
+    
+kind: ConfigMap
+metadata:
+  name: vault-init-cm

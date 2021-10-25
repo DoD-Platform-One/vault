@@ -1,0 +1,57 @@
+{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: vault-miniobackend-creds
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: "objectstorage"
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-1"
+data:
+  accesskey: {{ .Values.minio.accessKey | b64enc }}
+  secretkey: {{ .Values.minio.secretKey | b64enc }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-create-bucket
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec: 
+  template:     
+    spec:
+      {{- include "imagePullSecrets" . | nindent 6 }}
+      containers:
+      - name: minio-client
+        image: minio/mc:latest
+        env:
+          - name: MINIO_ACCESSKEY
+            valueFrom:
+              secretKeyRef:
+                name: vault-miniobackend-creds
+                key: accesskey
+          - name: MINIO_SECRETKEY
+            valueFrom:
+              secretKeyRef:
+                name: vault-miniobackend-creds
+                key: secretkey
+        command:
+        - /bin/sh
+        - -c
+        - |
+         set -e
+         echo -e "$MINIO_ACCESSKEY\n$MINIO_SECRETKEY" | mc alias set minio {{ if .Values.minio.disableSSL }}http://{{ else }}https://{{ end }}{{ .Values.minio.endpoint }} --api S3v4
+         mc mb minio/{{ .Values.minio.bucketName }}
+         mc ls minio
+      restartPolicy: Never
+{{- end }}
