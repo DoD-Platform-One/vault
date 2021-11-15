@@ -6,7 +6,8 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-  imagePullSecrets: []
+  imagePullSecrets:
+  - private-registry
   # imagePullSecrets:
   #   - name: image-pull-secret
   # TLS for end-to-end encrypted transport
@@ -38,8 +39,8 @@ injector:
   leaderElector:
     enabled: false
     image:
-      repository: registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector
-      tag: 0.4
+      repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector"
+      tag: "0.4"
     ttl: 60s
 
   # If true, will enable a node exporter metrics endpoint at /metrics.
@@ -52,25 +53,25 @@ injector:
 
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
-    repository: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s
-    tag: 0.11.0
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
+    tag: "0.11.0"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
   # containers.  This should be set to the official Vault image.  Vault 1.3.1+ is
   # required.
   agentImage:
-    repository: registry1.dso.mil/ironbank/hashicorp/vault/vault
-    tag: 1.8.3
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
+    tag: "1.8.3"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
     # For more information on configuring resources, see the K8s documentation:
     # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     cpuLimit: "500m"
-    cpuRequest: "250m"
-    memLimit: "128Mi"
-    memRequest: "64Mi"
+    cpuRequest: "500m"
+    memLimit: "250Mi"
+    memRequest: "250Mi"
 
     # Default template type for secrets when no custom template is specified.
     # Possible values include: "json" and "map".
@@ -230,8 +231,8 @@ server:
   # By default no direct resource request is made.
 
   image:
-    repository: registry1.dso.mil/ironbank/hashicorp/vault/vault
-    tag: 1.8.3
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
+    tag: "1.8.3"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
