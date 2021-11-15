@@ -6,10 +6,9 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-  imagePullSecrets:
-  - private-registry
+  imagePullSecrets: [ ] 
   # imagePullSecrets:
-  #   - name: image-pull-secret
+  # - name: image-pull-secret
   # TLS for end-to-end encrypted transport
   tlsDisable: true
   # If deploying to OpenShift
