@@ -75,6 +75,13 @@ spec:
           mountPath: "/vault/data"
         - name: vault-data
           mountPath: "/vault/data/init"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
       restartPolicy: OnFailure
       serviceAccount: {{ template "vault.fullname" . }}-root-token-secret
       volumes:
