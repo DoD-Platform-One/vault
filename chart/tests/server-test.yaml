@@ -6,6 +6,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": test
+    vault.hashicorp.com/agent-init-first: "true"
+    vault.hashicorp.com/agent-inject: "true"
 spec:
   {{- include "imagePullSecrets" . | nindent 2 }}
   containers:
