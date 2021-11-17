@@ -6,6 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": test
+    sidecar.istio.io/inject: 'false'
     vault.hashicorp.com/agent-init-first: "true"
     vault.hashicorp.com/agent-inject: "true"
 spec:
