@@ -85,7 +85,7 @@ spec:
             cpu: 100m
             memory: 256Mi
       - name: bigbang-base-secret-creation
-        image:  {{ .Values.autoInit.image.repository }}:{{ .Values.autoInit .image.tag }}
+        image:  {{ .Values.autoInit.image.repository }}:{{ .Values.autoInit.image.tag }}
         command:
           - /bin/bash 
           - -c
