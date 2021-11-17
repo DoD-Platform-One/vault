@@ -853,8 +853,13 @@ networkPolicies:
     app: istio-ingressgateway
     istio: ingressgateway
 
+# BigBang autoInit Job
 autoInit:
   enabled: true
+  image:
+    repository: registry1.dso.mil/ironbank/big-bang/base
+    tag: 8.4
+
 istio:
   # Toggle istio interaction
   enabled: false
@@ -863,7 +868,6 @@ istio:
     -  istio-system/main
     hosts:
     -  vault.{{ .Values.domain }}
-
 
 minio:
   enabled: false
