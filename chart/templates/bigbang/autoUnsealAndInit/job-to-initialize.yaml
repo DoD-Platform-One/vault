@@ -72,11 +72,6 @@ spec:
           - /bin/bash 
           - -c
           - |
-            #until [ $(kubectl get po "$HOSTNAME" -n "$VAULT_K8S_NAMESPACE" -ojsonpath='{.status.containerStatuses[0].state.terminated.reason}') != "Completed" ]
-            #do  
-            #  sleep 1
-            #done
-            sleep 15
             kubectl create secret generic vault-token --from-file=key=/export/key
         volumeMounts:
         - name: vault-keys
