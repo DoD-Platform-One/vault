@@ -94,7 +94,7 @@ spec:
             #do  
             #  sleep 1
             #done
-            sleep 5
+            sleep 15
             kubectl create secret generic vault-token --from-file=key=/export/key
         volumeMounts:
         - name: vault-keys
