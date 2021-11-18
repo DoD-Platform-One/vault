@@ -9,7 +9,7 @@ data:
     KEYS_FOLDER="/vault/data"
     VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
     VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200
-    until [ $(curl $VAULT_ADDR  -k -s -f -o /dev/null) = SUCCESS ]
+    until [[ "$(curl $VAULT_ADDR  -k -s -f -o /dev/null)" = SUCCESS ]]
     do 
       sleep 5
     done
