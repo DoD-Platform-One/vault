@@ -1,10 +1,10 @@
-# Fluent-bit
+# Vault
 
 ## Overview
 
 This package contains an extensible and configurable installation of Hashicorp Vault based on the upstream chart provided by hashicorp.
 
-## Fluent-bit
+## Vault
 
 [HashiCorp Vault](https://www.hashicorp.com/products/vault) is an identity-based secrets and encryption management system that helps organizations reduce the risk of breaches and data exposure with identity-based security automation and encryption-as-a-service.
 
