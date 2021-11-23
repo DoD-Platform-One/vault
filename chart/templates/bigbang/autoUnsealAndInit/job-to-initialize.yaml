@@ -63,10 +63,31 @@ spec:
         app.kubernetes.io/name:  vault-job-init
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
-
     spec:
       {{- include "imagePullSecrets" . | nindent 6 }}
       containers:
+      - name: bigbang-base-secret-creation
+        image:  {{ .Values.autoInit.image.repository }}:{{ .Values.autoInit.image.tag }}
+        command:
+          - /bin/bash 
+          - -c
+          - |
+            kubectl create secret generic vault-token --from-file=key=/export/key
+        volumeMounts:
+        - name: vault-keys
+          mountPath: "/vault/data"
+        - name: vault-data
+          mountPath: "/vault/data/init"
+        - name: vault-tmp
+          mountPath: "/export"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
+      initContainers:
       - name: vault-init-job
         image:  {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
         command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
@@ -75,6 +96,15 @@ spec:
           mountPath: "/vault/data"
         - name: vault-data
           mountPath: "/vault/data/init"
+        - name: vault-tmp
+          mountPath: "/export"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 100m
+            memory: 256Mi
       restartPolicy: OnFailure
       serviceAccount: {{ template "vault.fullname" . }}-root-token-secret
       volumes:
@@ -84,6 +114,8 @@ spec:
       - name: vault-data
         configMap:
           name: vault-init-cm
+      - name: vault-tmp
+        emptyDir: {}
   backoffLimit: 10
   activeDeadlineSeconds: 360
   {{- end }}

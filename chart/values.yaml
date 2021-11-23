@@ -6,9 +6,9 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-  imagePullSecrets: []
+  imagePullSecrets: [ ] 
   # imagePullSecrets:
-  #   - name: image-pull-secret
+  # - name: image-pull-secret
   # TLS for end-to-end encrypted transport
   tlsDisable: true
   # If deploying to OpenShift
@@ -36,7 +36,7 @@ injector:
   # If multiple replicas are specified, by default a leader-elector side-car
   # will be created so that only one injector attempts to create TLS certificates.
   leaderElector:
-    enabled: true
+    enabled: false
     image:
       repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector"
       tag: "0.4"
@@ -61,16 +61,16 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.7.3"
+    tag: "1.8.3"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
     # For more information on configuring resources, see the K8s documentation:
     # https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
     cpuLimit: "500m"
-    cpuRequest: "250m"
-    memLimit: "128Mi"
-    memRequest: "64Mi"
+    cpuRequest: "500m"
+    memLimit: "250Mi"
+    memRequest: "250Mi"
 
     # Default template type for secrets when no custom template is specified.
     # Possible values include: "json" and "map".
@@ -724,7 +724,7 @@ ui:
   # serviceType can be used to control the type of service created. For
   # example, setting this to "LoadBalancer" will create an external load
   # balancer (for supported K8S installations) to access the UI.
-  enabled: false
+  enabled: true
   publishNotReadyAddresses: true
   # The service should only contain selectors for active Vault pod
   activeVaultPodOnly: false
@@ -853,8 +853,13 @@ networkPolicies:
     app: istio-ingressgateway
     istio: ingressgateway
 
+# BigBang autoInit Job
 autoInit:
   enabled: true
+  image:
+    repository: registry1.dso.mil/ironbank/big-bang/base
+    tag: 8.4
+
 istio:
   # Toggle istio interaction
   enabled: false
@@ -863,7 +868,6 @@ istio:
     -  istio-system/main
     hosts:
     -  vault.{{ .Values.domain }}
-
 
 minio:
   enabled: false
