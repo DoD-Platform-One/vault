@@ -65,6 +65,13 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
     spec:
       {{- include "imagePullSecrets" . | nindent 6 }}
+      {{- if not .Values.global.openshift }}
+      securityContext:
+        runAsNonRoot: true
+        runAsGroup: {{ .Values.server.gid | default 1000 }}
+        runAsUser: {{ .Values.server.uid | default 100 }}
+        fsGroup: {{ .Values.server.gid | default 1000 }}
+      {{- end }}
       containers:
       - name: bigbang-base-secret-creation
         image:  {{ .Values.autoInit.image.repository }}:{{ .Values.autoInit.image.tag }}
