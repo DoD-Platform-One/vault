@@ -1,4 +1,4 @@
-{{- if .Values.autoInit.enabled }}
+{{- if and .Values.autoInit.enabled .Release.IsInstall }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -52,7 +52,6 @@ kind: Job
 metadata:
   name: {{ template "vault.fullname" . }}-job-init
   namespace: {{ .Release.Namespace }}
-    
 spec:
   template:
     metadata:

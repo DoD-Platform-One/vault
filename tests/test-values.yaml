@@ -16,6 +16,18 @@ minio:
   accessKey: "minio"
   secretKey: "minio123"
   bucketName: vault-data
+injector:
+  affinity: |
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: {{ template "vault.name" . }}-agent-injector
+                app.kubernetes.io/instance: "{{ .Release.Name }}"
+                component: webhook
+            topologyKey: kubernetes.io/hostname
 
 bbtests:
   enabled: true
