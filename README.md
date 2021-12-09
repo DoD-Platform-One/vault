@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.16.1-bb.2](https://img.shields.io/badge/Version-0.16.2--bb.1-informational?style=flat-square) ![AppVersion: 1.8.3](https://img.shields.io/badge/AppVersion-1.8.3-informational?style=flat-square)
+![Version: 0.16.1-bb.3](https://img.shields.io/badge/Version-0.16.1--bb.3-informational?style=flat-square) ![AppVersion: 1.8.3](https://img.shields.io/badge/AppVersion-1.8.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -41,7 +41,7 @@ helm install vault chart/
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.enabled | bool | `true` |  |
-| global.imagePullSecrets[0] | string | `"private-registry"` |  |
+| global.imagePullSecrets | list | `[]` |  |
 | global.tlsDisable | bool | `true` |  |
 | global.openshift | bool | `false` |  |
 | global.psp.enable | bool | `false` |  |
@@ -189,7 +189,7 @@ helm install vault chart/
 | server.serviceAccount.name | string | `""` |  |
 | server.serviceAccount.annotations | object | `{}` |  |
 | server.statefulSet.annotations | object | `{}` |  |
-| ui.enabled | bool | `false` |  |
+| ui.enabled | bool | `true` |  |
 | ui.publishNotReadyAddresses | bool | `true` |  |
 | ui.activeVaultPodOnly | bool | `false` |  |
 | ui.serviceType | string | `"ClusterIP"` |  |
@@ -232,6 +232,8 @@ helm install vault chart/
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | autoInit.enabled | bool | `true` |  |
+| autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
+| autoInit.image.tag | float | `8.4` |  |
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
