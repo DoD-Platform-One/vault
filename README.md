@@ -1,6 +1,7 @@
 # vault
 
-![Version: 0.16.1-bb.3](https://img.shields.io/badge/Version-0.16.1--bb.3-informational?style=flat-square) ![AppVersion: 1.8.3](https://img.shields.io/badge/AppVersion-1.8.3-informational?style=flat-square)
+![Version: 0.18.0-bb.0](https://img.shields.io/badge/Version-0.18.0--bb.0-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+=======
 
 Official HashiCorp Vault Chart
 
@@ -56,16 +57,17 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"0.11.0"` |  |
+| injector.image.tag | string | `"0.14.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| injector.agentImage.tag | string | `"1.8.3"` |  |
+| injector.agentImage.tag | string | `"1.9.0"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
 | injector.agentDefaults.memRequest | string | `"250Mi"` |  |
 | injector.agentDefaults.template | string | `"map"` |  |
 | injector.agentDefaults.templateConfig.exitOnRetryFailure | bool | `true` |  |
+| injector.agentDefaults.templateConfig.staticSecretRenderInterval | string | `""` |  |
 | injector.authPath | string | `"auth/kubernetes"` |  |
 | injector.logLevel | string | `"info"` |  |
 | injector.logFormat | string | `"standard"` |  |
@@ -101,7 +103,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| server.image.tag | string | `"1.8.3"` |  |
+| server.image.tag | string | `"1.9.0"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -113,6 +115,8 @@ helm install vault chart/
 | server.ingress.enabled | bool | `false` |  |
 | server.ingress.labels | object | `{}` |  |
 | server.ingress.annotations | object | `{}` |  |
+| server.ingress.ingressClassName | string | `""` |  |
+| server.ingress.pathType | string | `"Prefix"` |  |
 | server.ingress.activeService | bool | `true` |  |
 | server.ingress.hosts[0].host | string | `"chart-example.local"` |  |
 | server.ingress.hosts[0].paths | list | `[]` |  |
@@ -157,6 +161,7 @@ helm install vault chart/
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
 | server.service.enabled | bool | `true` |  |
+| server.service.externalTrafficPolicy | string | `"Cluster"` |  |
 | server.service.port | int | `8200` |  |
 | server.service.targetPort | int | `8200` |  |
 | server.service.annotations | object | `{}` |  |
@@ -196,6 +201,7 @@ helm install vault chart/
 | ui.serviceNodePort | string | `nil` |  |
 | ui.externalPort | int | `8200` |  |
 | ui.targetPort | int | `8200` |  |
+| ui.externalTrafficPolicy | string | `"Cluster"` |  |
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"` |  |
@@ -210,6 +216,8 @@ helm install vault chart/
 | csi.daemonSet.updateStrategy.type | string | `"RollingUpdate"` |  |
 | csi.daemonSet.updateStrategy.maxUnavailable | string | `""` |  |
 | csi.daemonSet.annotations | object | `{}` |  |
+| csi.daemonSet.providersDir | string | `"/etc/kubernetes/secrets-store-csi-providers"` |  |
+| csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
 | csi.serviceAccount.annotations | object | `{}` |  |

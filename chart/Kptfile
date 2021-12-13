@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: c820454dd5ac0d0e73968e24eddd053fb07b105f
+    commit: 9fa25e97c806073c7dd3274a851181cbb3d67868
     repo: https://github.com/hashicorp/vault-helm
     directory: /
-    ref: master
+    ref: v0.18.0
