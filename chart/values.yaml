@@ -6,7 +6,7 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-  imagePullSecrets: [ ] 
+  imagePullSecrets: [ ]
   # imagePullSecrets:
   # - name: image-pull-secret
   # TLS for end-to-end encrypted transport
@@ -33,8 +33,8 @@ injector:
   # Configures the port the injector should listen on
   port: 8080
 
-  # If multiple replicas are specified, by default a leader-elector side-car
-  # will be created so that only one injector attempts to create TLS certificates.
+  # If multiple replicas are specified, by default a leader will be determined
+  # so that only one injector attempts to create TLS certificates.
   leaderElector:
     enabled: false
     image:
@@ -53,7 +53,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-    tag: "0.11.0"
+    tag: "0.14.1"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -61,7 +61,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.8.3"
+    tag: "1.9.0"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -79,6 +79,7 @@ injector:
     # Default values within Agent's template_config stanza.
     templateConfig:
       exitOnRetryFailure: true
+      staticSecretRenderInterval: ""
 
   # Mount Path of the Vault Kubernetes Auth Method.
   authPath: "auth/kubernetes"
@@ -231,7 +232,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.8.3"
+    tag: "1.9.0"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -272,6 +273,14 @@ server:
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
 
+    # Optionally use ingressClassName instead of deprecated annotation.
+    # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#deprecated-annotation
+    ingressClassName: ""
+
+    # As of Kubernetes 1.19, all Ingress Paths must have a pathType configured. The default value below should be sufficient in most cases.
+    # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types for other possible values.
+    pathType: Prefix
+
     # When HA mode is enabled and K8s service registration is being used,
     # configure the ingress to point to the Vault active service.
     activeService: true
@@ -282,8 +291,10 @@ server:
     extraPaths: []
     # - path: /*
     #   backend:
-    #     serviceName: ssl-redirect
-    #     servicePort: use-annotation
+    #     service:
+    #       name: ssl-redirect
+    #       port:
+    #         number: use-annotation
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
@@ -456,7 +467,7 @@ server:
      # ports:
       #-  protocol: TCP
       #   port: 15021
-      
+
 
   # Priority class for server pods
   priorityClassName: ""
@@ -484,6 +495,12 @@ server:
     # Configures the service type for the main Vault service.  Can be ClusterIP
     # or NodePort.
     #type: ClusterIP
+
+    # The externalTrafficPolicy can be set to either Cluster or Local
+    # and is only valid for LoadBalancer and NodePort service types.
+    # The default value is Cluster.
+    # ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-traffic-policy
+    externalTrafficPolicy: Cluster
 
     # If type is set to "NodePort", a specific nodePort value can be configured,
     # will be random if left blank.
@@ -575,7 +592,7 @@ server:
         disable_hostname = true
         unauthenticated_metrics_access = true
       }
-     
+
       {{- if .Values.server.dataStorage.enabled }}
       storage "raft" {
         path = "/vault/data"
@@ -644,13 +661,13 @@ server:
         storage "raft" {
           path = "/vault/data"
         }
-       
+
         telemetry {
           prometheus_retention_time = "24h"
           disable_hostname = true
           unauthenticated_metrics_access = true
         }
-      
+
 
         service_registration "kubernetes" {}
 
@@ -733,7 +750,13 @@ ui:
   externalPort: 8200
   targetPort: 8200
 
-  # loadBalancerSourceRanges:
+  # The externalTrafficPolicy can be set to either Cluster or Local
+  # and is only valid for LoadBalancer and NodePort service types.
+  # The default value is Cluster.
+  # ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-traffic-policy
+  externalTrafficPolicy: Cluster
+
+  #loadBalancerSourceRanges:
   #   - 10.0.0.0/16
   #   - 1.78.23.3/32
 
@@ -795,6 +818,10 @@ csi:
     # YAML-formatted multi-line templated string map of the annotations to apply
     # to the daemonSet.
     annotations: {}
+    # Provider host path (must match the CSI provider's path)
+    providersDir: "/etc/kubernetes/secrets-store-csi-providers"
+    # Kubelet host path
+    kubeletRootDir: "/var/lib/kubelet"
 
   pod:
     # Extra annotations for the provider pods. This can either be YAML or a
