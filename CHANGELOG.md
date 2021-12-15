@@ -2,7 +2,12 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
----
+## [0.18.0-bb.1] - 2021-12-13
+### Added
+- Networkpolicy to allow ingress for service calls and agent-injector
+- Store full output of the initial vault init in the vault-token secret
+- More documentation for bigbang and vault
+
 ## [0.18.0-bb.0] - 2021-12-10
 ### Changed
 - Update vault upstream chart
@@ -11,7 +16,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 - Added conditional to run autoinit job only on install
 - Changed affinity to `preferredDuringScheduling` in test values for CI package pipeline
-
 
 ## [0.16.1-bb.2] - 2021-11-29
 ### Added

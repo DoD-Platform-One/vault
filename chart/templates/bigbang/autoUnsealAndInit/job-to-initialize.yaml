@@ -10,9 +10,11 @@ metadata:
 rules:
 - apiGroups:
   - ""
+  - "authentication.k8s.io"
   resources:
   - serviceaccounts/token
   - secrets
+  - tokenreviews
   verbs:
   - create
   - get
@@ -78,7 +80,7 @@ spec:
           - /bin/bash 
           - -c
           - |
-            kubectl create secret generic vault-token --from-file=key=/export/key
+            kubectl create secret generic vault-token --from-file=key=/export/key --from-file=init.out=/export/init.out
         volumeMounts:
         - name: vault-keys
           mountPath: "/vault/data"

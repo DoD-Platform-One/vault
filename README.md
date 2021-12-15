@@ -1,7 +1,6 @@
 # vault
 
-![Version: 0.18.0-bb.0](https://img.shields.io/badge/Version-0.18.0--bb.0-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
-=======
+![Version: 0.18.0-bb.1](https://img.shields.io/badge/Version-0.18.0--bb.1-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -246,6 +245,8 @@ helm install vault chart/
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
 | minio.enabled | bool | `false` |  |
+| customAppIngressSelector.key | string | `"vault-ingress"` |  |
+| customAppIngressSelector.value | bool | `true` |  |
 
 ## Contributing
 

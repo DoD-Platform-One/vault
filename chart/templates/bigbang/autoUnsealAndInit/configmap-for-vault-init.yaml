@@ -5,42 +5,60 @@ data:
     #!/bin/sh
     ## Use following container vault:1.4.0
     ## Make sure folder name is not ending with /
-    sleep 30
+
     KEYS_FOLDER="/vault/data"
+    POLICY_FILE=/tmp/policy.hcl
+    INIT_OUT=/export/init.out
     VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
     VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200
-    until curl $VAULT_ADDR  -k -s -f -o /dev/null; do sleep 5; done
+    
+    until curl -L -s -k -f ${VAULT_ADDR} | grep Vault >& /dev/null; do echo "waiting for vault server"; sleep 5; done
+    
+    
+    echo "initializing vault"
+    vault operator init -address=$VAULT_ADDR  -recovery-shares=5 -recovery-threshold=3 > $INIT_OUT
+    
+    # export the initial root token
+    export TOKEN=$(grep Token $INIT_OUT | cut -d' ' -f  4)
 
-    MASTER_KEYS=$(vault operator init -address=$VAULT_ADDR  -recovery-shares=5 -recovery-threshold=3 | grep -e "2:\|3:\|4:\|Token:" |  awk '{print $4}')
-   
+    # pick 3 of the master keys to unseal the running instance
+    MIN_MASTER_KEYS=$(cat $INIT_OUT | grep -e "2:\|3:\|4:" |  awk '{print $4}')
+
+    # unseal the current instance using the min # of 3 keys   
     KEY_NUMBER=1
-    export TOKEN=$(echo $MASTER_KEYS | cut -d' ' -f  4)
-    
-    
-    for key in $MASTER_KEYS
+    for key in $MIN_MASTER_KEYS
     do
-        
         echo '{"key": "'"$key"'"}' > "$KEYS_FOLDER/master_keys_$KEY_NUMBER.json"
         curl --request PUT --data @"$KEYS_FOLDER/master_keys_$KEY_NUMBER.json" "$VAULT_ENDPOINT"
         KEY_NUMBER=$(( $KEY_NUMBER + 1 ))
     done
-    export KEYS_FOLDER="$(echo $KEYS_FOLDER)"
-    #export VAULT_ADDR=http://vault-0.vault-internal:8200
+
     export VAULT_ADDR=$VAULT_ADDR
+    export VAULT_TOKEN=$TOKEN
   
-    $(vault login $TOKEN)
-    $(vault auth enable kubernetes)
-    touch  /home/vault/policy.hcl 
-    echo 'path "sys/metrics*"'  >> /home/vault/policy.hcl 
-    echo  '{ capabilities = ["read", "list"] }'  >> /home/vault/policy.hcl 
-     cat  /home/vault/policy.hcl 
-     $(vault  policy write prometheus /home/vault/policy.hcl)
-    echo "vault policy written"
+    # redirect login to avoid password written to logs and retry to avoid race condition
+    until vault login -no-store $TOKEN >& /dev/null; do echo "Waiting to login to vault"; sleep 5; done;
+    echo "login success"
+
+    echo "enabling kubernetes"
+    vault auth enable kubernetes
+
+    echo "configuring kubernetes"
+    vault write auth/kubernetes/config \
+      kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+      token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+      kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+      issuer="https://kubernetes.default.svc.cluster.local"    
     
-    $(vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h)
+    echo 'path "sys/metrics*"' > $POLICY_FILE
+    echo  '{ capabilities = ["read", "list"] }' >> $POLICY_FILE 
+    cat $POLICY_FILE 
+    vault  policy write prometheus $POLICY_FILE
+    echo "vault prometheus policy written"
+    
+    vault write auth/kubernetes/role/prometheus bound_service_account_names=prometheus bound_service_account_namespaces=monitoring  policies=prometheus ttl=1h
     echo "vault monitoring auth enabled"
-    cd /home/vault
-    echo $TOKEN > /export/key   
+    echo $TOKEN > /export/key
     
 kind: ConfigMap
 metadata:
