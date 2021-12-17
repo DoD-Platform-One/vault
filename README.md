@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.18.0-bb.1](https://img.shields.io/badge/Version-0.18.0--bb.1-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 0.18.0-bb.2](https://img.shields.io/badge/Version-0.18.0--bb.2-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -236,6 +236,7 @@ helm install vault chart/
 | monitoring.enabled | bool | `false` |  |
 | monitoring.namespace | string | `"monitoring"` |  |
 | networkPolicies.enabled | bool | `false` |  |
+| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | autoInit.enabled | bool | `true` |  |
