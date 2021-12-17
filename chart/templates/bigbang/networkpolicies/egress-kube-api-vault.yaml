@@ -1,0 +1,18 @@
+{{- if .Values.networkPolicies.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: egress-kube-api-vault
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "vault.name" . }}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: {{ .Values.networkPolicies.controlPlaneCidr }}
+        # vault always needs access to the metadata api -- 169.254.169.254/32 -- this is handled in the egress-metadata.yaml
+  policyTypes:
+  - Egress
+{{- end }}
