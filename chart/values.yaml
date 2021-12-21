@@ -876,7 +876,9 @@ monitoring:
   namespace: monitoring
 networkPolicies:
   enabled: false
-  controlPlaneCidr: 0.0.0.0/0  
+  controlPlaneCidr: 0.0.0.0/0
+  # 
+  VPCCidr: 0.0.0.0/0  
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
