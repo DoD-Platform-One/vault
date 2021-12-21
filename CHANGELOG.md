@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.0-bb.2] - 2021-12-21
+### Changed
+- Changed egress-vault networkpolicy to not check for `networkPolicies.controlPlaneCidr` but new value `networkPolicies.VPCCidr`
+
 ## [0.18.0-bb.2] - 2021-12-15
 ### Changed
 - Changed network policies to be more restrictive
