@@ -16,7 +16,11 @@ This process may require several keys to be entered to unseal the data and possi
 
 To simplify things in AWS, vault support using a single KMS key to auto-unseal the data on pod/server restarts.
 
-To add in auto unseal, we need to create a KMS key and pass the information to the vault server.
+In a production environment, it is recommended to setup a Private Endpoint for your AWS services like KMS or S3. Please review [this guide from AWS](https://docs.aws.amazon.com/kms/latest/developerguide/kms-vpc-endpoint.html) to setup routing to AWS services that never leave the AWS network.
+
+Once created update `networkPolicies.vpcCidr` to match the CIDR of your VPC so Vault will be able to reach your VPCs DNS and new KMS endpoint.
+
+Next, to add in auto unseal, we need to create a KMS key and pass the information to the vault server.
 
 The autoInit chart value needs to be enabled (defaults to enabled) .  
 

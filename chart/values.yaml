@@ -876,7 +876,10 @@ monitoring:
   namespace: monitoring
 networkPolicies:
   enabled: false
-  controlPlaneCidr: 0.0.0.0/0  
+  # For vault-agent-injector egress to Kube-API
+  controlPlaneCidr: 0.0.0.0/0
+  # For Vault pod egress to VPC DNS & Endpoints, please review ../docs/bigbang-kms-auto-unseal.md
+  vpcCidr: 0.0.0.0/0  
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
