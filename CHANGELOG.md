@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [0.18.0-bb.2] - 2021-12-21
 ### Changed
-- Changed egress-vault networkpolicy to not check for `networkPolicies.controlPlaneCidr` but new value `networkPolicies.VPCCidr`
+- Changed egress-vault networkpolicy to not check for `networkPolicies.controlPlaneCidr` but new value `networkPolicies.vpcCidr`
 
 ## [0.18.0-bb.2] - 2021-12-15
 ### Changed

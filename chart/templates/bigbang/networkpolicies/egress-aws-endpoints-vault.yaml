@@ -11,7 +11,7 @@ spec:
   egress:
   - to:
     - ipBlock:
-        cidr: {{ .Values.networkPolicies.VPCCidr }}
+        cidr: {{ .Values.networkPolicies.vpcCidr }}
         # vault always needs access to the metadata api -- 169.254.169.254/32 -- this is handled in the egress-metadata.yaml
   policyTypes:
   - Egress
