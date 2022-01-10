@@ -1,4 +1,4 @@
-{{- if .Values.networkPolicies.enabled }}
+{{- if and .Values.networkPolicies.enabled (or (contains "awskms" .Values.server.standalone.config) (contains "awskms" .Values.server.ha.config) )  }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
