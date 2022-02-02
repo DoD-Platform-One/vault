@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.0-bb.5] - 2022-01-31
+### Changed
+- Update Chart.yaml to follow new standardization for release automation
+
 ## [0.18.0-bb.4] - 2022-01-10
 ### Changed
 - Changed egress-metadata.yaml to only deploy on condition the server config contains "awskms"
