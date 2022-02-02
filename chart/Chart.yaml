@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vault
-version: 0.18.0-bb.4
+version: 0.18.0-bb.5
 appVersion: 1.9.0
 kubeVersion: ">= 1.14.0-0"
 description: Official HashiCorp Vault Chart
@@ -21,3 +21,6 @@ dependencies:
   - name: gluon
     version: "0.2.4"
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
+annotations:
+  bigbang.dev/applicationVersions: |
+    - Vault: 1.9.0
