@@ -2,12 +2,12 @@
 {{- define "minio-test.cypress-configmap" }}
 metadata:
   labels:
-    {{- include "minio.labels" . | nindent 4 }}
+    {{- include "minio-operator.labels" . | nindent 4 }}
 {{- end }}
 ---
 {{- include "gluon.tests.cypress-runner.overrides" (list . "minio-test.cypress-runner") -}}
 {{- define "minio-test.cypress-runner" -}}
 metadata:
   labels:
-    {{- include "minio.labels" . | nindent 4 }}
+    {{- include "minio-operator.labels" . | nindent 4 }}
 {{- end }}

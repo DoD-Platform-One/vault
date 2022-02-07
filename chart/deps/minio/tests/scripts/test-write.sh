@@ -1,8 +1,16 @@
 #!/bin/bash
 set -ex
-# stall the ensure that the instances are started.
-sleep 60
-mc config host add bigbang ${MINIO_HOST}:${MINIO_PORT} ${ACCESS_KEY} ${SECRET_KEY}
+
+attempt_counter=0
+max_attempts=25
+until [ $(mc config host add bigbang ${MINIO_HOST}$(if [ -n "${MINIO_PORT}" ] ; then echo ":";fi)${MINIO_PORT} ${ACCESS_KEY} ${SECRET_KEY} >/dev/null; echo $?) -eq 0 ]; do
+  if [ ${attempt_counter} -eq ${max_attempts} ];then
+    echo "Max attempts reached"
+    exit 1
+  fi
+  attempt_counter=$(($attempt_counter+1))
+  sleep 10
+done
 # cleanup from pervious runs
 mc rb bigbang/foobar --force || true 
 mc mb bigbang/foobar

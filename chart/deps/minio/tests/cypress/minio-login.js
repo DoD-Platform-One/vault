@@ -1,15 +1,11 @@
 describe('Minio Login', function() {
   it('Check Minio Login', function() {
-      cy.visit(Cypress.env('url'), { timeout: 10000 })
+      cy.visit(Cypress.env('url'), { timeout: 15000 })
       // Fill the username
-        cy.get('[id*="accessKey"]').eq(1)
-        .type(Cypress.env('accesskey'))
-        .should('have.value', Cypress.env('accesskey'));
+      cy.get('input[id="accessKey"]').type(Cypress.env('accesskey'),{delay: 0})
 
       // Fill the password
-      cy.get('[id*="secretKey"]').eq(1)
-        .type(Cypress.env('secretkey'))
-        .should('have.value', Cypress.env('secretkey'));
+      cy.get('input[id="secretKey"]').type(Cypress.env('secretkey'),{delay: 0})
 
       // Locate and submit the form
       cy.get('form').submit();
