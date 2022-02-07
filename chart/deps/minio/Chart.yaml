@@ -1,21 +1,24 @@
 apiVersion: v2
-type: application
+description: A Helm chart for MinIO Operator
 name: minio-instance
-version: 4.2.3-bb.1
-appVersion: v4.2.3
-description: A Helm chart for MinIO based on Minio Operator 4.1.2
+version: 4.4.3-bb.2
+appVersion: v4.4.3
+keywords:
+  - storage
+  - object-storage
+  - S3
 home: https://min.io
 icon: https://min.io/resources/img/logo/MINIO_wordmark.png
-keywords:
-- storage
-- object-storage
-- S3
-maintainers:
-- email: dev@minio.io
-  name: MinIO, Inc
 sources:
-- https://github.com/minio/operator
+  - https://github.com/minio/operator
+maintainers:
+  - name: MinIO, Inc
+    email: dev@minio.io
+type: application
 dependencies:
 - name: gluon
   version: "0.2.4"
   repository: "oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon"
+annotations:
+  bigbang.dev/applicationVersions: |
+    - Minio: RELEASE.2022-01-08T03-11-54Z

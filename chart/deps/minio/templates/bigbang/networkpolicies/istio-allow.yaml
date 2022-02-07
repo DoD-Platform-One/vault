@@ -16,9 +16,7 @@ spec:
     ports:
     - port: {{ .Values.service.port }}
       protocol: TCP
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/instance: {{ .Release.Name }}
+  podSelector: {}
   policyTypes:
   - Ingress
 

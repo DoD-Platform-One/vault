@@ -1,5 +1,5 @@
 describe('Basic Minio', function() {
   it('Check Minio UI is accessible', function() {
-      cy.visit(Cypress.env('url'), { timeout: 10000 })
+      cy.visit(Cypress.env('url'), { timeout: 15000 })
   })
 })
