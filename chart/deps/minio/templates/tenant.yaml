@@ -7,12 +7,17 @@ metadata:
   ## Optionally pass labels to be applied to the statefulset pods
   labels:
     app: minio
-  {{ if dig "metrics" "enabled" false . }}
+  {{ if or (dig "metrics" "enabled" false .) $.Values.annotations }}
   ## Annotations for MinIO Tenant Pods
   annotations:
+  {{ if $.Values.annotations }}
+    {{- toYaml $.Values.annotations | nindent 4 }}
+  {{ end }}
+  {{ if dig "metrics" "enabled" false . }}
     prometheus.io/path: /minio/v2/metrics/cluster
     prometheus.io/port: {{ dig "metrics" "port" 9000 . | quote }}
     prometheus.io/scrape: "true"
+  {{ end }}
   {{ end }}
   {{ if dig "scheduler" "name" "" . }}
   scheduler:
