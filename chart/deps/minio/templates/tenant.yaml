@@ -24,7 +24,7 @@ metadata:
     name: {{ dig "scheduler" "name" "" . }}
   {{ end }}
 spec:
-  image: {{ dig "image" "repository" "minio/minio" . }}:{{ dig "image" "tag" "RELEASE.2022-01-08T03-11-54Z" . }}
+  image: {{ dig "image" "repository" "minio/minio" . }}:{{ dig "image" "tag" "RELEASE.2022-02-18T01-50-10Z" . }}
   imagePullPolicy: {{ dig "image" "pullPolicy" "IfNotPresent" . }}
   {{ if dig "imagePullSecret" "name" "" . }}
   imagePullSecret:
@@ -87,6 +87,14 @@ spec:
   requestAutoCert: {{ dig "certificate" "requestAutoCert" false . }}
   s3:
     bucketDNS: {{ dig "s3" "bucketDNS" false . }}
+  {{- with (dig "buckets" (list) .) }}
+  buckets:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with (dig "users" (list) .) }}
+  users:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with (dig "certificate" "certConfig" (dict) .) }}
   certConfig:
     {{ toYaml . | nindent 4 }}
