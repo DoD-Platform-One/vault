@@ -1,8 +1,8 @@
 apiVersion: v2
 description: A Helm chart for MinIO Operator
 name: minio-instance
-version: 4.4.3-bb.3
-appVersion: v4.4.3
+version: 4.4.10-bb.0
+appVersion: v4.4.10
 keywords:
   - storage
   - object-storage
@@ -21,4 +21,4 @@ dependencies:
   repository: "oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon"
 annotations:
   bigbang.dev/applicationVersions: |
-    - Minio: RELEASE.2022-01-08T03-11-54Z
+    - Minio: RELEASE.2022-02-26T02-54-46Z
