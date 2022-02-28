@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.18.0-bb.8](https://img.shields.io/badge/Version-0.18.0--bb.8-informational?style=flat-square) ![AppVersion: 1.9.0](https://img.shields.io/badge/AppVersion-1.9.0-informational?style=flat-square)
+![Version: 0.19.0-bb.0](https://img.shields.io/badge/Version-0.19.0--bb.0-informational?style=flat-square) ![AppVersion: 1.9.3](https://img.shields.io/badge/AppVersion-1.9.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -92,6 +92,8 @@ helm install vault chart/
 | injector.extraLabels | object | `{}` |  |
 | injector.hostNetwork | bool | `false` |  |
 | injector.service.annotations | object | `{}` |  |
+| injector.podDisruptionBudget | object | `{}` |  |
+| injector.strategy | object | `{}` |  |
 | server.enabled | bool | `true` |  |
 | server.extraSecretEnvironmentVars[0].envName | string | `"AWS_ACCESS_KEY_ID"` |  |
 | server.extraSecretEnvironmentVars[0].secretName | string | `"eks-creds"` |  |
@@ -126,6 +128,7 @@ helm install vault chart/
 | server.route.labels | object | `{}` |  |
 | server.route.annotations | object | `{}` |  |
 | server.route.host | string | `"chart-example.local"` |  |
+| server.route.tls.termination | string | `"passthrough"` |  |
 | server.authDelegator.enabled | bool | `true` |  |
 | server.extraInitContainers | string | `nil` |  |
 | server.extraContainers | string | `nil` |  |
@@ -144,6 +147,7 @@ helm install vault chart/
 | server.livenessProbe.periodSeconds | int | `5` |  |
 | server.livenessProbe.successThreshold | int | `1` |  |
 | server.livenessProbe.timeoutSeconds | int | `3` |  |
+| server.terminationGracePeriodSeconds | int | `10` |  |
 | server.preStopSleepSeconds | int | `5` |  |
 | server.postStart | list | `[]` |  |
 | server.extraEnvironmentVars | object | `{}` |  |
@@ -204,7 +208,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"` |  |
-| csi.image.tag | string | `"0.3.0"` |  |
+| csi.image.tag | string | `"0.4.0"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -219,6 +223,7 @@ helm install vault chart/
 | csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
+| csi.priorityClassName | string | `""` |  |
 | csi.serviceAccount.annotations | object | `{}` |  |
 | csi.readinessProbe.failureThreshold | int | `2` |  |
 | csi.readinessProbe.initialDelaySeconds | int | `5` |  |
