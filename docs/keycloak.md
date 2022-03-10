@@ -14,9 +14,9 @@ Create an OIDC client with the following (modify as needed):
 1. Clinet Protocol:  openid-connect
 1. Name:  Dev Vault
 1. Access Type:  confidential  (or ```public``` for dev environments)
-1. Valid Redirect URIs:
-    https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback
-    http://vault.bigbang.dev/oidc/callback
+1. Valid Redirect URIs:  
+    https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback  
+    https://vault.bigbang.dev/oidc/callback  
 1. Click ```Save``` button
 1. Map ```groups``` to user token claim. This will create a field on the user token that includes the user's Keycloak groups. This is needed so that Vault can use Keycloak groups.  
     a. Click the Mappers tab  
