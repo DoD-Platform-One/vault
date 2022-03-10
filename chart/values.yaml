@@ -912,6 +912,9 @@ networkPolicies:
     istio: ingressgateway
 
 # BigBang autoInit Job
+# For development or demo purposes only
+# Should not be used for operational environments
+# The root token and unlock keys should not be discoverable from a k8s secret
 autoInit:
   enabled: true
   image:
