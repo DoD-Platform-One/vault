@@ -1,0 +1,12 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "vault-grafana-dashboards"
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  hashicorp-vault-metrics-dashboard.json: |
+    {{ .Files.Get "dashboards/hashicorp-vault-metrics-dashboard.json"  | nindent 4 }}
+{{- end }}
