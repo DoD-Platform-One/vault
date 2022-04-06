@@ -1,6 +1,7 @@
-AutoUnseal and Init
+# AutoUnseal and Init Default Token
 
-Get the root token for the vault deployment  for the initial login
+To get the root token for the vault deployment (if using the developer autouseal/init):
  
- kubectl get secret vault-token -n vault  -o jsonpath='{.data}'
-
+```console
+kubectl get secret -n vault vault-token -o go-template='{{.data.key | base64decode}}'
+```
