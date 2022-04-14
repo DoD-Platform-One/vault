@@ -1,0 +1,17 @@
+{{- if .Values.istio.enabled }}
+{{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-tls
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "vault.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+type: kubernetes.io/tls
+data:
+  tls.crt: {{ .Values.istio.vault.tls.cert | b64enc }}
+  tls.key: {{ .Values.istio.vault.tls.key | b64enc }}
+{{- end }}
+{{- end }}

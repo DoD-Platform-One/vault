@@ -6,9 +6,10 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-  imagePullSecrets: [ ]
-  # imagePullSecrets:
-  # - name: image-pull-secret
+
+  imagePullSecrets:
+    - name: private-registry
+
   # TLS for end-to-end encrypted transport
   tlsDisable: true
   # If deploying to OpenShift
@@ -155,6 +156,12 @@ injector:
   # injector deployment.
   extraEnvironmentVars: {}
     # KUBERNETES_SERVICE_HOST: kubernetes.default.svc
+
+    # VAULT_API_ADDR: https://vault.bigbang.dev  
+    # VAULT_ADDR:  https://127.0.0.1:8200
+    # VAULT_SKIP_VERIFY: "true"
+    # VAULT_LOG_FORMAT: "json"
+    # # VAULT_LICENSE: "xxxxxxxxx"
 
   # Affinity Settings for injector pods
   # This can either be multi-line string or YAML matching the PodSpec's affinity field.
@@ -667,7 +674,7 @@ server:
       # Enables Raft integrated storage
       enabled: true
       # Set the Node Raft ID to the name of the pod
-      setNodeId: false
+      setNodeId: true
 
       # Note: Configuration files are stored in ConfigMaps so sensitive data
       # such as passwords should be either mounted through extraSecretEnvironmentVars
@@ -929,6 +936,10 @@ istio:
     -  istio-system/main
     hosts:
     -  vault.{{ .Values.domain }}
+    tls:
+      # for passthrough tls
+      cert: ""
+      key: ""
 
 minio:
   enabled: false

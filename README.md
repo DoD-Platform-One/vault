@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.19.0-bb.6](https://img.shields.io/badge/Version-0.19.0--bb.6-informational?style=flat-square) ![AppVersion: 1.9.4](https://img.shields.io/badge/AppVersion-1.9.4-informational?style=flat-square)
+![Version: 0.19.0-bb.7](https://img.shields.io/badge/Version-0.19.0--bb.7-informational?style=flat-square) ![AppVersion: 1.9.4](https://img.shields.io/badge/AppVersion-1.9.4-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -41,7 +41,7 @@ helm install vault chart/
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.enabled | bool | `true` |  |
-| global.imagePullSecrets | list | `[]` |  |
+| global.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | global.tlsDisable | bool | `true` |  |
 | global.openshift | bool | `false` |  |
 | global.psp.enable | bool | `false` |  |
@@ -188,7 +188,7 @@ helm install vault chart/
 | server.ha.replicas | int | `3` |  |
 | server.ha.apiAddr | string | `nil` |  |
 | server.ha.raft.enabled | bool | `true` |  |
-| server.ha.raft.setNodeId | bool | `false` |  |
+| server.ha.raft.setNodeId | bool | `true` |  |
 | server.ha.raft.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n\nservice_registration \"kubernetes\" {}\n"` |  |
 | server.ha.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n}\nstorage \"consul\" {\n  path = \"vault\"\n  address = \"HOST_IP:8500\"\n}\n\nservice_registration \"kubernetes\" {}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev-246514\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n"` |  |
 | server.ha.disruptionBudget.enabled | bool | `true` |  |
@@ -251,6 +251,8 @@ helm install vault chart/
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
+| istio.vault.tls.cert | string | `""` |  |
+| istio.vault.tls.key | string | `""` |  |
 | minio.enabled | bool | `false` |  |
 | customAppIngressSelector.key | string | `"vault-ingress"` |  |
 | customAppIngressSelector.value | bool | `true` |  |

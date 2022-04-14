@@ -1,6 +1,6 @@
 # Vault
 
-vault needs this kms policy applied to the workers in order to unseal with AWS KMS
+Vault needs this kms policy applied to the workers in order to unseal with AWS KMS
 
 ```json
 {
