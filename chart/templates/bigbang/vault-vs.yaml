@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.ui.enabled -}}
+{{- if .Values.istio.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -24,5 +24,16 @@ spec:
           port:
             number: 8200
           host: {{ .Release.Name }}.vault.svc.cluster.local
-
+  tls:
+  - match:
+    - port: 8443
+      sniHosts:
+      {{- range .Values.istio.vault.hosts }}
+        - {{ tpl . $}}
+      {{- end }}
+    route:
+    - destination:
+        host: {{ .Release.Name }}.vault.svc.cluster.local
+        port:
+          number: 8200
 {{- end }}
