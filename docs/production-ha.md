@@ -43,152 +43,152 @@ server:
 The following is a bare minimun configuration for a production/operatonal deployment. We recommend high availability and auto-unseal. Assumptions and considerations:
 1. This example assumes AWS is the cloud provider. [Documentation for other cloud providers](https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#vault-storage-config) is provided by Vault. 
 1. This example config uses passthrough ingress. It is possible to deploy Vault with TLS termination at the ingress gateway. But for better security TLS should be passed through to the Vault backend by using passthrough ingress. Also, passthrough ingress is required for Vault site-to-site replication. When deploying this Package with BigBang you should configure an istio passthrough gateway in the BigBang chart values and provide the passthrough cert. If the key and cert values are provided the vault-tls secret will be created for you and also take care of the secret volume and volume mount. Otherwise you can create the secret and config for volume/volumemount yourself.
-```yaml
-istio:
-  enabled: true
+    ```yaml
+    istio:
+      enabled: true
 
-  ingressGateways:
+      ingressGateways:
 
-    passthrough-ingressgateway:
-      type: "LoadBalancer"
-      # nodePortBase: 30200
+        passthrough-ingressgateway:
+          type: "LoadBalancer"
+          # nodePortBase: 30200
 
-  gateways:
-    passthrough:
-      ingressGateway: "passthrough-ingressgateway"
-      hosts:
-      - "*.{{ .Values.domain }}"
-      tls:
-        mode: "PASSTHROUGH"
+      gateways:
+        passthrough:
+          ingressGateway: "passthrough-ingressgateway"
+          hosts:
+          - "*.{{ .Values.domain }}"
+          tls:
+            mode: "PASSTHROUGH"
 
-addons:
-  vault:
-    ingress:
-      gateway: "passthrough"
-      key: |
-        -----BEGIN PRIVATE KEY-----
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        -----END PRIVATE KEY-----
-      cert: |
-        -----BEGIN CERTIFICATE-----
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-        -----END CERTIFICATE-----
-```
+    addons:
+      vault:
+        ingress:
+          gateway: "passthrough"
+          key: |
+            -----BEGIN PRIVATE KEY-----
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            -----END PRIVATE KEY-----
+          cert: |
+            -----BEGIN CERTIFICATE-----
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            -----END CERTIFICATE-----
+    ```
 1. Your cluster CSI storage should be configured with Reclaim Policy set as "Retain", otherwise you will loose data.
 1. S3 storage is a valid configuration but BigBang does not recommend it because it is not cloud agnostic and and is not compatible with many air-gap environments.
 1. The internal server name when deployed with BigBang chart is ```vault-vault-X.vault-vault-internal```. If you delpoy separately from BigBang then the internal server name is ```vault-X.vault-internal```
-```yaml
+    ```yaml
 
-# disable autoInit. It should not be used for operations.
-autoInit:
-  enabled: false
+    # disable autoInit. It should not be used for operations.
+    autoInit:
+      enabled: false
 
-global:
-  # this is a double negative. Put "false" to enable TLS
-  tlsDisable: false
+    global:
+      # this is a double negative. Put "false" to enable TLS
+      tlsDisable: false
 
-injector:
-  extraEnvironmentVars:
-    AGENT_INJECT_VAULT_ADDR: "https://vault.bigbang.dev"
+    injector:
+      extraEnvironmentVars:
+        AGENT_INJECT_VAULT_ADDR: "https://vault.bigbang.dev"
 
-server:
-  # The BigBang helm chart has configuration that can create the vault-tls secret and volumemont for you
-  # Volume mount the secret so that Vault can support Istio ingress passthrough
-  volumes:
-  - name: tls
-    secret:
-      secretName: vault-tls
-  volumeMounts:
-  - name: tls
-    mountPath: "/vault/tls"
-    readOnly: true
-  dataStorage:
-    enabled: true
-    size: 50Gi
-    mountPath: "/vault/data"
-    accessMode: ReadWriteOnce
+    server:
+      # The BigBang helm chart has configuration that can create the vault-tls secret and volumemont for you
+      # Volume mount the secret so that Vault can support Istio ingress passthrough
+      volumes:
+      - name: tls
+        secret:
+          secretName: vault-tls
+      volumeMounts:
+      - name: tls
+        mountPath: "/vault/tls"
+        readOnly: true
+      dataStorage:
+        enabled: true
+        size: 50Gi
+        mountPath: "/vault/data"
+        accessMode: ReadWriteOnce
 
-  # Increase default resources
-  resources:
-    requests:
-      memory: 8Gi
-      cpu: 2000m
-    limits:
-      memory: 8Gi
-      cpu: 2000m
+      # Increase default resources
+      resources:
+        requests:
+          memory: 8Gi
+          cpu: 2000m
+        limits:
+          memory: 8Gi
+          cpu: 2000m
 
-  # disable the Vault provided ingress so that Istio ingress can be used.
-  ingress:
-    enabled: false
+      # disable the Vault provided ingress so that Istio ingress can be used.
+      ingress:
+        enabled: false
 
-  # Extra environment variable to support high availability
-  extraEnvironmentVars:
-    VAULT_API_ADDR: https://vault.bigbang.dev  #istio GW domain
-    VAULT_ADDR:  https://127.0.0.1:8200
-    VAULT_SKIP_VERIFY: "true"
-    VAULT_LOG_FORMAT: "json"
-    VAULT_LICENSE: "your-license-key-goes-here"
+      # Extra environment variable to support high availability
+      extraEnvironmentVars:
+        VAULT_API_ADDR: https://vault.bigbang.dev  #istio GW domain
+        VAULT_ADDR:  https://127.0.0.1:8200
+        VAULT_SKIP_VERIFY: "true"
+        VAULT_LOG_FORMAT: "json"
+        VAULT_LICENSE: "your-license-key-goes-here"
 
-  ha:
-    # enable high availability.
-    enabled: true
-    replicas: 3
+      ha:
+        # enable high availability.
+        enabled: true
+        replicas: 3
 
-    # raft is the license free most simple solution for distributed filesystem
-    raft:
-      enabled: true
-      setNodeId: true
+        # raft is the license free most simple solution for distributed filesystem
+        raft:
+          enabled: true
+          setNodeId: true
 
-      # This config should be encrypted to prevent the kms_key_id from being revealed
-      config: |
-        ui = true
+          # This config should be encrypted to prevent the kms_key_id from being revealed
+          config: |
+            ui = true
 
-        listener "tcp" {
-          tls_disable = 0
-          address = "[::]:8200"
-          cluster_address = "[::]:8201"
-          tls_cert_file = "/vault/tls/tls.crt"
-          tls_key_file  = "/vault/tls/tls.key"
-        }
+            listener "tcp" {
+              tls_disable = 0
+              address = "[::]:8200"
+              cluster_address = "[::]:8201"
+              tls_cert_file = "/vault/tls/tls.crt"
+              tls_key_file  = "/vault/tls/tls.key"
+            }
 
-        storage "raft" {
-          path = "/vault/data"
+            storage "raft" {
+              path = "/vault/data"
 
-          retry_join {
-            leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
-            leader_client_cert_file = "/vault/tls/tls.crt"
-            leader_client_key_file = "/vault/tls/tls.key"
-            leader_tls_servername = "vault.bigbang.dev"
-          }
-  
-          retry_join {
-            leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
-            leader_client_cert_file = "/vault/tls/tls.crt"
-            leader_client_key_file = "/vault/tls/tls.key"
-            leader_tls_servername = "vault.bigbang.dev"
-          }
-  
-          retry_join {
-            leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
-            leader_client_cert_file = "/vault/tls/tls.crt"
-            leader_client_key_file = "/vault/tls/tls.key"
-            leader_tls_servername = "vault.bigbang.dev"
-          }
-        }
+              retry_join {
+                leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
+                leader_client_cert_file = "/vault/tls/tls.crt"
+                leader_client_key_file = "/vault/tls/tls.key"
+                leader_tls_servername = "vault.bigbang.dev"
+              }
+      
+              retry_join {
+                leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
+                leader_client_cert_file = "/vault/tls/tls.crt"
+                leader_client_key_file = "/vault/tls/tls.key"
+                leader_tls_servername = "vault.bigbang.dev"
+              }
+      
+              retry_join {
+                leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
+                leader_client_cert_file = "/vault/tls/tls.crt"
+                leader_client_key_file = "/vault/tls/tls.key"
+                leader_tls_servername = "vault.bigbang.dev"
+              }
+            }
 
-        seal "awskms" {
-          region     = "us-gov-west-1"
-          kms_key_id = "your-kms-key-goes-here"
-          endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
-        }
+            seal "awskms" {
+              region     = "us-gov-west-1"
+              kms_key_id = "your-kms-key-goes-here"
+              endpoint   = "https://kms.us-gov-west-1.amazonaws.com"
+            }
 
-        telemetry {
-          prometheus_retention_time = "24h"
-          disable_hostname = true
-          unauthenticated_metrics_access = true
-        }
+            telemetry {
+              prometheus_retention_time = "24h"
+              disable_hostname = true
+              unauthenticated_metrics_access = true
+            }
 
-        service_registration "kubernetes" {}
-```
+            service_registration "kubernetes" {}
+    ```

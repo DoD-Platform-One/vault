@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.19.0-bb.8] - 2022-04-18
+### Updated
+- Update Ironbank Docker tags: `vault` to `1.10.0` and `vault-k8s` to `0.15.0`
+- Updated appVersion to `1.10.0`
+
 ## [0.19.0-bb.7] - 2022-04-11
 ### Added
 - Added production/operational documentation
