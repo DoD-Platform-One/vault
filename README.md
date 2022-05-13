@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.19.0-bb.8](https://img.shields.io/badge/Version-0.19.0--bb.8-informational?style=flat-square) ![AppVersion: 1.10.0](https://img.shields.io/badge/AppVersion-1.10.0-informational?style=flat-square)
+![Version: 0.19.0-bb.9](https://img.shields.io/badge/Version-0.19.0--bb.9-informational?style=flat-square) ![AppVersion: 1.10.1](https://img.shields.io/badge/AppVersion-1.10.1-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -59,7 +59,7 @@ helm install vault chart/
 | injector.image.tag | string | `"0.15.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| injector.agentImage.tag | string | `"1.10.0"` |  |
+| injector.agentImage.tag | string | `"1.10.1"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -104,7 +104,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| server.image.tag | string | `"1.10.0"` |  |
+| server.image.tag | string | `"1.10.1"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -247,7 +247,7 @@ helm install vault chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| autoInit.image.tag | float | `8.4` |  |
+| autoInit.image.tag | string | `"1.2.0"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |

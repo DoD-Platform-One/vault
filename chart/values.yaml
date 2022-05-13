@@ -62,7 +62,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.10.0"
+    tag: "1.10.1"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -254,7 +254,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.10.0"
+    tag: "1.10.1"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -926,7 +926,7 @@ autoInit:
   enabled: true
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 8.4
+    tag: 1.2.0
 
 istio:
   # Toggle istio interaction
