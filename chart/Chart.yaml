@@ -1,8 +1,8 @@
 apiVersion: v2
 name: vault
-version: 0.19.0-bb.9
-appVersion: 1.10.1
-kubeVersion: ">= 1.14.0-0"
+version: 0.20.0-bb.0
+appVersion: 1.10.3
+kubeVersion: ">= 1.16.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
 icon: https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png
@@ -19,8 +19,8 @@ dependencies:
     condition: minio.enabled
     repository: file://./deps/minio
   - name: gluon
-    version: "0.2.4"
+    version: "0.2.9"
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
 annotations:
   bigbang.dev/applicationVersions: |
-    - Vault: 1.10.1
+    - Vault: 1.10.3

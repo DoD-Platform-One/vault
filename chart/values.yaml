@@ -27,7 +27,8 @@ global:
 
 injector:
   # True if you want to enable vault agent injection.
-  enabled: true
+  # @default: global.enabled
+  enabled: "-"
 
   replicas: 1
 
@@ -54,7 +55,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-    tag: "0.15.0"
+    tag: "0.16.0"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -62,7 +63,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.10.1"
+    tag: "1.10.3"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -95,6 +96,61 @@ injector:
   # Configures all Vault Agent sidecars to revoke their token when shutting down
   revokeOnShutdown: false
 
+  webhook: 
+    # Configures failurePolicy of the webhook. The "unspecified" default behaviour depends on the
+    # API Version of the WebHook.
+    # To block pod creation while webhook is unavailable, set the policy to `Fail` below.
+    # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#failure-policy
+    #
+    failurePolicy: Ignore
+
+    # matchPolicy specifies the approach to accepting changes based on the rules of 
+    # the MutatingWebhookConfiguration.
+    # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-matchpolicy
+    # for more details.
+    #
+    matchPolicy: Exact
+
+    # timeoutSeconds is the amount of seconds before the webhook request will be ignored
+    # or fails.
+    # If it is ignored or fails depends on the failurePolicy
+    # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#timeouts
+    # for more details.
+    #
+    timeoutSeconds: 30
+    
+    # namespaceSelector is the selector for restricting the webhook to only
+    # specific namespaces.
+    # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-namespaceselector
+    # for more details.
+    # Example:
+    # namespaceSelector:
+    #    matchLabels:
+    #      sidecar-injector: enabled
+    namespaceSelector: {}
+
+    # objectSelector is the selector for restricting the webhook to only
+    # specific labels.
+    # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-objectselector
+    # for more details.
+    # Example:
+    # objectSelector:
+    #    matchLabels:
+    #      vault-sidecar-injector: enabled
+    objectSelector: {}
+
+    # Extra annotations to attach to the webhook
+    annotations: {}
+
+  # Deprecated: please use 'webhook.failurePolicy' instead
+  # Configures failurePolicy of the webhook. The "unspecified" default behaviour depends on the
+  # API Version of the WebHook.
+  # To block pod creation while webhook is unavailable, set the policy to `Fail` below.
+  # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#failure-policy
+  #
+  failurePolicy: Ignore
+
+  # Deprecated: please use 'webhook.namespaceSelector' instead
   # namespaceSelector is the selector for restricting the webhook to only
   # specific namespaces.
   # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-namespaceselector
@@ -104,6 +160,8 @@ injector:
   #    matchLabels:
   #      sidecar-injector: enabled
   namespaceSelector: {}
+
+  # Deprecated: please use 'webhook.objectSelector' instead
   # objectSelector is the selector for restricting the webhook to only
   # specific labels.
   # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-objectselector
@@ -114,13 +172,7 @@ injector:
   #      vault-sidecar-injector: enabled
   objectSelector: {}
 
-  # Configures failurePolicy of the webhook. The "unspecified" default behaviour deoends on the
-  # API Version of the WebHook.
-  # To block pod creation while webhook is unavailable, set the policy to `Fail` below.
-  # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#failure-policy
-  #
-  failurePolicy: Ignore
-
+  # Deprecated: please use 'webhook.annotations' instead
   # Extra annotations to attach to the webhook
   webhookAnnotations: {}
 
@@ -177,6 +229,12 @@ injector:
               component: webhook
           topologyKey: kubernetes.io/hostname
 
+  # Topology settings for injector pods
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  # This should be either a multi-line string or YAML matching the topologySpreadConstraints array
+  # in a PodSpec.
+  topologySpreadConstraints: []
+
   # Toleration Settings for injector pods
   # This should be either a multi-line string or YAML matching the Toleration array
   # in a PodSpec.
@@ -226,7 +284,8 @@ injector:
   #   type: RollingUpdate
 
 server:
-  # If not set to true, Vault server will not be installed. See vault.mode in _helpers.tpl for implementation details
+  # If true, or "-" with global.enabled true, Vault server will be installed.
+  # See vault.mode in _helpers.tpl for implementation details.
   enabled: true
   extraSecretEnvironmentVars:
     - envName: AWS_ACCESS_KEY_ID
@@ -254,7 +313,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.10.1"
+    tag: "1.10.3"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -357,7 +416,7 @@ server:
     #   command: [sh, -c]
     #   args:
     #     - cd /tmp &&
-    #       wget https://github.com/puppetlabs/vault-plugin-secrets-oauthapp/releases/download/v1.2.0/vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64.tar.xz -O oauthapp.xz &&
+    #       wget https://github.com/puppetlabs/vault-plugin-secrets-oauthapp/releases/download/v1.16.0/vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64.tar.xz -O oauthapp.xz &&
     #       tar -xf oauthapp.xz &&
     #       mv vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64 /usr/local/libexec/vault/oauthapp &&
     #       chmod +x /usr/local/libexec/vault/oauthapp
@@ -473,6 +532,12 @@ server:
               component: server
           topologyKey: kubernetes.io/hostname
 
+  # Topology settings for server pods
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  # This should be either a multi-line string or YAML matching the topologySpreadConstraints array
+  # in a PodSpec.
+  topologySpreadConstraints: []
+
   # Toleration Settings for server pods
   # This should be either a multi-line string or YAML matching the Toleration array
   # in a PodSpec.
@@ -526,6 +591,9 @@ server:
     # Configures the service type for the main Vault service.  Can be ClusterIP
     # or NodePort.
     #type: ClusterIP
+
+    # Do not wait for pods to be ready
+    publishNotReadyAddresses: true
 
     # The externalTrafficPolicy can be set to either Cluster or Local
     # and is only valid for LoadBalancer and NodePort service types.
@@ -664,6 +732,11 @@ server:
     # See https://www.vaultproject.io/docs/configuration#api_addr
     # If set to null, this will be set to the Pod IP Address
     apiAddr: null
+
+    # Set the cluster_addr confuguration for Vault HA
+    # See https://www.vaultproject.io/docs/configuration#cluster_addr
+    # If set to null, this will be set to https://$(HOSTNAME).{{ template "vault.fullname" . }}-internal:8201
+    clusterAddr: null
 
     # Enables Vault's integrated Raft storage.  Unlike the typical HA modes where
     # Vault's persistence is external (such as Consul), enabling Raft mode will create
@@ -812,7 +885,7 @@ csi:
 
   image:
     repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"
-    tag: "0.4.0"
+    tag: "1.1.0"
     pullPolicy: IfNotPresent
 
   # volumes is a list of volumes made available to all containers. These are rendered
@@ -853,6 +926,9 @@ csi:
     providersDir: "/etc/kubernetes/secrets-store-csi-providers"
     # Kubelet host path
     kubeletRootDir: "/var/lib/kubelet"
+    # Extra labels to attach to the vault-csi-provider daemonSet
+    # This should be a YAML map of the labels to apply to the csi provider daemonSet
+    extraLabels: {}
 
   pod:
     # Extra annotations for the provider pods. This can either be YAML or a
@@ -865,6 +941,12 @@ csi:
     # in a PodSpec.
     tolerations: []
 
+    # Extra labels to attach to the vault-csi-provider pod
+    # This should be a YAML map of the labels to apply to the csi provider pod
+    extraLabels: {}
+
+
+
   # Priority class for csi pods
   priorityClassName: ""
 
@@ -873,6 +955,10 @@ csi:
     # YAML or a YAML-formatted multi-line templated string map of the
     # annotations to apply to the serviceAccount.
     annotations: {}
+
+    # Extra labels to attach to the vault-csi-provider serviceAccount
+    # This should be a YAML map of the labels to apply to the csi provider serviceAccount
+    extraLabels: {}
 
   # Used to configure readinessProbe for the pods.
   readinessProbe:
@@ -926,7 +1012,7 @@ autoInit:
   enabled: true
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.2.0
+    tag: 1.16.0
 
 istio:
   # Toggle istio interaction
