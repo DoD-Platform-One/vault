@@ -3,11 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.19.0-bb.10] - 2022-05-17
+### Updated
+- Updated vault to 1.10.3 and big-bang/base to 1.16.0
+
 ## [0.19.0-bb.9] - 2022-05-09
 ### Updated
-- Updated container image tags:
-    - `vault` to `1.10.1`
-    - `big-bang/base` to `1.2.0`
+- Updated vault to 1.10.1 and big-bang/base to 1.2.0
 
 ## [0.19.0-bb.8] - 2022-04-18
 ### Updated

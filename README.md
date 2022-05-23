@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.19.0-bb.9](https://img.shields.io/badge/Version-0.19.0--bb.9-informational?style=flat-square) ![AppVersion: 1.10.1](https://img.shields.io/badge/AppVersion-1.10.1-informational?style=flat-square)
+![Version: 0.20.0-bb.0](https://img.shields.io/badge/Version-0.20.0--bb.0-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -22,7 +22,7 @@ Official HashiCorp Vault Chart
 * Kubernetes config installed in `~/.kube/config`
 * Helm installed
 
-Kubernetes: `>= 1.14.0-0`
+Kubernetes: `>= 1.16.0-0`
 
 Install Helm
 
@@ -46,7 +46,7 @@ helm install vault chart/
 | global.openshift | bool | `false` |  |
 | global.psp.enable | bool | `false` |  |
 | global.psp.annotations | string | `"seccomp.security.alpha.kubernetes.io/allowedProfileNames: docker/default,runtime/default\napparmor.security.beta.kubernetes.io/allowedProfileNames: runtime/default\nseccomp.security.alpha.kubernetes.io/defaultProfileName:  runtime/default\napparmor.security.beta.kubernetes.io/defaultProfileName:  runtime/default\n"` |  |
-| injector.enabled | bool | `true` |  |
+| injector.enabled | string | `"-"` |  |
 | injector.replicas | int | `1` |  |
 | injector.port | int | `8080` |  |
 | injector.leaderElector.enabled | bool | `false` |  |
@@ -56,10 +56,10 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"0.15.0"` |  |
+| injector.image.tag | string | `"0.16.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| injector.agentImage.tag | string | `"1.10.1"` |  |
+| injector.agentImage.tag | string | `"1.10.3"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -71,9 +71,15 @@ helm install vault chart/
 | injector.logLevel | string | `"info"` |  |
 | injector.logFormat | string | `"standard"` |  |
 | injector.revokeOnShutdown | bool | `false` |  |
+| injector.webhook.failurePolicy | string | `"Ignore"` |  |
+| injector.webhook.matchPolicy | string | `"Exact"` |  |
+| injector.webhook.timeoutSeconds | int | `30` |  |
+| injector.webhook.namespaceSelector | object | `{}` |  |
+| injector.webhook.objectSelector | object | `{}` |  |
+| injector.webhook.annotations | object | `{}` |  |
+| injector.failurePolicy | string | `"Ignore"` |  |
 | injector.namespaceSelector | object | `{}` |  |
 | injector.objectSelector | object | `{}` |  |
-| injector.failurePolicy | string | `"Ignore"` |  |
 | injector.webhookAnnotations | object | `{}` |  |
 | injector.certs.secretName | string | `nil` |  |
 | injector.certs.caBundle | string | `""` |  |
@@ -85,6 +91,7 @@ helm install vault chart/
 | injector.resources.limits.cpu | string | `"250m"` |  |
 | injector.extraEnvironmentVars | object | `{}` |  |
 | injector.affinity | string | `"podAntiAffinity:\n  requiredDuringSchedulingIgnoredDuringExecution:\n    - labelSelector:\n        matchLabels:\n          app.kubernetes.io/name: {{ template \"vault.name\" . }}-agent-injector\n          app.kubernetes.io/instance: \"{{ .Release.Name }}\"\n          component: webhook\n      topologyKey: kubernetes.io/hostname\n"` |  |
+| injector.topologySpreadConstraints | list | `[]` |  |
 | injector.tolerations | list | `[]` |  |
 | injector.nodeSelector | object | `{}` |  |
 | injector.priorityClassName | string | `""` |  |
@@ -104,7 +111,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| server.image.tag | string | `"1.10.1"` |  |
+| server.image.tag | string | `"1.10.3"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -156,6 +163,7 @@ helm install vault chart/
 | server.volumes | string | `nil` |  |
 | server.volumeMounts | string | `nil` |  |
 | server.affinity | string | `"podAntiAffinity:\n  requiredDuringSchedulingIgnoredDuringExecution:\n    - labelSelector:\n        matchLabels:\n          app.kubernetes.io/name: {{ template \"vault.name\" . }}\n          app.kubernetes.io/instance: \"{{ .Release.Name }}\"\n          component: server\n      topologyKey: kubernetes.io/hostname\n"` |  |
+| server.topologySpreadConstraints | list | `[]` |  |
 | server.tolerations | list | `[]` |  |
 | server.nodeSelector | object | `{}` |  |
 | server.networkPolicy.enabled | bool | `false` |  |
@@ -164,6 +172,7 @@ helm install vault chart/
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
 | server.service.enabled | bool | `true` |  |
+| server.service.publishNotReadyAddresses | bool | `true` |  |
 | server.service.externalTrafficPolicy | string | `"Cluster"` |  |
 | server.service.port | int | `8200` |  |
 | server.service.targetPort | int | `8200` |  |
@@ -187,6 +196,7 @@ helm install vault chart/
 | server.ha.enabled | bool | `false` |  |
 | server.ha.replicas | int | `3` |  |
 | server.ha.apiAddr | string | `nil` |  |
+| server.ha.clusterAddr | string | `nil` |  |
 | server.ha.raft.enabled | bool | `true` |  |
 | server.ha.raft.setNodeId | bool | `true` |  |
 | server.ha.raft.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n\nservice_registration \"kubernetes\" {}\n"` |  |
@@ -208,7 +218,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"` |  |
-| csi.image.tag | string | `"0.4.0"` |  |
+| csi.image.tag | string | `"1.1.0"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -221,10 +231,13 @@ helm install vault chart/
 | csi.daemonSet.annotations | object | `{}` |  |
 | csi.daemonSet.providersDir | string | `"/etc/kubernetes/secrets-store-csi-providers"` |  |
 | csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
+| csi.daemonSet.extraLabels | object | `{}` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
+| csi.pod.extraLabels | object | `{}` |  |
 | csi.priorityClassName | string | `""` |  |
 | csi.serviceAccount.annotations | object | `{}` |  |
+| csi.serviceAccount.extraLabels | object | `{}` |  |
 | csi.readinessProbe.failureThreshold | int | `2` |  |
 | csi.readinessProbe.initialDelaySeconds | int | `5` |  |
 | csi.readinessProbe.periodSeconds | int | `5` |  |
@@ -247,7 +260,7 @@ helm install vault chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| autoInit.image.tag | string | `"1.2.0"` |  |
+| autoInit.image.tag | string | `"1.16.0"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |

@@ -14,6 +14,9 @@
                                 "string"
                             ]
                         },
+                        "extraLabels": {
+                            "type": "object"
+                        },
                         "kubeletRootDir": {
                             "type": "string"
                         },
@@ -40,7 +43,10 @@
                     "type": "boolean"
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": [
+                        "boolean",
+                        "string"
+                    ]
                 },
                 "extraArgs": {
                     "type": "array"
@@ -88,6 +94,9 @@
                                 "string"
                             ]
                         },
+                        "extraLabels": {
+                            "type": "object"
+                        },
                         "tolerations": {
                             "type": [
                                 "null",
@@ -128,6 +137,9 @@
                                 "object",
                                 "string"
                             ]
+                        },
+                        "extraLabels": {
+                            "type": "object"
                         }
                     }
                 },
@@ -257,7 +269,10 @@
                     }
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": [
+                        "boolean",
+                        "string"
+                    ]
                 },
                 "externalVaultAddr": {
                     "type": "string"
@@ -364,6 +379,39 @@
                         "array",
                         "string"
                     ]
+                },
+                "topologySpreadConstraints": {
+                    "type": [
+                        "null",
+                        "array",
+                        "string"
+                    ]
+                },
+                "webhook": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": [
+                                "object",
+                                "string"
+                            ]
+                        },
+                        "failurePolicy": {
+                            "type": "string"
+                        },
+                        "matchPolicy": {
+                            "type": "string"
+                        },
+                        "namespaceSelector": {
+                            "type": "object"
+                        },
+                        "objectSelector": {
+                            "type": "object"
+                        },
+                        "timeoutSeconds": {
+                            "type": "integer"
+                        }
+                    }
                 },
                 "webhookAnnotations": {
                     "type": [
@@ -472,7 +520,10 @@
                     }
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": [
+                        "boolean",
+                        "string"
+                    ]
                 },
                 "enterpriseLicense": {
                     "type": "object",
@@ -522,7 +573,10 @@
                             ]
                         },
                         "config": {
-                            "type": "string"
+                            "type": [
+                                "string",
+                                "object"
+                            ]
                         },
                         "disruptionBudget": {
                             "type": "object",
@@ -545,7 +599,10 @@
                             "type": "object",
                             "properties": {
                                 "config": {
-                                    "type": "string"
+                                    "type": [
+                                        "string",
+                                        "object"
+                                    ]
                                 },
                                 "enabled": {
                                     "type": "boolean"
@@ -740,6 +797,9 @@
                         "enabled": {
                             "type": "boolean"
                         },
+                        "publishNotReadyAddresses": {
+                            "type": "boolean"
+                        },
                         "externalTrafficPolicy": {
                             "type": "string"
                         },
@@ -775,7 +835,10 @@
                     "type": "object",
                     "properties": {
                         "config": {
-                            "type": "string"
+                            "type": [
+                                "string",
+                                "object"
+                            ]
                         },
                         "enabled": {
                             "type": [
@@ -836,7 +899,10 @@
                     ]
                 },
                 "enabled": {
-                    "type": "boolean"
+                    "type": [
+                        "boolean",
+                        "string"
+                    ]
                 },
                 "externalPort": {
                     "type": "integer"
