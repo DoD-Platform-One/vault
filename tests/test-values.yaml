@@ -31,7 +31,3 @@ injector:
 
 bbtests:
   enabled: true
-  cypress:
-    artifacts: true
-    envs:
-      cypress_vault_url: "http://vault.vault.svc:8200"

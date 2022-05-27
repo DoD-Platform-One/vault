@@ -3,9 +3,15 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
-## [0.19.0-bb.10] - 2022-05-17
+## [0.20.0-bb.1] - 2022-05-23
+### Updated
+- enable use of passthrough ingress gateway for CI pipeline
+- Allow autoInit job to work with HA and passthrough TLS
+
+## [0.20.0-bb.0] - 2022-05-17
 ### Updated
 - Updated vault to 1.10.3 and big-bang/base to 1.16.0
+- update to appVersion 1.10.3 chart version 0.20.0
 
 ## [0.19.0-bb.9] - 2022-05-09
 ### Updated

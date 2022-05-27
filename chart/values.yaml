@@ -182,6 +182,7 @@ injector:
     # injector will default to its automatic management mode that will assign
     # a service account to the injector to generate its own certificates.
     secretName: null
+    # secretName: vault-tls
 
     # caBundle is a base64-encoded PEM-encoded certificate bundle for the CA
     # that signed the TLS certificate that the webhook serves. This must be set
@@ -1040,3 +1041,9 @@ customAppIngressSelector:
   key: vault-ingress
   value: true
   
+bbtests:
+  enabled: false
+  cypress:
+    artifacts: true
+    envs:
+      cypress_vault_url: "http://vault.vault.svc:8200"

@@ -12,9 +12,15 @@ data:
     MONITORING_SERVICE_ACCOUNT_NAME="monitoring-monitoring-kube-prometheus"
     MONITORING_NAMESPACE="monitoring"
     INIT_OUT=/export/init.out
+
+    {{- if not .Values.global.tlsDisable }}
+    VAULT_ENDPOINT=https://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
+    export VAULT_ADDR=https://vault.{{ .Values.domain }}
+    {{- else }}
     VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
     export VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200
-    
+    {{- end }}
+
     until curl -L -s -k -f ${VAULT_ADDR} | grep Vault >& /dev/null; do echo "---=== Waiting For Vault Server ===---"; sleep 5; done
     
     echo "---=== Initializing Vault ===---"
