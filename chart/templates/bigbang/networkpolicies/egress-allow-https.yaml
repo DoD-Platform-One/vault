@@ -1,0 +1,20 @@
+{{- if and .Values.networkPolicies.enabled (not .Values.global.tlsDisable) }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: egress-allow-https
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "vault.name" . }}
+  egress:
+  - to:
+    - namespaceSelector: {}
+  - ports:
+    # need to open port 443 egress because the IP for the vault domain is unknown
+    - port: 443
+  # egress to aws metadata is specifically allowed in egress-metadata.yaml
+  policyTypes:
+  - Egress
+{{- end }}

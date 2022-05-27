@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.0-bb.0](https://img.shields.io/badge/Version-0.20.0--bb.0-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
+![Version: 0.20.0-bb.1](https://img.shields.io/badge/Version-0.20.0--bb.1-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -269,6 +269,9 @@ helm install vault chart/
 | minio.enabled | bool | `false` |  |
 | customAppIngressSelector.key | string | `"vault-ingress"` |  |
 | customAppIngressSelector.value | bool | `true` |  |
+| bbtests.enabled | bool | `false` |  |
+| bbtests.cypress.artifacts | bool | `true` |  |
+| bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
 
 ## Contributing
 
