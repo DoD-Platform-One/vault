@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.0-bb.2](https://img.shields.io/badge/Version-0.20.0--bb.2-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
+![Version: 0.20.1-bb.0](https://img.shields.io/badge/Version-0.20.1--bb.0-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -56,7 +56,7 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"0.16.0"` |  |
+| injector.image.tag | string | `"0.16.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
 | injector.agentImage.tag | string | `"1.10.3"` |  |
@@ -75,7 +75,7 @@ helm install vault chart/
 | injector.webhook.matchPolicy | string | `"Exact"` |  |
 | injector.webhook.timeoutSeconds | int | `30` |  |
 | injector.webhook.namespaceSelector | object | `{}` |  |
-| injector.webhook.objectSelector | object | `{}` |  |
+| injector.webhook.objectSelector | string | `"matchExpressions:\n- key: app.kubernetes.io/name\n  operator: NotIn\n  values:\n  - {{ template \"vault.name\" . }}-agent-injector\n"` |  |
 | injector.webhook.annotations | object | `{}` |  |
 | injector.failurePolicy | string | `"Ignore"` |  |
 | injector.namespaceSelector | object | `{}` |  |
@@ -260,7 +260,7 @@ helm install vault chart/
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
-| autoInit.image.tag | string | `"1.16.0"` |  |
+| autoInit.image.tag | string | `"1.18.0"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
@@ -277,3 +277,4 @@ helm install vault chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
