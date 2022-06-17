@@ -59,6 +59,32 @@ Compute if the server is enabled.
 {{- end -}}
 
 {{/*
+Compute if the server auth delegator serviceaccount is enabled.
+*/}}
+{{- define "vault.serverServiceAccountEnabled" -}}
+{{- $_ := set . "serverServiceAccountEnabled"
+  (and
+    (eq (.Values.server.serviceAccount.create | toString) "true" )
+    (or
+      (eq (.Values.server.enabled | toString) "true")
+      (eq (.Values.global.enabled | toString) "true"))) -}}
+{{- end -}}
+
+{{/*
+Compute if the server auth delegator serviceaccount is enabled.
+*/}}
+{{- define "vault.serverAuthDelegator" -}}
+{{- $_ := set . "serverAuthDelegator"
+  (and
+    (eq (.Values.server.authDelegator.enabled | toString) "true" )
+    (or (eq (.Values.server.serviceAccount.create | toString) "true")
+        (not (eq .Values.server.serviceAccount.name "")))
+    (or
+      (eq (.Values.server.enabled | toString) "true")
+      (eq (.Values.global.enabled | toString) "true"))) -}}
+{{- end -}}
+
+{{/*
 Compute if the server service is enabled.
 */}}
 {{- define "vault.serverServiceEnabled" -}}
@@ -458,6 +484,22 @@ Sets extra injector webhook annotations
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{/*
+Set's the injector webhook objectSelector
+*/}}
+{{- define "injector.objectSelector" -}}
+  {{- $v := or (((.Values.injector.webhook)).objectSelector) (.Values.injector.objectSelector) -}}
+  {{ if $v }}
+    objectSelector:
+    {{- $tp := typeOf $v -}}
+    {{ if eq $tp "string" }}
+      {{ tpl $v . | indent 6 | trim }}
+    {{ else }}
+      {{ toYaml $v | indent 6 | trim }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 
 {{/*
 Sets extra ui service annotations

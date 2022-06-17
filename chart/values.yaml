@@ -6,10 +6,9 @@ global:
   enabled: true
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
-
+  # imagePullSecrets: []
   imagePullSecrets:
     - name: private-registry
-
   # TLS for end-to-end encrypted transport
   tlsDisable: true
   # If deploying to OpenShift
@@ -55,7 +54,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-    tag: "0.16.0"
+    tag: "0.16.1"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -96,7 +95,7 @@ injector:
   # Configures all Vault Agent sidecars to revoke their token when shutting down
   revokeOnShutdown: false
 
-  webhook: 
+  webhook:
     # Configures failurePolicy of the webhook. The "unspecified" default behaviour depends on the
     # API Version of the WebHook.
     # To block pod creation while webhook is unavailable, set the policy to `Fail` below.
@@ -104,7 +103,7 @@ injector:
     #
     failurePolicy: Ignore
 
-    # matchPolicy specifies the approach to accepting changes based on the rules of 
+    # matchPolicy specifies the approach to accepting changes based on the rules of
     # the MutatingWebhookConfiguration.
     # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-matchpolicy
     # for more details.
@@ -118,7 +117,7 @@ injector:
     # for more details.
     #
     timeoutSeconds: 30
-    
+
     # namespaceSelector is the selector for restricting the webhook to only
     # specific namespaces.
     # See https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/#matching-requests-namespaceselector
@@ -137,7 +136,12 @@ injector:
     # objectSelector:
     #    matchLabels:
     #      vault-sidecar-injector: enabled
-    objectSelector: {}
+    objectSelector: |
+      matchExpressions:
+      - key: app.kubernetes.io/name
+        operator: NotIn
+        values:
+        - {{ template "vault.name" . }}-agent-injector
 
     # Extra annotations to attach to the webhook
     annotations: {}
@@ -417,7 +421,7 @@ server:
     #   command: [sh, -c]
     #   args:
     #     - cd /tmp &&
-    #       wget https://github.com/puppetlabs/vault-plugin-secrets-oauthapp/releases/download/v1.16.0/vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64.tar.xz -O oauthapp.xz &&
+    #       wget https://github.com/puppetlabs/vault-plugin-secrets-oauthapp/releases/download/v1.2.0/vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64.tar.xz -O oauthapp.xz &&
     #       tar -xf oauthapp.xz &&
     #       mv vault-plugin-secrets-oauthapp-v1.2.0-linux-amd64 /usr/local/libexec/vault/oauthapp &&
     #       chmod +x /usr/local/libexec/vault/oauthapp
@@ -555,16 +559,13 @@ server:
   networkPolicy:
     enabled: false
     egress: []
-    #egress:
-    #- to:
+    # egress:
+    # - to:
     #   - ipBlock:
-     #      cidr: 0.0.0.0/0
-      #     except:
-       #    -  169.254.169.254/32
-     # ports:
-      #-  protocol: TCP
-      #   port: 15021
-
+    #       cidr: 10.0.0.0/24
+    #   ports:
+    #   - protocol: TCP
+    #     port: 443
 
   # Priority class for server pods
   priorityClassName: ""
@@ -991,6 +992,7 @@ csi:
 
   # Pass arbitrary additional arguments to vault-csi-provider.
   extraArgs: []
+
 domain: bigbang.dev
 monitoring:
   enabled: false
@@ -1013,7 +1015,7 @@ autoInit:
   enabled: true
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
-    tag: 1.16.0
+    tag: 1.18.0
 
 istio:
   # Toggle istio interaction

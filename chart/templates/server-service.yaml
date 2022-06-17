@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/name: {{ include "vault.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-    prometheus-metrics: "true"    
+    prometheus-metrics: "true"
   annotations:
 {{ template "vault.service.annotations" .}}
 spec:
