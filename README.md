@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.1-bb.0](https://img.shields.io/badge/Version-0.20.1--bb.0-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
+![Version: 0.20.1-bb.1](https://img.shields.io/badge/Version-0.20.1--bb.1-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -277,4 +277,3 @@ helm install vault chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-

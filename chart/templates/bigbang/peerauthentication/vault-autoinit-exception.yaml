@@ -1,14 +1,14 @@
-{{- if and .Values.istio.enabled (eq .Values.istio.mtls.mode "STRICT") }}
+{{- if and .Values.istio.enabled .Values.autoInit.enabled (eq .Values.istio.mtls.mode "STRICT") }}
 apiVersion: "security.istio.io/v1beta1"
 kind: PeerAuthentication
 metadata:
-  name: vault-metrics-exception
+  name: vault-autoinit-exception
   namespace: {{ .Release.Namespace }}
 spec:
   mtls:
     mode: {{ .Values.istio.mtls.mode }}
   portLevelMtls:
-    "8080":
+    "8200":
       mode: PERMISSIVE
   selector:
     matchLabels:
