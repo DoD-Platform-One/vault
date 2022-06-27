@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.20.1-bb.1] - 2022-06-27
+### Added
+- added PeerAuthentication for autoInit job
+
 ## [0.20.1-bb.0] - 2022-06-06
 ### Updated
 - Updated `vault-k8s` to `1.16.1`, `big-bang/base` to `1.17.0`

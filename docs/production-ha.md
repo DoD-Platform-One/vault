@@ -77,7 +77,7 @@ The following is a bare minimun configuration for a production/operatonal deploy
             -----END CERTIFICATE-----
     ```
 1. Your cluster CSI storage should be configured with Reclaim Policy set as "Retain", otherwise you will loose data.
-1. S3 storage is a valid configuration but BigBang does not recommend it because it is not cloud agnostic and and is not compatible with many air-gap environments.
+1. S3 storage is a valid configuration but BigBang does not provide documentation because S3 is not cloud agnostic and is not compatible with many air-gap environments.
 1. The internal server name when deployed with BigBang chart is ```vault-vault-X.vault-vault-internal```. If you delpoy separately from BigBang then the internal server name is ```vault-X.vault-internal```
     ```yaml
 
@@ -126,7 +126,6 @@ The following is a bare minimun configuration for a production/operatonal deploy
       # Extra environment variable to support high availability
       extraEnvironmentVars:
         VAULT_API_ADDR: https://vault.bigbang.dev  #istio GW domain
-        VAULT_ADDR:  https://127.0.0.1:8200
         VAULT_SKIP_VERIFY: "true"
         VAULT_LOG_FORMAT: "json"
         VAULT_LICENSE: "your-license-key-goes-here"
@@ -146,11 +145,14 @@ The following is a bare minimun configuration for a production/operatonal deploy
             ui = true
 
             listener "tcp" {
-              tls_disable = 0
+              tls_disable = false
               address = "[::]:8200"
               cluster_address = "[::]:8201"
               tls_cert_file = "/vault/tls/tls.crt"
               tls_key_file  = "/vault/tls/tls.key"
+              telemetry {
+                unauthenticated_metrics_access = true
+              }
             }
 
             storage "raft" {
@@ -187,7 +189,6 @@ The following is a bare minimun configuration for a production/operatonal deploy
             telemetry {
               prometheus_retention_time = "24h"
               disable_hostname = true
-              unauthenticated_metrics_access = true
             }
 
             service_registration "kubernetes" {}
