@@ -24,7 +24,7 @@ metadata:
     name: {{ dig "scheduler" "name" "" . }}
   {{ end }}
 spec:
-  image: {{ dig "image" "repository" "minio/minio" . }}:{{ dig "image" "tag" "RELEASE.2022-02-18T01-50-10Z" . }}
+  image: {{ dig "image" "repository" "minio/minio" . }}:{{ dig "image" "tag" "RELEASE.2022-04-30T22-23-53Z" . }}
   imagePullPolicy: {{ dig "image" "pullPolicy" "IfNotPresent" . }}
   {{ if dig "imagePullSecret" "name" "" . }}
   imagePullSecret:
