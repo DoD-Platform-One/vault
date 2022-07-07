@@ -30,6 +30,10 @@ service:
 
 istio:
   enabled: false
+  mtls:
+    # STRICT = Allow only mutual TLS traffic
+    # PERMISSIVE = Allow both plain text and mutual TLS traffic
+    mode: STRICT
   console:
     enabled: true
     annotations: {}
@@ -71,7 +75,7 @@ tenants:
   ## Registry location and Tag to download MinIO Server image
   image:
     repository: registry1.dso.mil/ironbank/opensource/minio/minio
-    tag: RELEASE.2022-02-26T02-54-46Z
+    tag: RELEASE.2022-04-30T22-23-53Z
     pullPolicy: IfNotPresent
   ## Customize namespace for tenant deployment
   #namespace: default

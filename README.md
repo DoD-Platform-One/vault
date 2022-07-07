@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.1-bb.2](https://img.shields.io/badge/Version-0.20.1--bb.2-informational?style=flat-square) ![AppVersion: 1.10.3](https://img.shields.io/badge/AppVersion-1.10.3-informational?style=flat-square)
+![Version: 0.20.1-bb.3](https://img.shields.io/badge/Version-0.20.1--bb.3-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -59,7 +59,7 @@ helm install vault chart/
 | injector.image.tag | string | `"0.16.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| injector.agentImage.tag | string | `"1.10.3"` |  |
+| injector.agentImage.tag | string | `"1.11.0"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -111,7 +111,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| server.image.tag | string | `"1.10.3"` |  |
+| server.image.tag | string | `"1.11.0"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -277,3 +277,4 @@ helm install vault chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
