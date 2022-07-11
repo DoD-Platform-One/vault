@@ -1016,6 +1016,9 @@ autoInit:
   image:
     repository: registry1.dso.mil/ironbank/big-bang/base
     tag: 2.0.0
+  # Init Job PVC Storage Size
+  storage:
+    size: 2Gi
 
 istio:
   # Toggle istio interaction
