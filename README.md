@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.1-bb.3](https://img.shields.io/badge/Version-0.20.1--bb.3-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
+![Version: 0.20.1-bb.4](https://img.shields.io/badge/Version-0.20.1--bb.4-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -261,6 +261,7 @@ helm install vault chart/
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
 | autoInit.image.tag | string | `"2.0.0"` |  |
+| autoInit.storage.size | string | `"2Gi"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
@@ -277,4 +278,3 @@ helm install vault chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-
