@@ -12,7 +12,7 @@ or
 
 [Meld UI](https://meldmerge.org/)
 
-BigBang makes modifications to the upstream helm chart. The full list of changes is at the end of  this document.
+BigBang makes modifications to the upstream helm chart. The full list of changes is at the end of  this document.  
 
 # Testing new Vault version
 1. Create a k8s dev environment. One option is to use the Big Bang [k3d-dev.sh](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/developer/scripts) with no arguments which will give you the default configuration. The following steps assume you are using the script.
