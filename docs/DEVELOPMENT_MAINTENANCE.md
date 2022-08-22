@@ -87,6 +87,8 @@ This is a high-level list of modifitations that Big Bang has made to the upstrea
 - add MinIO and `helm dependency update`
 ## chart/templates/bigbang/*
 - add templates to support Big Bang integration
+## chart/templates/server-service.yaml
+- add `prometeus-metrics: "true"` to end of `metadata: labels:`
 ## chart/templates/tests/*
 - delete server-test.yaml
 ## chart/tests/*

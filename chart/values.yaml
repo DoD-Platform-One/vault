@@ -4,6 +4,7 @@ global:
   # enabled is the master enabled switch. Setting this to true or false
   # will enable or disable all the components within this chart by default.
   enabled: true
+
   # Image pull secret to use for registry authentication.
   # Alternatively, the value may be specified as an array of strings.
   # imagePullSecrets: []
@@ -11,8 +12,14 @@ global:
     - name: private-registry
   # TLS for end-to-end encrypted transport
   tlsDisable: true
+
+  # External vault server address for the injector and CSI provider to use.
+  # Setting this will disable deployment of a vault server.
+  externalVaultAddr: ""
+
   # If deploying to OpenShift
   openshift: false
+
   # Create PodSecurityPolicy for pods
   psp:
     enable: false
@@ -47,14 +54,13 @@ injector:
   metrics:
     enabled: true
 
-  # External vault server address for the injector to use. Setting this will
-  # disable deployment of a vault server along with the injector.
+  # Deprecated: Please use global.externalVaultAddr instead.
   externalVaultAddr: ""
 
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-    tag: "0.16.1"
+    tag: "0.17.0"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -62,7 +68,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.11.0"
+    tag: "1.11.2"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -200,14 +206,28 @@ injector:
     certName: tls.crt
     keyName: tls.key
 
-  #resources: {}
+  # Security context for the pod template and the injector container
+  # The default pod securityContext is:
+  #   runAsNonRoot: true
+  #   runAsGroup: {{ .Values.injector.gid | default 1000 }}
+  #   runAsUser: {{ .Values.injector.uid | default 100 }}
+  #   fsGroup: {{ .Values.injector.gid | default 1000 }}
+  # and for container is
+  #    allowPrivilegeEscalation: false
+  #    capabilities:
+  #      drop:
+  #        - ALL
+  securityContext:
+    pod: {}
+    container: {}
+
   resources:
-     requests:
-       memory: 256Mi
-       cpu: 250m
-     limits:
-       memory: 256Mi
-       cpu: 250m
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
 
   # extraEnvironmentVars is a list of extra environment variables to set in the
   # injector deployment.
@@ -273,6 +293,11 @@ injector:
     # Extra annotations to attach to the injector service
     annotations: {}
 
+  # Injector serviceAccount specific config
+  serviceAccount:
+    # Extra annotations to attach to the injector serviceAccount
+    annotations: {}
+
   # A disruption budget limits the number of pods of a replicated application
   # that are down simultaneously from voluntary disruptions
   podDisruptionBudget: {}
@@ -318,7 +343,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault"
-    tag: "1.11.0"
+    tag: "1.11.2"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -607,6 +632,16 @@ server:
     # will be random if left blank.
     #nodePort: 30000
 
+    # When HA mode is enabled
+    # If type is set to "NodePort", a specific nodePort value can be configured,
+    # will be random if left blank.
+    #activeNodePort: 30001
+
+    # When HA mode is enabled
+    # If type is set to "NodePort", a specific nodePort value can be configured,
+    # will be random if left blank.
+    #standbyNodePort: 30002
+
     # Port on which Vault server is listening
     port: 8200
     # Target port to which the service should be mapped to
@@ -840,6 +875,24 @@ server:
     # to the statefulSet.
     annotations: {}
 
+    # Set the pod and container security contexts.
+    # If not set, these will default to, and for *not* OpenShift:
+    # pod:
+    #   runAsNonRoot: true
+    #   runAsGroup: {{ .Values.server.gid | default 1000 }}
+    #   runAsUser: {{ .Values.server.uid | default 100 }}
+    #   fsGroup: {{ .Values.server.gid | default 1000 }}
+    # container: {}
+    #
+    # If not set, these will default to, and for OpenShift:
+    # pod: {}
+    # container:
+    #   allowPrivilegeEscalation: false
+    securityContext:
+      pod: {}
+      container: {}
+
+
 # Vault UI
 ui:
   # True if you want to create a Service entry for the Vault UI.
@@ -887,7 +940,7 @@ csi:
 
   image:
     repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"
-    tag: "1.1.0"
+    tag: "1.2.0"
     pullPolicy: IfNotPresent
 
   # volumes is a list of volumes made available to all containers. These are rendered
@@ -931,6 +984,10 @@ csi:
     # Extra labels to attach to the vault-csi-provider daemonSet
     # This should be a YAML map of the labels to apply to the csi provider daemonSet
     extraLabels: {}
+    # security context for the pod template and container in the csi provider daemonSet
+    securityContext:
+      pod: {}
+      container: {}
 
   pod:
     # Extra annotations for the provider pods. This can either be YAML or a
@@ -991,6 +1048,8 @@ csi:
   debug: false
 
   # Pass arbitrary additional arguments to vault-csi-provider.
+  # See https://www.vaultproject.io/docs/platform/k8s/csi/configurations#command-line-arguments
+  # for the available command line flags.
   extraArgs: []
 
 domain: bigbang.dev

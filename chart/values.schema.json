@@ -23,6 +23,23 @@
                         "providersDir": {
                             "type": "string"
                         },
+                        "securityContext": {
+                            "type": "object",
+                            "properties": {
+                                "container": {
+                                    "type": [
+                                        "object",
+                                        "string"
+                                    ]
+                                },
+                                "pod": {
+                                    "type": [
+                                        "object",
+                                        "string"
+                                    ]
+                                }
+                            }
+                        },
                         "updateStrategy": {
                             "type": "object",
                             "properties": {
@@ -35,9 +52,6 @@
                             }
                         }
                     }
-                },
-                "priorityClassName": {
-                    "type": "string"
                 },
                 "debug": {
                     "type": "boolean"
@@ -106,6 +120,9 @@
                         }
                     }
                 },
+                "priorityClassName": {
+                    "type": "string"
+                },
                 "readinessProbe": {
                     "type": "object",
                     "properties": {
@@ -162,6 +179,9 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "externalVaultAddr": {
+                    "type": "string"
                 },
                 "imagePullSecrets": {
                     "type": "array"
@@ -359,7 +379,35 @@
                 "revokeOnShutdown": {
                     "type": "boolean"
                 },
+                "securityContext": {
+                    "type": "object",
+                    "properties": {
+                        "container": {
+                            "type": [
+                                "object",
+                                "string"
+                            ]
+                        },
+                        "pod": {
+                            "type": [
+                                "object",
+                                "string"
+                            ]
+                        }
+                    }
+                },
                 "service": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": [
+                                "object",
+                                "string"
+                            ]
+                        }
+                    }
+                },
+                "serviceAccount": {
                     "type": "object",
                     "properties": {
                         "annotations": {
@@ -578,6 +626,12 @@
                                 "string"
                             ]
                         },
+                        "clusterAddr": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
                         "config": {
                             "type": [
                                 "string",
@@ -788,6 +842,9 @@
                         },
                         "labels": {
                             "type": "object"
+                        },
+                        "tls": {
+                            "type": "object"
                         }
                     }
                 },
@@ -803,16 +860,25 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "publishNotReadyAddresses": {
-                            "type": "boolean"
-                        },
                         "externalTrafficPolicy": {
                             "type": "string"
                         },
                         "port": {
                             "type": "integer"
                         },
+                        "publishNotReadyAddresses": {
+                            "type": "boolean"
+                        },
                         "targetPort": {
+                            "type": "integer"
+                        },
+                        "nodePort": {
+                            "type": "integer"
+                        },
+                        "activeNodePort": {
+                            "type": "integer"
+                        },
+                        "standbyNodePort": {
                             "type": "integer"
                         }
                     }
@@ -862,6 +928,23 @@
                                 "object",
                                 "string"
                             ]
+                        },
+                        "securityContext": {
+                            "type": "object",
+                            "properties": {
+                                "container": {
+                                    "type": [
+                                        "object",
+                                        "string"
+                                    ]
+                                },
+                                "pod": {
+                                    "type": [
+                                        "object",
+                                        "string"
+                                    ]
+                                }
+                            }
                         }
                     }
                 },
@@ -869,6 +952,13 @@
                     "type": "integer"
                 },
                 "tolerations": {
+                    "type": [
+                        "null",
+                        "array",
+                        "string"
+                    ]
+                },
+                "topologySpreadConstraints": {
                     "type": [
                         "null",
                         "array",

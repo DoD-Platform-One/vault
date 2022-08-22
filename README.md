@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.20.1-bb.4](https://img.shields.io/badge/Version-0.20.1--bb.4-informational?style=flat-square) ![AppVersion: 1.11.0](https://img.shields.io/badge/AppVersion-1.11.0-informational?style=flat-square)
+![Version: 0.21.0-bb.0](https://img.shields.io/badge/Version-0.21.0--bb.0-informational?style=flat-square) ![AppVersion: 1.11.2](https://img.shields.io/badge/AppVersion-1.11.2-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -43,6 +43,7 @@ helm install vault chart/
 | global.enabled | bool | `true` |  |
 | global.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | global.tlsDisable | bool | `true` |  |
+| global.externalVaultAddr | string | `""` |  |
 | global.openshift | bool | `false` |  |
 | global.psp.enable | bool | `false` |  |
 | global.psp.annotations | string | `"seccomp.security.alpha.kubernetes.io/allowedProfileNames: docker/default,runtime/default\napparmor.security.beta.kubernetes.io/allowedProfileNames: runtime/default\nseccomp.security.alpha.kubernetes.io/defaultProfileName:  runtime/default\napparmor.security.beta.kubernetes.io/defaultProfileName:  runtime/default\n"` |  |
@@ -56,10 +57,10 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"0.16.1"` |  |
+| injector.image.tag | string | `"0.17.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| injector.agentImage.tag | string | `"1.11.0"` |  |
+| injector.agentImage.tag | string | `"1.11.2"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -85,6 +86,8 @@ helm install vault chart/
 | injector.certs.caBundle | string | `""` |  |
 | injector.certs.certName | string | `"tls.crt"` |  |
 | injector.certs.keyName | string | `"tls.key"` |  |
+| injector.securityContext.pod | object | `{}` |  |
+| injector.securityContext.container | object | `{}` |  |
 | injector.resources.requests.memory | string | `"256Mi"` |  |
 | injector.resources.requests.cpu | string | `"250m"` |  |
 | injector.resources.limits.memory | string | `"256Mi"` |  |
@@ -99,6 +102,7 @@ helm install vault chart/
 | injector.extraLabels | object | `{}` |  |
 | injector.hostNetwork | bool | `false` |  |
 | injector.service.annotations | object | `{}` |  |
+| injector.serviceAccount.annotations | object | `{}` |  |
 | injector.podDisruptionBudget | object | `{}` |  |
 | injector.strategy | object | `{}` |  |
 | server.enabled | bool | `true` |  |
@@ -111,7 +115,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault"` |  |
-| server.image.tag | string | `"1.11.0"` |  |
+| server.image.tag | string | `"1.11.2"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -207,6 +211,8 @@ helm install vault chart/
 | server.serviceAccount.name | string | `""` |  |
 | server.serviceAccount.annotations | object | `{}` |  |
 | server.statefulSet.annotations | object | `{}` |  |
+| server.statefulSet.securityContext.pod | object | `{}` |  |
+| server.statefulSet.securityContext.container | object | `{}` |  |
 | ui.enabled | bool | `true` |  |
 | ui.publishNotReadyAddresses | bool | `true` |  |
 | ui.activeVaultPodOnly | bool | `false` |  |
@@ -218,7 +224,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"` |  |
-| csi.image.tag | string | `"1.1.0"` |  |
+| csi.image.tag | string | `"1.2.0"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -232,6 +238,8 @@ helm install vault chart/
 | csi.daemonSet.providersDir | string | `"/etc/kubernetes/secrets-store-csi-providers"` |  |
 | csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
 | csi.daemonSet.extraLabels | object | `{}` |  |
+| csi.daemonSet.securityContext.pod | object | `{}` |  |
+| csi.daemonSet.securityContext.container | object | `{}` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
 | csi.pod.extraLabels | object | `{}` |  |

@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.21.0-bb.0] - 2022-08-12
+### Updated
+- Updated `vault` to `1.11.2`, `vault-k8s` to `1.17.0`
+
 ## [0.20.1-bb.4] - 2022-07-11
 ### Changed
 - Added configurable PVC size for dev/testing
