@@ -22,7 +22,7 @@ Known issues:
 
 ## Vault Kubernetes Authentication Method
 
-The Kubernetes Authentcation Method can be create using Vault's web interface or by the vault cli.
+The Kubernetes Authentication Method can be create using Vault's web interface or by the vault cli.
 
 See [HashiCorp Vault Kubernetes Auth Method](https://www.vaultproject.io/docs/auth/kubernetes) for more details
 
@@ -33,12 +33,12 @@ This script creates an Auth Method called **prometheus** and binds the Auth Meth
 
 ## Vault ACL Policy Defined
 
-Vault exposes Prometheus metrics at the **/sys/metrics** url. 
+Vault exposes Prometheus metrics at the **/sys/metrics** url.
 
 Since Prometheus needs read ability, we create the policy with this:
 
 ```yaml
-    path "/sys/metrics" { 
+    path "/sys/metrics" {
      capabilities = ["read"]
     }
 ```
@@ -54,11 +54,11 @@ The Big Bang prometheus pod is annotated with the following valules:
 ```yaml
 vault.hashicorp.com/agent-inject: "true"
 vault.hashicorp.com/agent-init-first: "true"
-vault.hashicorp.com/agent-inject-token: "true"      
+vault.hashicorp.com/agent-inject-token: "true"
 vault.hashicorp.com/role: "prometheus"
 ```
 
-With these settings, the Vault sidecar will mount the Vault token assigned to the kubernetes/prometheus role inside the pod at **/vault/secrets/token** .  
+With these settings, the Vault sidecar will mount the Vault token assigned to the kubernetes/prometheus role inside the pod at **/vault/secrets/token** .
 
 Mounting the token inside the pod allows the Prometheus configuration to pass the token when it scrapes data from Vault.
 
@@ -72,10 +72,10 @@ Prometheus is configured using a ServiceMonitor to scrape the metrics from Vault
 endpoints:
 - port: http
   path: /v1/sys/metrics
-  bearerTokenFile: /vault/secrets/token  
-  scheme: http    
+  bearerTokenFile: /vault/secrets/token
+  scheme: http
   params:
-    format: ['prometheus']  
+    format: ['prometheus']
 ```
 
 ## Big Bang Development Environment Upgrade Issues
@@ -84,6 +84,6 @@ endpoints:
 
 1. Earlier versions set the service account name to **prometheus** -- it should be **monitoring-monitoring-kube-prometheus**
     * **Fix**: Using the Vault web interface, replace **prometheus** with **monitoring-monitoring-kube-prometheus** under the settings **kubernetes/prometheus auth Bound service account names**
-2. Permission denied trying to re-authenticate after upgrade 
+2. Permission denied trying to re-authenticate after upgrade
     * see here for possible, related issue [after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied](https://discuss.hashicorp.com/t/after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied/29392)
     * **Fix**: Re-save the **Access/Authentication Methods/kubernetes/Configuration/Configure** settings
