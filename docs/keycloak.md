@@ -11,22 +11,22 @@ https://www.spicyomelet.com/sso-with-keycloak-and-hashicorp-vault/
 There is a sample Keycloak realm with pre-configured clients in the [Keycloak package repository](https://repo1.dso.mil/platform-one/big-bang/apps/security-tools/keycloak/-/tree/main/chart/resources/dev/).
 Create an OIDC client with the following (modify as needed):
 1. Client ID:  dev_00eb8904-5b88-4c68-ad67-cec0d2e07aa6_vault
-1. Clinet Protocol:  openid-connect
+1. Client Protocol:  openid-connect
 1. Name:  Dev Vault
 1. Access Type:  confidential  (or ```public``` for dev environments)
-1. Valid Redirect URIs:  
-    https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback  
-    https://vault.bigbang.dev/oidc/callback  
+1. Valid Redirect URIs:
+    https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback
+    https://vault.bigbang.dev/oidc/callback
 1. Click ```Save``` button
-1. Map ```groups``` to user token claim. This will create a field on the user token that includes the user's Keycloak groups. This is needed so that Vault can use Keycloak groups.  
-    a. Click the Mappers tab  
-    b. Click the Create button  
-    c. Name: groups  
-    d. Mapper Type: Group Membership  
-    e. Token Claim Name: groups  
-    f. Full group path: OFF  
-    g. click save button  
-1. Note the client secret on the credentials tab if the Access Type is ```confidential``` 
+1. Map ```groups``` to user token claim. This will create a field on the user token that includes the user's Keycloak groups. This is needed so that Vault can use Keycloak groups.
+    a. Click the Mappers tab
+    b. Click the Create button
+    c. Name: groups
+    d. Mapper Type: Group Membership
+    e. Token Claim Name: groups
+    f. Full group path: OFF
+    g. click save button
+1. Note the client secret on the credentials tab if the Access Type is ```confidential```
 1. Optional: Create a ```vault-admin``` group
 1. Optional: Add user(s) to the vault-admin group
 
@@ -53,7 +53,7 @@ The [upstream Vault documentation](https://learn.hashicorp.com/tutorials/vault/o
         capabilities = ["read", "list"]
     }
     EOF
-    
+
     vault policy write reader ./reader.hcl
     ```
     view it
