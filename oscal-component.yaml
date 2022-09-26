@@ -1,0 +1,54 @@
+component-definition:
+  uuid: D955EB03-9403-483B-A304-6459224DD7C9
+  metadata: 
+    title: Vault Component
+    last-modified: '2022-09-23T12:00:00Z'
+    version: "20220923"
+    oscal-version: 1.0.0
+    parties:
+      # Should be consistent across all of the packages, but where is ground truth?
+    - uuid: 72134592-08C2-4A77-ABAD-C880F109367A 
+      type: organization
+      name: Platform One
+      links:
+      - href: <https://p1.dso.mil>
+        rel: website
+  components:
+  - uuid: B0E83077-22B4-4BCE-97AB-A41D5B53F078
+    type: software
+    title: Vault
+    description: |
+      Deployment of Vault as a secrets management application
+    purpose: Secrets maangement 
+    responsible-roles:
+    - role-id: provider
+      party-uuids:
+      - 72134592-08C2-4A77-ABAD-C880F109367A # matches parties entry for p1
+    control-implementations:
+    - uuid: 5108E5FC-C45F-477B-A542-9C5611A92485
+      source: https://raw.githubusercontent.com/usnistgov/oscal-content/master/nist.gov/SP800-53/rev5/json/NIST_SP-800-53_rev5_catalog.json
+      description:
+        Controls implemented by Vault for inheritance by applications
+      implemented-requirements:
+      - uuid: BA75E949-4B87-4F5C-BEBC-556349D6B681
+        control-id: IA-9
+        description: >-
+          HashiCorp Vault is a secrets management solution that programmatically brokers access to systems for both humans and machines. It also provides granular access controls to SSH certificate parameters and signing, which is enforced by Vault policies.
+      - uuid: 76F7F8A6-EF5B-45E4-992E-F51EEA7315DD
+        control-id: SC-17
+        description: >-
+          The PKI secrets engine generates dynamic X.509 certificates. With this secrets engine, services can get certificates without going through the usual manual process of generating a private key and CSR, submitting to a CA, and waiting for a verification and signing process to complete. Vault's built-in authentication and authorization mechanisms provide the verification functionality.
+      - uuid: 03D6D7F5-BC10-4D11-9D80-F0D826576AA3
+        control-id: SC-28
+        description: >-
+          Vault encrypts secrets prior to writing them to persistent storage.
+  back-matter: 
+    resources:
+    - uuid: 135709B6-8398-49BC-BBDE-479B44A5728C
+      title: Vault
+      rlinks:
+      - href: https://github.com/hashicorp/vault
+    - uuid: 174449D8-3238-4DD4-85DE-84CA0B19829B
+      title: Big Bang vault package
+      rlinks:
+        - href: https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/vault
