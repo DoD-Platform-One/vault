@@ -89,10 +89,6 @@ The following is a bare minimum configuration for a production/operational deplo
       # this is a double negative. Put "false" to enable TLS
       tlsDisable: false
 
-    injector:
-      extraEnvironmentVars:
-        AGENT_INJECT_VAULT_ADDR: "https://vault.bigbang.dev"
-
     server:
       # The BigBang helm chart has configuration that can create the vault-tls secret and volumemount for you
       # Volume mount the secret so that Vault can support Istio ingress passthrough
@@ -125,7 +121,6 @@ The following is a bare minimum configuration for a production/operational deplo
 
       # Extra environment variable to support high availability
       extraEnvironmentVars:
-        VAULT_API_ADDR: https://vault.bigbang.dev  #istio GW domain
         VAULT_SKIP_VERIFY: "true"
         VAULT_LOG_FORMAT: "json"
         VAULT_LICENSE: "your-license-key-goes-here"
@@ -134,6 +129,10 @@ The following is a bare minimum configuration for a production/operational deplo
         # enable high availability.
         enabled: true
         replicas: 3
+
+	# tell the deployments where our Vault API endpoint is
+	# see https://github.com/hashicorp/vault-helm/issues/789
+        apiAddr: "https://vault.bigbang.dev"
 
         # raft is the license free most simple solution for distributed filesystem
         raft:

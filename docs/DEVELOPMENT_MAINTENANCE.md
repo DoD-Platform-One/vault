@@ -89,6 +89,10 @@ This is a high-level list of modifitations that Big Bang has made to the upstrea
 - add templates to support Big Bang integration
 ## chart/templates/server-service.yaml
 - add `prometeus-metrics: "true"` to end of `metadata: labels:`
+## chart/templates/injector-deployment.yaml
+- ensure `AGENT_INJECT_VAULT_ADDR` environment variable has third if else option checking for `.Values.server.ha.apiAddr`. This is a BigBang addition.
+## chart/templates/csi-daemonset.yaml
+- ensure `VAULT_ADDR` environment variable has if else option checking for `.Values.server.ha.apiAddr`. This is a BigBang addition.
 ## chart/templates/tests/*
 - delete server-test.yaml
 ## chart/tests/*

@@ -3,9 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.22.0-bb.0] - 2022-09-21
+### Updated
+- Update Vault to appVersion `1.11.3` helm chart version `0.22.0` , `vault-k8s` to `1.0.0`
+
 ## [0.21.0-bb.0] - 2022-08-12
 ### Updated
-- Updated `vault` to `1.11.2`, `vault-k8s` to `1.17.0`
+- Updated `vault` to `1.11.2`, `vault-k8s` to `0.17.0`
 
 ## [0.20.1-bb.4] - 2022-07-11
 ### Changed
