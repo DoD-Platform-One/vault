@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.22.0-bb.0](https://img.shields.io/badge/Version-0.22.0--bb.0-informational?style=flat-square) ![AppVersion: 1.11.3](https://img.shields.io/badge/AppVersion-1.11.3-informational?style=flat-square)
+![Version: 0.22.0-bb.1](https://img.shields.io/badge/Version-0.22.0--bb.1-informational?style=flat-square) ![AppVersion: 1.11.3](https://img.shields.io/badge/AppVersion-1.11.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -283,6 +283,13 @@ helm install vault chart/
 | bbtests.enabled | bool | `false` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
+| serverTelemetry.serviceMonitor.enabled | bool | `false` |  |
+| serverTelemetry.serviceMonitor.selectors | object | `{}` |  |
+| serverTelemetry.serviceMonitor.interval | string | `"30s"` |  |
+| serverTelemetry.serviceMonitor.scrapeTimeout | string | `"10s"` |  |
+| serverTelemetry.prometheusRules.enabled | bool | `false` |  |
+| serverTelemetry.prometheusRules.selectors | object | `{}` |  |
+| serverTelemetry.prometheusRules.rules | object | `{}` |  |
 
 ## Contributing
 
