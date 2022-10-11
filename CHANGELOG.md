@@ -3,9 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.22.0-bb.3] - 2022-10-07
+### Removed
+- Removed metric monitoring exception for Istio PeerAuthentication resource
+
 ## [0.22.0-bb.2] - 2022-09-28
 ### Updated
 - Enhance Renovate functionality
+
 ## [0.22.0-bb.1] - 2022-09-28
 ### Added
 - Added `oscal-component.yaml` file to project root w/ implemented requirements against NIST 800-53
