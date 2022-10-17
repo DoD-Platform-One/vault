@@ -1,12 +1,7 @@
 # Vault configuration for production high availability
 This document describes BigBang recommended minimum production/operational settings. Vault is a large complicated application and has many options that cannot adequately be covered here. Vault has significant security risks if not properly configured and administrated. Please consult the upstream [Vault documentation](https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#configure-vault-helm-chart) as the ultimate authority.
 
-## Vault Initialization
-Regardless of whether or not you configure for auto-unseal, you must first initialize Vault for a new deployment. Exec into one of the Vault k8s containers.
-```bash
-kubectl exec -it pod/vault-vault-0 -n vault /bin/bash
-```
-From there you can initialize the deployment. See the [Vault documentation](https://www.vaultproject.io/docs/commands/operator/init)
+[[_TOC_]]
 
 ## Disable Auto Init
 BigBang developed an ```autoInit``` k8s job that initializes and unseals Vault and writes the root token and unseal keys to a k8s secret. This should only be used for development, CI pipelines, or demos. The root token and unlock keys should not be discoverable from a k8s secret. This setting should be disabled for operational deployments.
@@ -14,6 +9,21 @@ BigBang developed an ```autoInit``` k8s job that initializes and unseals Vault a
 autoInit:
   enabled: false
 ```
+
+## Vault Initialization
+Regardless of whether or not you configure for auto-unseal, you must first initialize Vault for a new deployment. 
+
+Review the [Vault init documentation for available options](https://www.vaultproject.io/docs/commands/operator/init)
+
+Exec into one of the Vault k8s containers and run your `init` command:
+```bash
+kubectl exec -it pod/vault-vault-0 -n vault /bin/bash
+
+vault operator init ...
+```
+Be sure to save the root token and recovery keys to a secure location, one of the two outputs will be required to continue use of the Vault Installation.
+
+Also see the [Vault documentation](https://www.vaultproject.io/docs/commands/operator/init)
 
 ## High availability
 An operational deployment of Vault should be configured for high availability.
@@ -192,3 +202,11 @@ The following is a bare minimum configuration for a production/operational deplo
 
             service_registration "kubernetes" {}
     ```
+
+## Next Steps / More Reading
+
+From here Vault is initialized, using KMS and ready for Operational use, please see our guides for further reading:
+
+* Creating a secret and injecting an app with said secret review our [Operational Guide For using Vault secrets in BigBang](./bigbang-operational-guide.md)
+
+* Configuring and verifying [Prometheus metrics scraping of a Vault server](./PROMETHEUS.md)

@@ -15,7 +15,11 @@ There are 3 main parts to getting secrets to Kubernetes pods:
 
 ## Vault Server Configuration
 
-When autoInit is enabled, the Vault helm chart will enable the Kubernetes integration after the server is initialized.  See init.sh defined in [configmap-for-vault-init.yaml](../chart/templates/bigbang/autoUnsealAndInit/configmap-for-vault-init.yaml)
+When autoInit is enabled, the Vault helm chart will enable the Kubernetes integration after the server is initialized. To get the root token for the vault deployment if using the BigBang developer `autoInit` job:
+
+  ```console
+  kubectl get secret -n vault vault-token -o go-template='{{.data.key | base64decode}}'
+  ```
 
 The command that configure Kubernetes:
 
