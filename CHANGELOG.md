@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.22.1-bb.2] - 2022-12-02
+### Updated
+- Update Vault to appVersion `1.12.0` , `vault-k8s` to `1.0.1`
+- Updated gluon to `0.3.1`
+- update Minio dependency to `4.5.4-bb.1`
+
 ## [0.22.1-bb.1] - 2022-11-16
 ### Updated
 - Fixed security context capability violations
