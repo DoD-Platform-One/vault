@@ -23,4 +23,4 @@ dependencies:
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
 annotations:
   bigbang.dev/applicationVersions: |
-    - Vault: 1.12.0
+    - Vault: 1.12.1
