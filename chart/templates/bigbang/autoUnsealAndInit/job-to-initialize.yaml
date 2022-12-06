@@ -102,7 +102,7 @@ spec:
       initContainers:
       - name: vault-init-job
         image:  {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
-        command: ['/bin/sh', '-c', 'sleep 1200 && cd /vault/data/init && sh init.sh' ]
+        command: ['/bin/sh', '-c', 'cd /vault/data/init && sh init.sh' ]
         volumeMounts:
         - name: vault-keys
           mountPath: "/vault/data"
