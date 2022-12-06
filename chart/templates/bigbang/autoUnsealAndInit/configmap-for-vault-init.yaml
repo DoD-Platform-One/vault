@@ -24,7 +24,7 @@ data:
     until curl -L -s -k -f ${VAULT_ADDR} | grep Vault >& /dev/null; do echo "---=== Waiting For Vault Server ===---"; sleep 5; done
     
     echo "---=== Initializing Vault ===---"
-    vault operator init -address=$VAULT_ADDR > $INIT_OUT
+    vault operator init -address=$VAULT_ADDR  -key-shares=5 -key-threshold=3 > $INIT_OUT
     
     export VAULT_TOKEN=$(grep Token $INIT_OUT | cut -d' ' -f  4)
     
