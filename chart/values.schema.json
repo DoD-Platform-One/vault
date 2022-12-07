@@ -851,6 +851,14 @@
                 "service": {
                     "type": "object",
                     "properties": {
+                        "active": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
                         "annotations": {
                             "type": [
                                 "object",
@@ -863,11 +871,27 @@
                         "externalTrafficPolicy": {
                             "type": "string"
                         },
+                        "instanceSelector": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
                         "port": {
                             "type": "integer"
                         },
                         "publishNotReadyAddresses": {
                             "type": "boolean"
+                        },
+                        "standby": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
                         },
                         "targetPort": {
                             "type": "integer"
@@ -895,8 +919,19 @@
                         "create": {
                             "type": "boolean"
                         },
+                        "extraLabels": {
+                            "type": "object"
+                        },
                         "name": {
                             "type": "string"
+                        },
+                        "serviceDiscovery": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
                         }
                     }
                 },

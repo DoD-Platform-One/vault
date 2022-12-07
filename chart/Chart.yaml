@@ -1,7 +1,12 @@
 apiVersion: v2
 name: vault
+<<<<<<< HEAD
 version: 0.22.1-bb.2
 appVersion: 1.12.0
+=======
+version: 0.23.0-bb.0
+appVersion: 1.12.1
+>>>>>>> 564d350 (update "chart" (https://github.com/hashicorp/vault-helm) from "v0.22.1" (5d7014c7bbaba9efe87dbd747b4461fec889d77b) to "v0.23.0" (2d7fd5d5652d9f3f09dd686e3318aa7dc8f661eb))
 kubeVersion: ">= 1.16.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
@@ -14,12 +19,12 @@ sources:
   - https://github.com/hashicorp/vault-csi-provider
 dependencies:
   - name: minio-instance
-    version: 4.5.4-bb.0
+    version: 4.5.4-bb.2
     alias: minio
     condition: minio.enabled
     repository: file://./deps/minio
   - name: gluon
-    version: "0.2.10"
+    version: "0.3.1"
     repository: oci://registry.dso.mil/platform-one/big-bang/apps/library-charts/gluon
 annotations:
   bigbang.dev/applicationVersions: |
