@@ -5,9 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ---
 ## [0.22.1-bb.2] - 2022-12-02
 ### Updated
-- Update Vault to appVersion `1.12.1` , `vault-k8s` to `1.0.1`
+- Update Vault to appVersion `1.12.1` , `vault-k8s` to `1.1.0`
 - Updated gluon to `0.3.1`
-- update Minio dependency to `4.5.4-bb.1`
+- update Minio dependency to `4.5.4-bb.2`
 
 ## [0.22.1-bb.1] - 2022-11-16
 ### Updated
