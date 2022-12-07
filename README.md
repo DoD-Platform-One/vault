@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.22.1-bb.1](https://img.shields.io/badge/Version-0.22.1--bb.1-informational?style=flat-square) ![AppVersion: 1.12.1](https://img.shields.io/badge/AppVersion-1.12.1-informational?style=flat-square)
+![Version: 0.23.0-bb.0](https://img.shields.io/badge/Version-0.23.0--bb.0-informational?style=flat-square) ![AppVersion: 1.12.1](https://img.shields.io/badge/AppVersion-1.12.1-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -58,7 +58,7 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"1.0.1"` |  |
+| injector.image.tag | string | `"1.1.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
 | injector.agentImage.tag | string | `"1.12.1"` |  |
@@ -177,6 +177,9 @@ helm install vault chart/
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
 | server.service.enabled | bool | `true` |  |
+| server.service.active.enabled | bool | `true` |  |
+| server.service.standby.enabled | bool | `true` |  |
+| server.service.instanceSelector.enabled | bool | `true` |  |
 | server.service.publishNotReadyAddresses | bool | `true` |  |
 | server.service.externalTrafficPolicy | string | `"Cluster"` |  |
 | server.service.port | int | `8200` |  |
@@ -211,6 +214,8 @@ helm install vault chart/
 | server.serviceAccount.create | bool | `true` |  |
 | server.serviceAccount.name | string | `""` |  |
 | server.serviceAccount.annotations | object | `{}` |  |
+| server.serviceAccount.extraLabels | object | `{}` |  |
+| server.serviceAccount.serviceDiscovery.enabled | bool | `true` |  |
 | server.statefulSet.annotations | object | `{}` |  |
 | server.statefulSet.securityContext.pod | object | `{}` |  |
 | server.statefulSet.securityContext.container | object | `{}` |  |
