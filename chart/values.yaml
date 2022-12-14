@@ -224,7 +224,10 @@ injector:
   #        - ALL
   securityContext:
     pod: {}
-    container: {}
+    container:
+      capabilities:
+        drop:
+          - ALL
 
   resources:
     requests:
@@ -239,7 +242,7 @@ injector:
   extraEnvironmentVars: {}
     # KUBERNETES_SERVICE_HOST: kubernetes.default.svc
 
-    # VAULT_API_ADDR: https://vault.bigbang.dev  
+    # VAULT_API_ADDR: https://vault.bigbang.dev
     # VAULT_ADDR:  https://127.0.0.1:8200
     # VAULT_SKIP_VERIFY: "true"
     # VAULT_LOG_FORMAT: "json"
@@ -917,7 +920,10 @@ server:
     # container: {}
     securityContext:
       pod: {}
-      container: {}
+      container:
+        capabilities:
+          drop:
+            - ALL
 
 
 # Vault UI
@@ -1014,7 +1020,10 @@ csi:
     # security context for the pod template and container in the csi provider daemonSet
     securityContext:
       pod: {}
-      container: {}
+      container:
+        capabilities:
+          drop:
+            - ALL
 
   pod:
     # Extra annotations for the provider pods. This can either be YAML or a
@@ -1088,7 +1097,7 @@ networkPolicies:
   # For vault-agent-injector egress to Kube-API
   controlPlaneCidr: 0.0.0.0/0
   # For Vault pod egress to VPC DNS & Endpoints, please review ../docs/bigbang-kms-auto-unseal.md
-  vpcCidr: 0.0.0.0/0  
+  vpcCidr: 0.0.0.0/0
   ingressLabels:
     app: istio-ingressgateway
     istio: ingressgateway
@@ -1130,12 +1139,12 @@ minio:
   # accessKey: ""
   # secretKey: ""
   # bucketName: vault-data
-  
+
 # Label to determine what workloads (pods/deployments) should be allowed by the custom-app-ingress-selector
 customAppIngressSelector:
   key: vault-ingress
   value: true
-  
+
 bbtests:
   enabled: false
   cypress:

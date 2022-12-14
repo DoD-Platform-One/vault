@@ -548,6 +548,9 @@ securityContext for the statefulset vault container
   {{- else if not .Values.global.openshift }}
           securityContext:
             allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
   {{- end }}
 {{- end -}}
 

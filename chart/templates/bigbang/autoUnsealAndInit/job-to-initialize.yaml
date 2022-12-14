@@ -47,7 +47,7 @@ metadata:
     app.kubernetes.io/name: {{ include "vault.name" . }}-root-token-secret
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  
+
 ---
 apiVersion: batch/v1
 kind: Job
@@ -77,10 +77,14 @@ spec:
       - name: bigbang-base-secret-creation
         image:  {{ .Values.autoInit.image.repository }}:{{ .Values.autoInit.image.tag }}
         command:
-          - /bin/bash 
+          - /bin/bash
           - -c
           - |
             kubectl create secret generic vault-token --from-file=key=/export/key --from-file=init.out=/export/init.out
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
         volumeMounts:
         - name: vault-keys
           mountPath: "/vault/data"
@@ -113,6 +117,10 @@ spec:
           limits:
             cpu: 100m
             memory: 256Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
       restartPolicy: OnFailure
       serviceAccount: {{ template "vault.fullname" . }}-root-token-secret
       volumes:
