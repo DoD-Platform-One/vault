@@ -1,5 +1,21 @@
 ## Unreleased
 
+## 0.23.0 (November 28th, 2022)
+
+Changes:
+* `vault` updated to 1.12.1 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+* `vault-k8s` updated to 1.1.0 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+* `vault-csi-provider` updated to 1.2.1 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+
+Features:
+* server: Add `extraLabels` for Vault server serviceAccount [GH-806](https://github.com/hashicorp/vault-helm/pull/806)
+* server: Add `server.service.active.enabled` and `server.service.standby.enabled` options to selectively disable additional services [GH-811](https://github.com/hashicorp/vault-helm/pull/811)
+* server: Add `server.serviceAccount.serviceDiscovery.enabled` option to selectively disable a Vault service discovery role and role binding [GH-811](https://github.com/hashicorp/vault-helm/pull/811)
+* server: Add `server.service.instanceSelector.enabled` option to allow selecting pods outside the helm chart deployment [GH-813](https://github.com/hashicorp/vault-helm/pull/813)
+
+Bugs:
+* server: Quote `.server.ha.clusterAddr` value [GH-810](https://github.com/hashicorp/vault-helm/pull/810)
+
 ## 0.22.1 (October 26th, 2022)
 
 Changes:
