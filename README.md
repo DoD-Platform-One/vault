@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.22.1-bb.2](https://img.shields.io/badge/Version-0.22.1--bb.2-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
+![Version: 0.22.1-bb.3](https://img.shields.io/badge/Version-0.22.1--bb.3-informational?style=flat-square) ![AppVersion: 1.12.0](https://img.shields.io/badge/AppVersion-1.12.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -88,7 +88,7 @@ helm install vault chart/
 | injector.certs.certName | string | `"tls.crt"` |  |
 | injector.certs.keyName | string | `"tls.key"` |  |
 | injector.securityContext.pod | object | `{}` |  |
-| injector.securityContext.container | object | `{}` |  |
+| injector.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
 | injector.resources.requests.memory | string | `"256Mi"` |  |
 | injector.resources.requests.cpu | string | `"250m"` |  |
 | injector.resources.limits.memory | string | `"256Mi"` |  |
@@ -218,7 +218,7 @@ helm install vault chart/
 | server.serviceAccount.serviceDiscovery.enabled | bool | `true` |  |
 | server.statefulSet.annotations | object | `{}` |  |
 | server.statefulSet.securityContext.pod | object | `{}` |  |
-| server.statefulSet.securityContext.container | object | `{}` |  |
+| server.statefulSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
 | ui.enabled | bool | `true` |  |
 | ui.publishNotReadyAddresses | bool | `true` |  |
 | ui.activeVaultPodOnly | bool | `false` |  |
@@ -245,7 +245,7 @@ helm install vault chart/
 | csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
 | csi.daemonSet.extraLabels | object | `{}` |  |
 | csi.daemonSet.securityContext.pod | object | `{}` |  |
-| csi.daemonSet.securityContext.container | object | `{}` |  |
+| csi.daemonSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
 | csi.pod.extraLabels | object | `{}` |  |
