@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.23.0-bb.0] - 2022-12-28
+### Updated
+- `vault` updated to 1.12.1 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+- `vault-k8s` updated to 1.1.0 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+- `vault-csi-provider` updated to 1.2.1 [GH-814](https://github.com/hashicorp/vault-helm/pull/814)
+
 ## [0.22.1-bb.3] - 2022-12-19
 ### Updated
 - Migrated minio dep to OCI repository
