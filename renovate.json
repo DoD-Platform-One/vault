@@ -36,6 +36,13 @@
             "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-bb\\.(?<build>\\d+)$"
         },
         {
+            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "matchStrings": [
+                "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
+            ],
+            "datasourceTemplate": "docker"
+        },
+        {
             "fileMatch": ["^chart/deps/minio/Chart\\.yaml$"],
             "matchStrings": [
               "version:\\s+(?<currentValue>.+)"
