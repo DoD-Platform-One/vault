@@ -50,10 +50,6 @@ injector:
   # so that only one injector attempts to create TLS certificates.
   leaderElector:
     enabled: false
-    image:
-      repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector"
-      tag: "0.4"
-    ttl: 60s
 
   # If true, will enable a node exporter metrics endpoint at /metrics.
   metrics:
@@ -993,8 +989,8 @@ csi:
   enabled: false
 
   image:
-    repository: "registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider"
-    tag: "1.2.0"
+    repository: "registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"
+    tag: "1.2.1"
     pullPolicy: IfNotPresent
 
   # volumes is a list of volumes made available to all containers. These are rendered
