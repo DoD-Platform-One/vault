@@ -1,7 +1,7 @@
 apiVersion: v2
 name: vault
-version: 0.23.0-bb.3
-appVersion: 1.12.4
+version: 0.23.0-bb.4
+appVersion: 1.12.5
 kubeVersion: ">= 1.16.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
@@ -23,18 +23,15 @@ dependencies:
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/applicationVersions: |
-    - Vault: 1.12.4
+    - Vault: 1.12.5
   helm.sh/images: |
     - name: vault
-      image: registry1.dso.mil/ironbank/hashicorp/vault:1.12.4
+      image: registry1.dso.mil/ironbank/hashicorp/vault:1.12.5
     - name: vault-k8s
-      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:1.1.0
-    - name: leader-elector
-      condition: leaderElector.enabled
-      image: registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/leader-elector:0.4
+      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:1.2.0
     - name: vault-csi-provider
       condition: csi.enabled
-      image: registry.dso.mil/platform-one/big-bang/apps/sandbox/vault/vault-csi-provider:1.2.0
+      image: registry1.dso.mil/ironbank/hashicorp/vault-csi-provider:1.2.1
     - name: base
       condition: autoInit.enabled
       image: registry1.dso.mil/ironbank/big-bang/base:2.0.0
