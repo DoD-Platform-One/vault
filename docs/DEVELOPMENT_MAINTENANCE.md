@@ -18,6 +18,7 @@ BigBang makes modifications to the upstream helm chart. The full list of changes
 1. Create a k8s dev environment. One option is to use the Big Bang [k3d-dev.sh](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/developer/scripts) with no arguments which will give you the default configuration. The following steps assume you are using the script.
 1. Follow the instructions at the end of the script to connect to the k8s cluster and install flux.
 1. Deploy Vault with these dev values overrides. Core apps are disabled for quick deployment.
+1. Kyverno blocks PVC provisioning on k3d by default because they are local path, need to add the dev exception(s)
 ```
     domain: bigbang.dev
 
@@ -61,6 +62,24 @@ BigBang makes modifications to the upstream helm chart. The full list of changes
 
     twistlock:
       enabled: false
+    
+  kyvernoPolicies:
+  enabled: true
+  values:
+    exclude:
+      any:
+      # Allows k3d load balancer to bypass policies.
+      - resources:
+          namespaces:
+          - istio-system
+          - vault
+          names:
+          - svclb-*
+    policies:
+      restrict-host-path-mount-pv:
+        parameters:
+          allow:
+          - /var/lib/rancher/k3s/storage/pvc-*
 
     sso:
       oidc:
