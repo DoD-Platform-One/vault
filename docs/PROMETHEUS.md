@@ -60,7 +60,7 @@ vault policy write prometheus-monitoring - << EOF
 Then attach the policy to the existing `monitoring-monitoring-kube-prometheus` ServiceAccount used by the Prometheus pod:
 
 ```shell
-vault write auth/kubernetes/role/prometheus-metrics-role \
+vault write auth/kubernetes/role/prometheus \
       bound_service_account_names=monitoring-monitoring-kube-prometheus \
       bound_service_account_namespaces=monitoring \
       policies="default,prometheus-monitoring" \

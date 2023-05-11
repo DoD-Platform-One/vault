@@ -5,6 +5,40 @@
         "csi": {
             "type": "object",
             "properties": {
+                "agent": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "extraArgs": {
+                            "type": "array"
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "pullPolicy": {
+                                    "type": "string"
+                                },
+                                "repository": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "logFormat": {
+                            "type": "string"
+                        },
+                        "logLevel": {
+                            "type": "string"
+                        },
+                        "resources": {
+                            "type": "object"
+                        }
+                    }
+                },
                 "daemonSet": {
                     "type": "object",
                     "properties": {
@@ -593,6 +627,12 @@
                 "extraArgs": {
                     "type": "string"
                 },
+                "extraPorts": {
+                    "type": [
+                        "null",
+                        "array"
+                    ]
+                },
                 "extraContainers": {
                     "type": [
                         "null",
@@ -1014,6 +1054,9 @@
                         "null",
                         "array"
                     ]
+                },
+                "hostNetwork": {
+                    "type": "boolean"
                 }
             }
         },
