@@ -14,17 +14,15 @@ data:
     INIT_OUT=/export/init.out
 
     {{- if not .Values.global.tlsDisable }}
-    VAULT_ENDPOINT=https://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
     export VAULT_ADDR=https://vault.{{ .Values.domain }}
     {{- else }}
-    VAULT_ENDPOINT=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200/v1/sys/unseal
-    export VAULT_ADDR=http://{{ template "vault.fullname" . }}-0.{{ template "vault.fullname" . }}-internal:8200
+    export VAULT_ADDR={{ include "vault.scheme" . }}://$VAULT_SERVICE_HOST:8200
     {{- end }}
 
     until curl -L -s -k -f ${VAULT_ADDR} | grep Vault >& /dev/null; do echo "---=== Waiting For Vault Server ===---"; sleep 5; done
     
     echo "---=== Initializing Vault ===---"
-    vault operator init -address=$VAULT_ADDR > $INIT_OUT
+    vault operator init -address=${VAULT_ADDR} > $INIT_OUT
     
     export VAULT_TOKEN=$(grep Token $INIT_OUT | cut -d' ' -f  4)
     
@@ -39,13 +37,13 @@ data:
     for key in $MIN_MASTER_KEYS
     do
         echo '{"key": "'"$key"'"}' > "$KEYS_FOLDER/master_keys_$KEY_NUMBER.json"
-        curl --request PUT --data @"$KEYS_FOLDER/master_keys_$KEY_NUMBER.json" "$VAULT_ENDPOINT"
+        curl --request PUT --data @"$KEYS_FOLDER/master_keys_$KEY_NUMBER.json" "$VAULT_ADDR/v1/sys/unseal"
         KEY_NUMBER=$(( $KEY_NUMBER + 1 ))
     done
   
     # redirect login to avoid password written to logs and retry to avoid race condition
     until vault login -no-store $VAULT_TOKEN >& /dev/null; do echo "Waiting to login to vault"; sleep 5; done;
-    echo "---=== Login Success Kubernetes ===---"
+    echo "---=== Login Success ===---"
 
     echo "---=== Enabling Kubernetes ===---"
     vault auth enable kubernetes

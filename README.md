@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.23.0-bb.5](https://img.shields.io/badge/Version-0.23.0--bb.5-informational?style=flat-square) ![AppVersion: 1.12.5](https://img.shields.io/badge/AppVersion-1.12.5-informational?style=flat-square)
+![Version: 0.24.1-bb.0](https://img.shields.io/badge/Version-0.24.1--bb.0-informational?style=flat-square) ![AppVersion: 1.13.1](https://img.shields.io/badge/AppVersion-1.13.1-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -22,7 +22,7 @@ Official HashiCorp Vault Chart
 * Kubernetes config installed in `~/.kube/config`
 * Helm installed
 
-Kubernetes: `>= 1.16.0-0`
+Kubernetes: `>= 1.22.0-0`
 
 Install Helm
 
@@ -55,10 +55,10 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"1.2.0"` |  |
+| injector.image.tag | string | `"1.2.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.12.5"` |  |
+| injector.agentImage.tag | string | `"1.13.1"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -66,6 +66,21 @@ helm install vault chart/
 | injector.agentDefaults.template | string | `"map"` |  |
 | injector.agentDefaults.templateConfig.exitOnRetryFailure | bool | `true` |  |
 | injector.agentDefaults.templateConfig.staticSecretRenderInterval | string | `""` |  |
+| injector.livenessProbe.failureThreshold | int | `2` |  |
+| injector.livenessProbe.initialDelaySeconds | int | `5` |  |
+| injector.livenessProbe.periodSeconds | int | `2` |  |
+| injector.livenessProbe.successThreshold | int | `1` |  |
+| injector.livenessProbe.timeoutSeconds | int | `5` |  |
+| injector.readinessProbe.failureThreshold | int | `2` |  |
+| injector.readinessProbe.initialDelaySeconds | int | `5` |  |
+| injector.readinessProbe.periodSeconds | int | `2` |  |
+| injector.readinessProbe.successThreshold | int | `1` |  |
+| injector.readinessProbe.timeoutSeconds | int | `5` |  |
+| injector.startupProbe.failureThreshold | int | `12` |  |
+| injector.startupProbe.initialDelaySeconds | int | `5` |  |
+| injector.startupProbe.periodSeconds | int | `5` |  |
+| injector.startupProbe.successThreshold | int | `1` |  |
+| injector.startupProbe.timeoutSeconds | int | `5` |  |
 | injector.authPath | string | `"auth/kubernetes"` |  |
 | injector.logLevel | string | `"info"` |  |
 | injector.logFormat | string | `"standard"` |  |
@@ -113,7 +128,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| server.image.tag | string | `"1.12.5"` |  |
+| server.image.tag | string | `"1.13.1"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -143,7 +158,9 @@ helm install vault chart/
 | server.extraContainers | string | `nil` |  |
 | server.shareProcessNamespace | bool | `false` |  |
 | server.extraArgs | string | `""` |  |
+| server.extraPorts | string | `nil` |  |
 | server.readinessProbe.enabled | bool | `true` |  |
+| server.readinessProbe.port | int | `8200` |  |
 | server.readinessProbe.failureThreshold | int | `2` |  |
 | server.readinessProbe.initialDelaySeconds | int | `5` |  |
 | server.readinessProbe.periodSeconds | int | `5` |  |
@@ -151,6 +168,7 @@ helm install vault chart/
 | server.readinessProbe.timeoutSeconds | int | `3` |  |
 | server.livenessProbe.enabled | bool | `false` |  |
 | server.livenessProbe.path | string | `"/v1/sys/health?standbyok=true"` |  |
+| server.livenessProbe.port | int | `8200` |  |
 | server.livenessProbe.failureThreshold | int | `2` |  |
 | server.livenessProbe.initialDelaySeconds | int | `60` |  |
 | server.livenessProbe.periodSeconds | int | `5` |  |
@@ -197,7 +215,7 @@ helm install vault chart/
 | server.dev.enabled | bool | `false` |  |
 | server.dev.devRootToken | string | `"root"` |  |
 | server.standalone.enabled | string | `"-"` |  |
-| server.standalone.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n{{- if .Values.server.dataStorage.enabled }}\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n{{- end }}\n\n{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}\nstorage \"s3\" {\n    access_key = \"{{ .Values.minio.accessKey }}\"\n    secret_key = \"{{ .Values.minio.secretKey }}\"\n    endpoint = \"{{ .Values.minio.endpoint }}\"\n    bucket = \"{{ .Values.minio.bucketName }}\"\n    s3_force_path_style = \"true\"\n    disable_ssl = \"{{ .Values.minio.disableSSL }}\"\n}\n{{- end }}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics in your config.\n#telemetry {\n#  prometheus_retention_time = \"30s\",\n#  disable_hostname = true\n#}\n"` |  |
+| server.standalone.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n{{- if .Values.server.dataStorage.enabled }}\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n{{- end }}\n\n{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}\nstorage \"s3\" {\n    access_key = \"{{ .Values.minio.accessKey }}\"\n    secret_key = \"{{ .Values.minio.secretKey }}\"\n    endpoint = \"{{ .Values.minio.endpoint }}\"\n    bucket = \"{{ .Values.minio.bucketName }}\"\n    s3_force_path_style = \"true\"\n    disable_ssl = \"{{ .Values.minio.disableSSL }}\"\n}\n{{- end }}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics in your config.\n#telemetry {\n#  prometheus_retention_time = \"30s\"\n#  disable_hostname = true\n#}\n"` |  |
 | server.ha.enabled | bool | `false` |  |
 | server.ha.replicas | int | `3` |  |
 | server.ha.apiAddr | string | `nil` |  |
@@ -205,7 +223,7 @@ helm install vault chart/
 | server.ha.raft.enabled | bool | `true` |  |
 | server.ha.raft.setNodeId | bool | `true` |  |
 | server.ha.raft.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n\nservice_registration \"kubernetes\" {}\n"` |  |
-| server.ha.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n}\nstorage \"consul\" {\n  path = \"vault\"\n  address = \"HOST_IP:8500\"\n}\n\nservice_registration \"kubernetes\" {}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev-246514\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics.\n# If you are using Prometheus Operator you can enable a ServiceMonitor resource below.\n# You may wish to enable unauthenticated metrics in the listener block above.\n#telemetry {\n#  prometheus_retention_time = \"30s\",\n#  disable_hostname = true\n#}\n"` |  |
+| server.ha.config | string | `"ui = true\n\nlistener \"tcp\" {\n  tls_disable = 1\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n}\nstorage \"consul\" {\n  path = \"vault\"\n  address = \"HOST_IP:8500\"\n}\n\nservice_registration \"kubernetes\" {}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev-246514\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics.\n# If you are using Prometheus Operator you can enable a ServiceMonitor resource below.\n# You may wish to enable unauthenticated metrics in the listener block above.\n#telemetry {\n#  prometheus_retention_time = \"30s\"\n#  disable_hostname = true\n#}\n"` |  |
 | server.ha.disruptionBudget.enabled | bool | `true` |  |
 | server.ha.disruptionBudget.maxUnavailable | string | `nil` |  |
 | server.serviceAccount.create | bool | `true` |  |
@@ -216,6 +234,7 @@ helm install vault chart/
 | server.statefulSet.annotations | object | `{}` |  |
 | server.statefulSet.securityContext.pod | object | `{}` |  |
 | server.statefulSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
+| server.hostNetwork | bool | `false` |  |
 | ui.enabled | bool | `true` |  |
 | ui.publishNotReadyAddresses | bool | `true` |  |
 | ui.activeVaultPodOnly | bool | `false` |  |
@@ -227,7 +246,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
-| csi.image.tag | string | `"v1.3.0"` |  |
+| csi.image.tag | string | `"v1.4.0"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -235,6 +254,7 @@ helm install vault chart/
 | csi.resources.requests.memory | string | `"128Mi"` |  |
 | csi.resources.limits.cpu | string | `"50m"` |  |
 | csi.resources.limits.memory | string | `"128Mi"` |  |
+| csi.hmacSecretName | string | `""` |  |
 | csi.daemonSet.updateStrategy.type | string | `"RollingUpdate"` |  |
 | csi.daemonSet.updateStrategy.maxUnavailable | string | `""` |  |
 | csi.daemonSet.annotations | object | `{}` |  |
@@ -246,6 +266,17 @@ helm install vault chart/
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
 | csi.pod.extraLabels | object | `{}` |  |
+| csi.agent.enabled | bool | `true` |  |
+| csi.agent.extraArgs | list | `[]` |  |
+| csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
+| csi.agent.image.tag | string | `"1.13.1"` |  |
+| csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
+| csi.agent.logFormat | string | `"standard"` |  |
+| csi.agent.logLevel | string | `"info"` |  |
+| csi.agent.resources.requests.memory | string | `"256Mi"` |  |
+| csi.agent.resources.requests.cpu | string | `"250m"` |  |
+| csi.agent.resources.limits.memory | string | `"256Mi"` |  |
+| csi.agent.resources.limits.cpu | string | `"250m"` |  |
 | csi.priorityClassName | string | `""` |  |
 | csi.serviceAccount.annotations | object | `{}` |  |
 | csi.serviceAccount.extraLabels | object | `{}` |  |
