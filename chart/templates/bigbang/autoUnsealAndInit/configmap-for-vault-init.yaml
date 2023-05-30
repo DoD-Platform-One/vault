@@ -16,7 +16,7 @@ data:
     {{- if not .Values.global.tlsDisable }}
     export VAULT_ADDR=https://vault.{{ .Values.domain }}
     {{- else }}
-    export VAULT_ADDR={{ include "vault.scheme" . }}://$VAULT_SERVICE_HOST:8200
+    export VAULT_ADDR={{ include "vault.scheme" . }}://{{ template "vault.fullname" . }}-internal:8200
     {{- end }}
 
     until curl -L -s -k -f ${VAULT_ADDR} | grep Vault >& /dev/null; do echo "---=== Waiting For Vault Server ===---"; sleep 5; done
