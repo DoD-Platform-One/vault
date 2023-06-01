@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.24.1-bb.1] - 2023-05-30
+### Changed
+- Fix VAULT_ADDR in autoInit job configMap
+
 ## [0.24.1-bb.0] - 2023-05-08
 ### Changed
 - `vault` updated to 1.13.1
