@@ -1,0 +1,23 @@
+{{- if and .Values.autoInit.enabled .Values.istio.enabled .Values.bbtests.enabled .Values.monitoring.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: vault-se
+  namespace: monitoring
+spec:
+  endpoints:
+  - address: {{ template "vault.fullname" . }}.{{.Release.Namespace}}.svc.cluster.local
+  exportTo:
+  - .
+  hosts:
+  {{- range .Values.istio.vault.hosts }}
+  - {{ tpl . $}}
+  {{- end }}
+  location: MESH_INTERNAL
+  ports:
+  - name: https
+    number: 443
+    protocol: TLS
+    targetPort: {{ .Values.server.service.targetPort }}
+  resolution: DNS
+  {{- end }}

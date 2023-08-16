@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.24.1-bb.1](https://img.shields.io/badge/Version-0.24.1--bb.1-informational?style=flat-square) ![AppVersion: 1.13.1](https://img.shields.io/badge/AppVersion-1.13.1-informational?style=flat-square)
+![Version: 0.24.1-bb.2](https://img.shields.io/badge/Version-0.24.1--bb.2-informational?style=flat-square) ![AppVersion: 1.13.1](https://img.shields.io/badge/AppVersion-1.13.1-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 

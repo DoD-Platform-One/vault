@@ -70,7 +70,7 @@ data:
       bound_service_account_names=$MONITORING_SERVICE_ACCOUNT_NAME \
       bound_service_account_namespaces=$MONITORING_NAMESPACE \
       policies=$METRICS_POLICY_NAME ttl=15m
-    
+    exit 0
 kind: ConfigMap
 metadata:
   name: vault-init-cm
