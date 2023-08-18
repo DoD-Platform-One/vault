@@ -59,6 +59,10 @@ spec:
     metadata:
       name: {{ template "vault.fullname" . }}-job-init
       annotations:
+        proxy.istio.io/config: |
+          proxyMetadata:
+            ISTIO_META_DNS_CAPTURE: "true"
+            ISTIO_META_DNS_AUTO_ALLOCATE: "true"
       labels:
         app.kubernetes.io/name:  {{ include "vault.name" . }}
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
