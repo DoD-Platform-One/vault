@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.0] - 2023-09-12
+### Changed
+- Updated registry1.dso.mil/ironbank/hashicorp/vault 1.13.1 -> 1.14.2
+- Updated minio-instance 4.5.4-bb.2 -> 5.0.3-bb.2
+- Updated gluon 0.3.2 -> 0.4.0
+
 ## [0.24.1-bb.3] - 2023-08-18
 ### Changed
 - Adding proxyMetadata to Vault init job

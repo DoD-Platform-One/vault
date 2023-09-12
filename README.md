@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.24.1-bb.3](https://img.shields.io/badge/Version-0.24.1--bb.3-informational?style=flat-square) ![AppVersion: 1.13.1](https://img.shields.io/badge/AppVersion-1.13.1-informational?style=flat-square)
+![Version: 0.25.0-bb.0](https://img.shields.io/badge/Version-0.25.0--bb.0-informational?style=flat-square) ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -22,7 +22,7 @@ Official HashiCorp Vault Chart
 * Kubernetes config installed in `~/.kube/config`
 * Helm installed
 
-Kubernetes: `>= 1.22.0-0`
+Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
@@ -58,7 +58,7 @@ helm install vault chart/
 | injector.image.tag | string | `"1.2.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.13.1"` |  |
+| injector.agentImage.tag | string | `"1.14.2"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -128,7 +128,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| server.image.tag | string | `"1.13.1"` |  |
+| server.image.tag | string | `"1.14.2"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -265,11 +265,13 @@ helm install vault chart/
 | csi.daemonSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
+| csi.pod.nodeSelector | object | `{}` |  |
+| csi.pod.affinity | object | `{}` |  |
 | csi.pod.extraLabels | object | `{}` |  |
 | csi.agent.enabled | bool | `true` |  |
 | csi.agent.extraArgs | list | `[]` |  |
 | csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| csi.agent.image.tag | string | `"1.13.1"` |  |
+| csi.agent.image.tag | string | `"1.14.2"` |  |
 | csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.agent.logFormat | string | `"standard"` |  |
 | csi.agent.logLevel | string | `"info"` |  |
@@ -322,7 +324,7 @@ helm install vault chart/
 | serverTelemetry.serviceMonitor.scrapeTimeout | string | `"10s"` |  |
 | serverTelemetry.prometheusRules.enabled | bool | `false` |  |
 | serverTelemetry.prometheusRules.selectors | object | `{}` |  |
-| serverTelemetry.prometheusRules.rules | object | `{}` |  |
+| serverTelemetry.prometheusRules.rules | list | `[]` |  |
 
 ## Contributing
 
