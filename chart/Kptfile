@@ -3,9 +3,9 @@ kind: Kptfile
 metadata:
     name: chart
 upstream:
-    type: git
-    git:
-        commit: a5d803ad3c79dcb3a8491f51432d01bdf2c80acf
-        repo: https://github.com/hashicorp/vault-helm
-        directory: /
-        ref: v0.24.1
+  type: git
+  git:
+    commit: e2711a2002df36caef2efc3878806a2b9f29952d
+    repo: https://github.com/hashicorp/vault-helm
+    directory: /
+    ref: v0.25.0

@@ -1,8 +1,8 @@
 apiVersion: v2
 name: vault
-version: 0.24.1-bb.3
-appVersion: 1.13.1
-kubeVersion: ">= 1.22.0-0"
+version: 0.25.0-bb.0
+appVersion: 1.14.2
+kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
 icon: https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png
@@ -14,19 +14,19 @@ sources:
   - https://github.com/hashicorp/vault-csi-provider
 dependencies:
   - name: minio-instance
-    version: 4.5.4-bb.2
+    version: 5.0.3-bb.2
     alias: minio
     condition: minio.enabled
     repository: oci://registry1.dso.mil/bigbang
   - name: gluon
-    version: "0.3.2"
+    version: "0.4.0"
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/applicationVersions: |
     - Vault: 1.13.1
   helm.sh/images: |
     - name: vault
-      image: registry1.dso.mil/ironbank/hashicorp/vault:1.13.1
+      image: registry1.dso.mil/ironbank/hashicorp/vault:1.14.2
     - name: vault-k8s
       image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:1.2.1
     - name: vault-csi-provider
