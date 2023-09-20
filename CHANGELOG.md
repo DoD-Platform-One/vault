@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.1] - 2023-09-19
+### Changed
+- Updated registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s 1.2.1 -> 1.3.0
+- Updated gluon 0.4.0 -> 0.4.1
+- Updated Cypress files
+
 ## [0.25.0-bb.0] - 2023-09-12
 ### Changed
 - Updated registry1.dso.mil/ironbank/hashicorp/vault 1.13.1 -> 1.14.2

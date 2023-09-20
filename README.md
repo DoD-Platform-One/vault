@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.0](https://img.shields.io/badge/Version-0.25.0--bb.0-informational?style=flat-square) ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
+![Version: 0.25.0-bb.1](https://img.shields.io/badge/Version-0.25.0--bb.1-informational?style=flat-square) ![AppVersion: 1.14.2](https://img.shields.io/badge/AppVersion-1.14.2-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -55,7 +55,7 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"1.2.1"` |  |
+| injector.image.tag | string | `"1.3.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
 | injector.agentImage.tag | string | `"1.14.2"` |  |
