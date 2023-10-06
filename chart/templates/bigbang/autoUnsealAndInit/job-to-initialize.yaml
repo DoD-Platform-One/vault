@@ -104,11 +104,22 @@ spec:
           - /bin/bash
           - -c
           - |
-            sleep 60
-            kubectl create secret generic vault-token --from-file=key=/export/key --from-file=init.out=/export/init.out
+            until [ -f /export/finished ]; do
+              echo "---=== Waiting for vault-init-job to finish ===---";
+              sleep 5;
+            done
+
+            echo "---=== Writing secret ===---"
+
+            until kubectl create secret generic vault-token --from-file=key=/export/key --from-file=init.out=/export/init.out >& /dev/null; 
+            do
+              echo "Retry writing secret"
+              sleep 5;
+            done
+
             {{- if .Values.istio.enabled }}
               echo "Killing Istio Sidecar"
-              curl -X POST http://localhost:15020/quitquitquit
+              curl -fsI -X POST http://localhost:15020/quitquitquit
             {{- end}}
             exit 0
         securityContext:
