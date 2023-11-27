@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.5] - 2023-11-21
+### Updated
+- Updated registry1.dso.mil/ironbank/hashicorp/vault 1.14.2 -> 1.14.6
+- Updated registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s 1.3.0 -> 1.3.1
+- Updated gluon 0.4.1 -> 0.4.4
+- Updated minio-instance 5.0.9-bb.2 -> 5.0.10-bb.2
+- Updated registry1.dso.mil/ironbank/big-bang/base 2.0.0 -> 2.1.0
+
 ## [0.25.0-bb.4] - 2023-10-11
 ### Updated
 - Updated OSCAL version from 1.0.0 to 1.1.1
