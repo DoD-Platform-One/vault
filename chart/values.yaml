@@ -1250,6 +1250,13 @@ customAppIngressSelector:
 bbtests:
   enabled: false
   cypress:
+    resources: 
+      requests:
+        cpu: 1
+        memory: "8Gi"
+      limits:
+        cpu: 1
+        memory: "8Gi"
     artifacts: true
     envs:
       cypress_vault_url: "http://vault.vault.svc:8200"
