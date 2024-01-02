@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.8] - 2023-12-28
+### Changed
+- Updated `values.yaml` to configure Vault TLS configuration based on `global.tlsDiable`, `istio.vault.tls.key`, and `istio.vault.tls.cert`
+- Updated Developer Documentation to provide guidance for configuring Vault with a `PASSTHROUGH` istio gateway
+
 ## [0.25.0-bb.7] - 2023-12-14
 ### Changed
 - Increased Cypress test resources
@@ -25,7 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [0.25.0-bb.3] - 2023-10-03
 ### Changed
-- Added resiliency to auto unseal job 
+- Added resiliency to auto unseal job
 
 ## [0.25.0-bb.2] - 2023-10-02
 ### Changed
