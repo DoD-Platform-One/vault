@@ -11,7 +11,7 @@ autoInit:
 ```
 
 ## Vault Initialization
-Regardless of whether or not you configure for auto-unseal, you must first initialize Vault for a new deployment. 
+Regardless of whether or not you configure for auto-unseal, you must first initialize Vault for a new deployment.
 
 Review the [Vault init documentation for available options](https://www.vaultproject.io/docs/commands/operator/init)
 
@@ -58,7 +58,6 @@ The following is a bare minimum configuration for a production/operational deplo
       enabled: true
 
       ingressGateways:
-
         passthrough-ingressgateway:
           type: "LoadBalancer"
           # nodePortBase: 30200
@@ -67,12 +66,13 @@ The following is a bare minimum configuration for a production/operational deplo
         passthrough:
           ingressGateway: "passthrough-ingressgateway"
           hosts:
-          - "*.{{ .Values.domain }}"
+          - "vault.{{ .Values.domain }}"
           tls:
             mode: "PASSTHROUGH"
 
     addons:
       vault:
+        enabled: true
         ingress:
           gateway: "passthrough"
           key: |
@@ -85,6 +85,10 @@ The following is a bare minimum configuration for a production/operational deplo
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             -----END CERTIFICATE-----
+        values:
+          global:
+            tlsDisable: false
+
     ```
 1. Your cluster CSI storage should be configured with Reclaim Policy set as "Retain", otherwise you will loose data.
 1. S3 storage is a valid configuration but BigBang does not provide documentation because S3 is not cloud agnostic and is not compatible with many air-gap environments.

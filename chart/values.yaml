@@ -786,7 +786,13 @@ server:
       ui = true
 
       listener "tcp" {
+        {{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key (not .Values.global.tlsDisable) }}
+        tls_disable = 0
+        tls_key_file = "/vault/tls/tls.key"
+        tls_cert_file = "/vault/tls/tls.crt"
+        {{- else }}
         tls_disable = 1
+        {{- end }}
         address = "[::]:8200"
         cluster_address = "[::]:8201"
         # Enable unauthenticated metrics access (necessary for Prometheus Operator)
@@ -872,7 +878,13 @@ server:
         ui = true
 
         listener "tcp" {
+          {{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key (not .Values.global.tlsDisable) }}
+          tls_disable = 0
+          tls_key_file = "/vault/tls/tls.key"
+          tls_cert_file = "/vault/tls/tls.crt"
+          {{- else }}
           tls_disable = 1
+          {{- end }}
           address = "[::]:8200"
           cluster_address = "[::]:8201"
           # Enable unauthenticated metrics access (necessary for Prometheus Operator)
@@ -906,7 +918,13 @@ server:
       ui = true
 
       listener "tcp" {
+        {{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key (not .Values.global.tlsDisable) }}
+        tls_disable = 0
+        tls_key_file = "/vault/tls/tls.key"
+        tls_cert_file = "/vault/tls/tls.crt"
+        {{- else }}
         tls_disable = 1
+        {{- end }}
         address = "[::]:8200"
         cluster_address = "[::]:8201"
       }
@@ -1250,7 +1268,7 @@ customAppIngressSelector:
 bbtests:
   enabled: false
   cypress:
-    resources: 
+    resources:
       requests:
         cpu: 1
         memory: "8Gi"
