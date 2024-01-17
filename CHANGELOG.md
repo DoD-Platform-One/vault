@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.9] - 2024-01-17
+### Changed
+- Updated to gluon to 4.7 allowing consumers to implement custom scripts
+- Updated Minio to 5.0.11-bb.2
+
 ## [0.25.0-bb.8] - 2023-12-28
 ### Changed
 - Updated `values.yaml` to configure Vault TLS configuration based on `global.tlsDiable`, `istio.vault.tls.key`, and `istio.vault.tls.cert`
