@@ -15,7 +15,7 @@ or
 BigBang makes modifications to the upstream helm chart. The full list of changes is at the end of  this document.
 
 # Testing new Vault version
-1. Create a k8s dev environment. One option is to use the Big Bang [k3d-dev.sh](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/developer/scripts) with no arguments which will give you the default configuration. The following steps assume you are using the script.
+1. Create a k8s dev environment. One option is to use the Big Bang [k3d-dev.sh](https://repo1.dso.mil/platform-one/big-bang/bigbang/-/tree/master/docs/developer/scripts) with no arguments which will give you the default configuration. The following steps assume you are using the script. NOTE: you will need to run it with `-m` and once it's done setup sshuttle and your hosts file.
 1. Follow the instructions at the end of the script to connect to the k8s cluster and install flux.
 1. Deploy Vault with these dev values overrides. Core apps are disabled for quick deployment.
 1. Kyverno blocks PVC provisioning on k3d by default because they are local path, need to add the dev exception(s)
@@ -30,12 +30,6 @@ flux:
 networkPolicies:
   enabled: true
 
-istio:
-  enabled: true
-
-istiooperator:
-  enabled: true
-
 jaeger:
   enabled: false
 
@@ -46,12 +40,6 @@ clusterAuditor:
   enabled: false
 
 gatekeeper:
-  enabled: false
-
-logging:
-  enabled: false
-
-eckoperator:
   enabled: false
 
 fluentbit:
@@ -93,16 +81,27 @@ kyvernoPolicies:
               allow:
               - /var/lib/rancher/k3s/storage/pvc-*
 
-sso:
-  oidc:
-    host: login.dso.mil
-    realm: baby-yoda
-  client_secret: ""
-
 addons:
   vault:
     enabled: true
+    git:
+      repo: https://repo1.dso.mil/big-bang/product/packages/vault.git
+      path: chart
+      tag: null
+      # tag: 6.3.4
+      branch: "57-implement-istio-authorization-policies"
+      # existingSecret: ""
+      # credentials:
+      #   password: ""
+      #   username: ""
+
     values:
+      istio:
+        enabled: true
+        hardened:
+          enabled: true
+          # enabled: false
+
       global:
         tlsDisable: false
 

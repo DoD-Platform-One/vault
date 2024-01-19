@@ -29,5 +29,9 @@ injector:
                 component: webhook
             topologyKey: kubernetes.io/hostname
 
+istio:
+  hardened:
+    enabled: true
+
 bbtests:
   enabled: true
