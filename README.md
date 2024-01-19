@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.10](https://img.shields.io/badge/Version-0.25.0--bb.10-informational?style=flat-square) ![AppVersion: 1.14.8](https://img.shields.io/badge/AppVersion-1.14.8-informational?style=flat-square)
+![Version: 0.25.0-bb.11](https://img.shields.io/badge/Version-0.25.0--bb.11-informational?style=flat-square) ![AppVersion: 1.14.8](https://img.shields.io/badge/AppVersion-1.14.8-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -307,6 +307,17 @@ helm install vault chart/
 | autoInit.image.tag | string | `"2.1.0"` |  |
 | autoInit.storage.size | string | `"2Gi"` |  |
 | istio.enabled | bool | `false` |  |
+| istio.hardened.enabled | bool | `false` |  |
+| istio.hardened.customAuthorizationPolicies | list | `[]` |  |
+| istio.hardened.monitoring.enabled | bool | `true` |  |
+| istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
+| istio.hardened.monitoring.principals[0] | string | `"cluster.local/ns/monitoring/sa/monitoring-grafana"` |  |
+| istio.hardened.monitoring.principals[1] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-alertmanager"` |  |
+| istio.hardened.monitoring.principals[2] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-operator"` |  |
+| istio.hardened.monitoring.principals[3] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
+| istio.hardened.monitoring.principals[4] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-state-metrics"` |  |
+| istio.hardened.monitoring.principals[5] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-prometheus-node-exporter"` |  |
+| istio.vault.enabled | bool | `true` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
 | istio.vault.tls.cert | string | `""` |  |

@@ -4,6 +4,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.25.0-bb.11] - 2024-01-18
+### Updated
+- allow-intranamespace policy
+- allow-nothing-policy
+- ingressgateway-authz-policy
+- monitoring-authz-policy
+- promtail-authz-policy
+- template for adding user defined policies
+- enabling hardening during testing
+
 ## [0.25.0-bb.10] - 2023-11-21
 ### Updated
 - Updated registry1.dso.mil/ironbank/hashicorp/vault 1.14.6 -> 1.14.8
