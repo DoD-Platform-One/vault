@@ -19,7 +19,7 @@ BigBang makes modifications to the upstream helm chart. The full list of changes
 1. Follow the instructions at the end of the script to connect to the k8s cluster and install flux.
 1. Deploy Vault with these dev values overrides. Core apps are disabled for quick deployment.
 1. Kyverno blocks PVC provisioning on k3d by default because they are local path, need to add the dev exception(s)
-```
+```yaml
 domain: bigbang.dev
 
 flux:

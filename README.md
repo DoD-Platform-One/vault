@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.12](https://img.shields.io/badge/Version-0.25.0--bb.11-informational?style=flat-square) ![AppVersion: 1.14.9](https://img.shields.io/badge/AppVersion-1.14.9-informational?style=flat-square)
+![Version: 0.25.0-bb.13](https://img.shields.io/badge/Version-0.25.0--bb.13-informational?style=flat-square) ![AppVersion: 1.14.9](https://img.shields.io/badge/AppVersion-1.14.9-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -317,6 +317,8 @@ helm install vault chart/
 | istio.hardened.monitoring.principals[3] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
 | istio.hardened.monitoring.principals[4] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-state-metrics"` |  |
 | istio.hardened.monitoring.principals[5] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-prometheus-node-exporter"` |  |
+| istio.hardened.apiAccess.enabled | bool | `true` |  |
+| istio.hardened.apiAccess.ports[0] | string | `"8200"` |  |
 | istio.vault.enabled | bool | `true` |  |
 | istio.vault.gateways[0] | string | `"istio-system/main"` |  |
 | istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |

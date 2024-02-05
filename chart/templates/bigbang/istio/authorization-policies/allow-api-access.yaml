@@ -1,0 +1,20 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled .Values.istio.hardened.apiAccess.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: monitoring-authz-policy
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "vault.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        ports:
+          {{- range .Values.istio.hardened.apiAccess.ports }}
+            - {{ . }}
+          {{- end }}
+{{- end }}
+
