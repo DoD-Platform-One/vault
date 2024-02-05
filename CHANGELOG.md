@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.13] - 2024-02-02
+### Updated
+- allow-api-access policy
+
 ## [0.25.0-bb.12] - 2024-02-02
 ### Updated
 - Updated registry1.dso.mil/ironbank/hashicorp/vault 1.14.8 -> 1.14.9
