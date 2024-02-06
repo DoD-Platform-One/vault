@@ -1257,7 +1257,8 @@ istio:
         - cluster.local/ns/monitoring/sa/monitoring-monitoring-prometheus-node-exporter
     apiAccess:
       enabled: true
-      ports: ["8200"]
+      ports:
+        - "8200"
   vault:
     enabled: true
     gateways:
