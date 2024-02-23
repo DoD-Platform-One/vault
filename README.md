@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.14](https://img.shields.io/badge/Version-0.25.0--bb.14-informational?style=flat-square) ![AppVersion: 1.14.9](https://img.shields.io/badge/AppVersion-1.14.9-informational?style=flat-square)
+![Version: 0.25.0-bb.15](https://img.shields.io/badge/Version-0.25.0--bb.15-informational?style=flat-square) ![AppVersion: 1.14.9](https://img.shields.io/badge/AppVersion-1.14.9-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -335,6 +335,7 @@ helm install vault chart/
 | bbtests.cypress.resources.limits.memory | string | `"8Gi"` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
+| bbtests.cypress.disableDefaultTests | bool | `false` |  |
 | serverTelemetry.serviceMonitor.enabled | bool | `false` |  |
 | serverTelemetry.serviceMonitor.selectors | object | `{}` |  |
 | serverTelemetry.serviceMonitor.interval | string | `"30s"` |  |

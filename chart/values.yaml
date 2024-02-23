@@ -1300,6 +1300,7 @@ bbtests:
     artifacts: true
     envs:
       cypress_vault_url: "http://vault.vault.svc:8200"
+    disableDefaultTests: false
 # Vault is able to collect and publish various runtime metrics.
 # Enabling this feature requires setting adding `telemetry{}` stanza to
 # the Vault configuration. There are a few examples included in the `config` sections above.
