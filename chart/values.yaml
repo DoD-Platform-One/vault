@@ -1382,3 +1382,5 @@ serverTelemetry:
       #    for: 5m
       #    labels:
       #      severity: critical
+
+openshift: false

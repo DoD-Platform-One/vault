@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.18](https://img.shields.io/badge/Version-0.25.0--bb.18-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.19](https://img.shields.io/badge/Version-0.25.0--bb.19-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -343,6 +343,7 @@ helm install vault chart/
 | serverTelemetry.prometheusRules.enabled | bool | `false` |  |
 | serverTelemetry.prometheusRules.selectors | object | `{}` |  |
 | serverTelemetry.prometheusRules.rules | list | `[]` |  |
+| openshift | bool | `false` |  |
 
 ## Contributing
 
