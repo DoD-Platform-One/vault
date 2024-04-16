@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.23] - 2024-04-09
+### Added
+- Added the ability to deploy additional custom NetworkPolicy objects via override values (see chart/templates/bigbang/additional-networkpolicies.yaml)
+
 ## [0.25.0-bb.22] - 2024-03-09
 ### Changed
 - Updated to gluon to 4.9

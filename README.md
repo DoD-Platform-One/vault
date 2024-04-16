@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.22](https://img.shields.io/badge/Version-0.25.0--bb.22-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.23](https://img.shields.io/badge/Version-0.25.0--bb.23-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -302,6 +302,7 @@ helm install vault chart/
 | networkPolicies.vpcCidr | string | `"0.0.0.0/0"` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
+| networkPolicies.additionalPolicies | list | `[]` |  |
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
 | autoInit.image.tag | string | `"2.1.0"` |  |
