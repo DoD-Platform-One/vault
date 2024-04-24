@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.24] - 2024-04-24
+### removed
+- Sidecar to deny egress that is external to istio services
+- customServiceEntries to allow egress to override sidecar
+
 ## [0.25.0-bb.23] - 2024-04-09
 ### Added
 - Added the ability to deploy additional custom NetworkPolicy objects via override values (see chart/templates/bigbang/additional-networkpolicies.yaml)
