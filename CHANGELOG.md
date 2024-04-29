@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.27] - 2024-04-29
+### Added
+- Sidecar to deny egress that is external to istio services
+- customServiceEntries to allow egress to override sidecar
+
 ## [0.25.0-bb.26] - 2024-04-26
 ### Added
 - registry1.dso.mil/ironbank/hashicorp/vault-csi-provider v1.4.1 -> v1.4.2
@@ -12,7 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed bug with Prometheus datasource returning no data
 
 ## [0.25.0-bb.24] - 2024-04-24
-### removed
+### Removed
+- Sidecar to deny egress that is external to istio services
+- customServiceEntries to allow egress to override sidecar
+
+## [0.25.0-bb.24] - 2024-04-24
+### Removed
 - Sidecar to deny egress that is external to istio services
 - customServiceEntries to allow egress to override sidecar
 
