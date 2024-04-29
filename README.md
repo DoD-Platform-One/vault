@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.25](https://img.shields.io/badge/Version-0.25.0--bb.25-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.26](https://img.shields.io/badge/Version-0.25.0--bb.26-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -246,7 +246,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
-| csi.image.tag | string | `"v1.4.1"` |  |
+| csi.image.tag | string | `"v1.4.2"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
