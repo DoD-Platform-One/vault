@@ -1061,7 +1061,7 @@ csi:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"
-    tag: "v1.4.1"
+    tag: "v1.4.2"
     pullPolicy: IfNotPresent
 
   # volumes is a list of volumes made available to all containers. These are rendered
