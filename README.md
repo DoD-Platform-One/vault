@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.27](https://img.shields.io/badge/Version-0.25.0--bb.27-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.28](https://img.shields.io/badge/Version-0.25.0--bb.28-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -309,8 +309,6 @@ helm install vault chart/
 | autoInit.storage.size | string | `"2Gi"` |  |
 | istio.enabled | bool | `false` |  |
 | istio.hardened.enabled | bool | `false` |  |
-| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
-| istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.hardened.customAuthorizationPolicies | list | `[]` |  |
 | istio.hardened.monitoring.enabled | bool | `true` |  |
 | istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
