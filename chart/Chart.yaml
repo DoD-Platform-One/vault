@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vault
-version: 0.25.0-bb.29
+version: 0.25.0-bb.30
 appVersion: 1.14.10
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
