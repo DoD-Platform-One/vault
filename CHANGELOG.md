@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.25.0-bb.33] - 2024-06-12
+### Added
+- Update cypress test
+
 ## [0.25.0-bb.32] - 2024-06-10
 ### Updated
 - Updated minio-instance 5.0.12-bb.2 -> 5.0.15-bb.2

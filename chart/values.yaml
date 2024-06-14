@@ -1299,20 +1299,6 @@ customAppIngressSelector:
   key: vault-ingress
   value: true
 
-bbtests:
-  enabled: false
-  cypress:
-    resources:
-      requests:
-        cpu: 1
-        memory: "8Gi"
-      limits:
-        cpu: 1
-        memory: "8Gi"
-    artifacts: true
-    envs:
-      cypress_vault_url: "http://vault.vault.svc:8200"
-    disableDefaultTests: false
 # Vault is able to collect and publish various runtime metrics.
 # Enabling this feature requires setting adding `telemetry{}` stanza to
 # the Vault configuration. There are a few examples included in the `config` sections above.
@@ -1394,5 +1380,26 @@ serverTelemetry:
       #    for: 5m
       #    labels:
       #      severity: critical
+
+bbtests:
+  enabled: false
+  cypress:
+    resources:
+      requests:
+        cpu: 1
+        memory: "8Gi"
+      limits:
+        cpu: 1
+        memory: "8Gi"
+    artifacts: true
+    envs:
+      cypress_vault_url: "http://vault.vault.svc:8200"
+    secretEnvs:
+      - name: cypress_token
+        valueFrom:
+          secretKeyRef:
+            name: vault-token
+            key: key
+    disableDefaultTests: false
 
 openshift: false
