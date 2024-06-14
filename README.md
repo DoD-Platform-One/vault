@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.32](https://img.shields.io/badge/Version-0.25.0--bb.32-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.33](https://img.shields.io/badge/Version-0.25.0--bb.33-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -329,14 +329,6 @@ helm install vault chart/
 | minio.enabled | bool | `false` |  |
 | customAppIngressSelector.key | string | `"vault-ingress"` |  |
 | customAppIngressSelector.value | bool | `true` |  |
-| bbtests.enabled | bool | `false` |  |
-| bbtests.cypress.resources.requests.cpu | int | `1` |  |
-| bbtests.cypress.resources.requests.memory | string | `"8Gi"` |  |
-| bbtests.cypress.resources.limits.cpu | int | `1` |  |
-| bbtests.cypress.resources.limits.memory | string | `"8Gi"` |  |
-| bbtests.cypress.artifacts | bool | `true` |  |
-| bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
-| bbtests.cypress.disableDefaultTests | bool | `false` |  |
 | serverTelemetry.serviceMonitor.enabled | bool | `false` |  |
 | serverTelemetry.serviceMonitor.selectors | object | `{}` |  |
 | serverTelemetry.serviceMonitor.interval | string | `"30s"` |  |
@@ -344,6 +336,17 @@ helm install vault chart/
 | serverTelemetry.prometheusRules.enabled | bool | `false` |  |
 | serverTelemetry.prometheusRules.selectors | object | `{}` |  |
 | serverTelemetry.prometheusRules.rules | list | `[]` |  |
+| bbtests.enabled | bool | `false` |  |
+| bbtests.cypress.resources.requests.cpu | int | `1` |  |
+| bbtests.cypress.resources.requests.memory | string | `"8Gi"` |  |
+| bbtests.cypress.resources.limits.cpu | int | `1` |  |
+| bbtests.cypress.resources.limits.memory | string | `"8Gi"` |  |
+| bbtests.cypress.artifacts | bool | `true` |  |
+| bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
+| bbtests.cypress.secretEnvs[0].name | string | `"cypress_token"` |  |
+| bbtests.cypress.secretEnvs[0].valueFrom.secretKeyRef.name | string | `"vault-token"` |  |
+| bbtests.cypress.secretEnvs[0].valueFrom.secretKeyRef.key | string | `"key"` |  |
+| bbtests.cypress.disableDefaultTests | bool | `false` |  |
 | openshift | bool | `false` |  |
 
 ## Contributing
