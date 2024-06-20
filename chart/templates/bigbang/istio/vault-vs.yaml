@@ -24,6 +24,7 @@ spec:
           port:
             number: 8200
           host: {{ .Release.Name }}.vault.svc.cluster.local
+        weight: 100
   tls:
   - match:
     - port: 8443
@@ -36,4 +37,5 @@ spec:
         host: {{ .Release.Name }}.vault.svc.cluster.local
         port:
           number: 8200
+      weight: 100
 {{- end }}
