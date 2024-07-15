@@ -1,11 +1,10 @@
 # vault
 
-![Version: 0.25.0-bb.35](https://img.shields.io/badge/Version-0.25.0--bb.35-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.36](https://img.shields.io/badge/Version-0.25.0--bb.36-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
-
 * <https://www.vaultproject.io>
 
 * <https://github.com/hashicorp/vault>
@@ -14,7 +13,6 @@ Official HashiCorp Vault Chart
 * <https://github.com/hashicorp/vault-csi-provider>
 
 ## Learn More
-
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -28,13 +26,12 @@ Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
-
 ```bash
 helm install vault chart/
 ```
