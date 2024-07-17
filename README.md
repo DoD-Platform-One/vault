@@ -1,6 +1,6 @@
 # vault
 
-![Version: 0.25.0-bb.37](https://img.shields.io/badge/Version-0.25.0--bb.37-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.25.0-bb.38](https://img.shields.io/badge/Version-0.25.0--bb.38-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -337,9 +337,9 @@ helm install vault chart/
 | serverTelemetry.prometheusRules.selectors | object | `{}` |  |
 | serverTelemetry.prometheusRules.rules | list | `[]` |  |
 | bbtests.enabled | bool | `false` |  |
-| bbtests.cypress.resources.requests.cpu | int | `1` |  |
+| bbtests.cypress.resources.requests.cpu | int | `2` |  |
 | bbtests.cypress.resources.requests.memory | string | `"8Gi"` |  |
-| bbtests.cypress.resources.limits.cpu | int | `1` |  |
+| bbtests.cypress.resources.limits.cpu | int | `2` |  |
 | bbtests.cypress.resources.limits.memory | string | `"8Gi"` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_vault_url | string | `"http://vault.vault.svc:8200"` |  |
