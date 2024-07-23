@@ -12,6 +12,10 @@ Official HashiCorp Vault Chart
 * <https://github.com/hashicorp/vault-k8s>
 * <https://github.com/hashicorp/vault-csi-provider>
 
+### Upstream Release Notes
+
+The [upstream `vault-helm` CHANGELOG](https://github.com/hashicorp/vault-helm/blob/main/CHANGELOG.md) may help when reviewing this package.
+
 ## Learn More
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
