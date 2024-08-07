@@ -1,10 +1,15 @@
+{{/*
+Copyright (c) HashiCorp, Inc.
+SPDX-License-Identifier: MPL-2.0
+*/}}
+
 {{- template "vault.csiEnabled" . -}}
 {{- if .csiEnabled -}}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ template "vault.fullname" . }}-csi-provider
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "vault.namespace" . }}
   labels:
     app.kubernetes.io/name: {{ include "vault.name" . }}-csi-provider
     app.kubernetes.io/instance: {{ .Release.Name }}
@@ -68,7 +73,7 @@ spec:
             {{- else if .Values.server.ha.apiAddr }}
               value: "{{ .Values.server.ha.apiAddr }}"
             {{- else }}
-              value: {{ include "vault.scheme" . }}://{{ template "vault.fullname" . }}.{{ .Release.Namespace }}.svc:{{ .Values.server.service.port }}
+              value: {{ include "vault.scheme" . }}://{{ template "vault.fullname" . }}.{{ include "vault.namespace" . }}.svc:{{ .Values.server.service.port }}
             {{- end }}
           volumeMounts:
             - name: providervol

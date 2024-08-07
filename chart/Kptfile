@@ -1,11 +1,11 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-    name: chart
+  name: chart
 upstream:
   type: git
   git:
-    commit: e2711a2002df36caef2efc3878806a2b9f29952d
+    commit: 50f7439fb298d98a223d2fdf58ece2bad2d816bc
     repo: https://github.com/hashicorp/vault-helm
     directory: /
-    ref: v0.25.0
+    ref: v0.27.0

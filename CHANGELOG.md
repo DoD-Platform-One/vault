@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+
+## [0.27.0-bb.0] 2024-07-18
+
+### Changed
+
+- registry1.dso.mil/ironbank/hashicorp/vault 1.14.10 -> 1.15.3
+- added in (c) notices from upstream
+
 ## [0.25.0-bb.37] - 2024-06-25
 
 ### Changed
@@ -14,7 +22,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - Added documentation related to performing integration tests of sections of code and settings that have potential integration impacts
-
 
 ## [0.25.0-bb.38] - 2024-07-16
 
@@ -33,6 +40,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - Added documentation related to performing integration tests of sections of code and settings that have potential integration impacts
+
+## [0.25.0-bb.36] - 2024-07-11
+
+### Changed
+
+- Upgraded chart version
+
 
 ## [0.25.0-bb.35] - 2024-06-20
 
