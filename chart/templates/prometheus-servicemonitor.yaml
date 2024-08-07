@@ -1,3 +1,8 @@
+{{/*
+Copyright (c) HashiCorp, Inc.
+SPDX-License-Identifier: MPL-2.0
+*/}}
+
 {{ template "vault.mode" . }}
 {{ if or (.Values.global.serverTelemetry.prometheusOperator) (.Values.serverTelemetry.serviceMonitor.enabled) }}
 ---
@@ -40,5 +45,5 @@ spec:
       insecureSkipVerify: true
   namespaceSelector:
     matchNames:
-      - {{ .Release.Namespace }}
+      - {{ include "vault.namespace" . }}
 {{ end }}

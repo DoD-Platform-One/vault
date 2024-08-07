@@ -1,6 +1,7 @@
+<!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.25.0-bb.38](https://img.shields.io/badge/Version-0.25.0--bb.38-informational?style=flat-square) ![AppVersion: 1.14.10](https://img.shields.io/badge/AppVersion-1.14.10-informational?style=flat-square)
+![Version: 0.27.0-bb.0](https://img.shields.io/badge/Version-0.27.0--bb.0-informational?style=flat-square) ![AppVersion: 1.15.2](https://img.shields.io/badge/AppVersion-1.15.2-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -14,7 +15,14 @@ Official HashiCorp Vault Chart
 
 ### Upstream Release Notes
 
-The [upstream `vault-helm` CHANGELOG](https://github.com/hashicorp/vault-helm/blob/main/CHANGELOG.md) may help when reviewing this package.
+This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
+Example:
+```yaml
+annotations:
+  bigbang.dev/upstreamReleaseNotesMarkdown: |
+    - [Find our upstream chart's CHANGELOG here](https://link-goes-here/CHANGELOG.md)
+    - [and our upstream application release notes here](https://another-link-here/RELEASE_NOTES.md)
+```
 
 ## Learn More
 * [Application Overview](docs/overview.md)
@@ -45,6 +53,7 @@ helm install vault chart/
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | global.enabled | bool | `true` |  |
+| global.namespace | string | `""` |  |
 | global.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | global.tlsDisable | bool | `true` |  |
 | global.externalVaultAddr | string | `""` |  |
@@ -62,7 +71,7 @@ helm install vault chart/
 | injector.image.tag | string | `"v1.4.1"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.14.10"` |  |
+| injector.agentImage.tag | string | `"1.15.3"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -132,7 +141,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| server.image.tag | string | `"1.14.10"` |  |
+| server.image.tag | string | `"1.15.3"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -151,6 +160,7 @@ helm install vault chart/
 | server.ingress.hosts[0].paths | list | `[]` |  |
 | server.ingress.extraPaths | list | `[]` |  |
 | server.ingress.tls | list | `[]` |  |
+| server.hostAliases | list | `[]` |  |
 | server.route.enabled | bool | `false` |  |
 | server.route.activeService | bool | `true` |  |
 | server.route.labels | object | `{}` |  |
@@ -171,6 +181,7 @@ helm install vault chart/
 | server.readinessProbe.successThreshold | int | `1` |  |
 | server.readinessProbe.timeoutSeconds | int | `3` |  |
 | server.livenessProbe.enabled | bool | `false` |  |
+| server.livenessProbe.execCommand | list | `[]` |  |
 | server.livenessProbe.path | string | `"/v1/sys/health?standbyok=true"` |  |
 | server.livenessProbe.port | int | `8200` |  |
 | server.livenessProbe.failureThreshold | int | `2` |  |
@@ -192,13 +203,22 @@ helm install vault chart/
 | server.nodeSelector | object | `{}` |  |
 | server.networkPolicy.enabled | bool | `false` |  |
 | server.networkPolicy.egress | list | `[]` |  |
+| server.networkPolicy.ingress[0].from[0].namespaceSelector | object | `{}` |  |
+| server.networkPolicy.ingress[0].ports[0].port | int | `8200` |  |
+| server.networkPolicy.ingress[0].ports[0].protocol | string | `"TCP"` |  |
+| server.networkPolicy.ingress[0].ports[1].port | int | `8201` |  |
+| server.networkPolicy.ingress[0].ports[1].protocol | string | `"TCP"` |  |
 | server.priorityClassName | string | `""` |  |
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
 | server.service.enabled | bool | `true` |  |
 | server.service.active.enabled | bool | `true` |  |
+| server.service.active.annotations | object | `{}` |  |
 | server.service.standby.enabled | bool | `true` |  |
+| server.service.standby.annotations | object | `{}` |  |
 | server.service.instanceSelector.enabled | bool | `true` |  |
+| server.service.ipFamilyPolicy | string | `""` |  |
+| server.service.ipFamilies | list | `[]` |  |
 | server.service.publishNotReadyAddresses | bool | `true` |  |
 | server.service.externalTrafficPolicy | string | `"Cluster"` |  |
 | server.service.port | int | `8200` |  |
@@ -210,12 +230,15 @@ helm install vault chart/
 | server.dataStorage.storageClass | string | `nil` |  |
 | server.dataStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.dataStorage.annotations | object | `{}` |  |
+| server.dataStorage.labels | object | `{}` |  |
+| server.persistentVolumeClaimRetentionPolicy | object | `{}` |  |
 | server.auditStorage.enabled | bool | `true` |  |
 | server.auditStorage.size | string | `"10Gi"` |  |
 | server.auditStorage.mountPath | string | `"/vault/audit"` |  |
 | server.auditStorage.storageClass | string | `nil` |  |
 | server.auditStorage.accessMode | string | `"ReadWriteOnce"` |  |
 | server.auditStorage.annotations | object | `{}` |  |
+| server.auditStorage.labels | object | `{}` |  |
 | server.dev.enabled | bool | `false` |  |
 | server.dev.devRootToken | string | `"root"` |  |
 | server.standalone.enabled | string | `"-"` |  |
@@ -232,6 +255,7 @@ helm install vault chart/
 | server.ha.disruptionBudget.maxUnavailable | string | `nil` |  |
 | server.serviceAccount.create | bool | `true` |  |
 | server.serviceAccount.name | string | `""` |  |
+| server.serviceAccount.createSecret | bool | `false` |  |
 | server.serviceAccount.annotations | object | `{}` |  |
 | server.serviceAccount.extraLabels | object | `{}` |  |
 | server.serviceAccount.serviceDiscovery.enabled | bool | `true` |  |
@@ -246,11 +270,13 @@ helm install vault chart/
 | ui.serviceNodePort | string | `nil` |  |
 | ui.externalPort | int | `8200` |  |
 | ui.targetPort | int | `8200` |  |
+| ui.serviceIPFamilyPolicy | string | `""` |  |
+| ui.serviceIPFamilies | list | `[]` |  |
 | ui.externalTrafficPolicy | string | `"Cluster"` |  |
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
-| csi.image.tag | string | `"v1.4.2"` |  |
+| csi.image.tag | string | `"v1.4.3"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -275,7 +301,7 @@ helm install vault chart/
 | csi.agent.enabled | bool | `true` |  |
 | csi.agent.extraArgs | list | `[]` |  |
 | csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| csi.agent.image.tag | string | `"1.14.10"` |  |
+| csi.agent.image.tag | string | `"1.15.3"` |  |
 | csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.agent.logFormat | string | `"standard"` |  |
 | csi.agent.logLevel | string | `"info"` |  |
@@ -356,3 +382,8 @@ helm install vault chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
+---
+
+_This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

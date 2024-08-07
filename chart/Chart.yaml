@@ -1,12 +1,21 @@
 apiVersion: v2
 name: vault
-version: 0.25.0-bb.38
-appVersion: 1.14.10
+version: 0.27.0-bb.0
+appVersion: 1.15.2
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
 icon: https://github.com/hashicorp/vault/raw/f22d202cde2018f9455dec755118a9b84586e082/Vault_PrimaryLogo_Black.png
-keywords: ["vault", "security", "encryption", "secrets", "management", "automation", "infrastructure"]
+keywords:
+  [
+    "vault",
+    "security",
+    "encryption",
+    "secrets",
+    "management",
+    "automation",
+    "infrastructure",
+  ]
 sources:
   - https://github.com/hashicorp/vault
   - https://github.com/hashicorp/vault-helm
@@ -19,19 +28,19 @@ dependencies:
     condition: minio.enabled
     repository: oci://registry1.dso.mil/bigbang
   - name: gluon
-    version: "0.5.0"
+    version: "0.5.2"
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/applicationVersions: |
     - Vault: 1.14.10
   helm.sh/images: |
     - name: vault
-      image: registry1.dso.mil/ironbank/hashicorp/vault:1.14.10
+      image: registry1.dso.mil/ironbank/hashicorp/vault:1.15.3
     - name: vault-k8s
-      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.4.1
+      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.4.2
     - name: vault-csi-provider
       condition: csi.enabled
-      image: registry1.dso.mil/ironbank/hashicorp/vault-csi-provider:v1.4.2
+      image: registry1.dso.mil/ironbank/hashicorp/vault-csi-provider:v1.4.3
     - name: base
       condition: autoInit.enabled
       image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
