@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.27.0-bb.0](https://img.shields.io/badge/Version-0.27.0--bb.0-informational?style=flat-square) ![AppVersion: 1.15.2](https://img.shields.io/badge/AppVersion-1.15.2-informational?style=flat-square)
+![Version: 0.27.0-bb.1](https://img.shields.io/badge/Version-0.27.0--bb.1-informational?style=flat-square) ![AppVersion: 1.15.2](https://img.shields.io/badge/AppVersion-1.15.2-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -38,7 +38,7 @@ Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
-https://helm.sh/docs/intro/install/
+<https://helm.sh/docs/intro/install/>
 
 ## Deployment
 
@@ -68,7 +68,7 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"v1.4.1"` |  |
+| injector.image.tag | string | `"v1.4.2"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
 | injector.agentImage.tag | string | `"1.15.3"` |  |
