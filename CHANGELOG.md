@@ -4,7 +4,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
-## [0.27.0-bb.0] 2024-07-18
+## [0.27.0-bb.1] - 2024-07-18
+
+### Changed
+
+- registry1.dso.mil/ironbank/hashicorp/vault 1.14.10 -> 1.15.3
+- registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.4.1 -> 1.4.2
+- Updated gluon version 0.5.0 -> 0.5.2
+
+## [0.27.0-bb.0] - 2024-07-18
 
 ### Changed
 
@@ -46,7 +54,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Changed
 
 - Upgraded chart version
-
 
 ## [0.25.0-bb.35] - 2024-06-20
 
