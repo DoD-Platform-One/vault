@@ -1,11 +1,12 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.27.0-bb.1](https://img.shields.io/badge/Version-0.27.0--bb.1-informational?style=flat-square) ![AppVersion: 1.15.2](https://img.shields.io/badge/AppVersion-1.15.2-informational?style=flat-square)
+![Version: 0.28.1-bb.0](https://img.shields.io/badge/Version-0.28.1--bb.0-informational?style=flat-square) ![AppVersion: 1.17.3](https://img.shields.io/badge/AppVersion-1.17.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
+
 * <https://www.vaultproject.io>
 
 * <https://github.com/hashicorp/vault>
@@ -17,6 +18,7 @@ Official HashiCorp Vault Chart
 
 This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
 Example:
+
 ```yaml
 annotations:
   bigbang.dev/upstreamReleaseNotesMarkdown: |
@@ -25,6 +27,7 @@ annotations:
 ```
 
 ## Learn More
+
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -44,6 +47,7 @@ Install Helm
 
 * Clone down the repository
 * cd into directory
+
 ```bash
 helm install vault chart/
 ```
@@ -71,7 +75,7 @@ helm install vault chart/
 | injector.image.tag | string | `"v1.4.2"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.15.3"` |  |
+| injector.agentImage.tag | string | `"1.17.3"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -141,7 +145,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| server.image.tag | string | `"1.15.3"` |  |
+| server.image.tag | string | `"1.17.3"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -276,7 +280,7 @@ helm install vault chart/
 | ui.annotations | object | `{}` |  |
 | csi.enabled | bool | `false` |  |
 | csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
-| csi.image.tag | string | `"v1.4.3"` |  |
+| csi.image.tag | string | `"v1.5.0"` |  |
 | csi.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.volumes | string | `nil` |  |
 | csi.volumeMounts | string | `nil` |  |
@@ -301,7 +305,7 @@ helm install vault chart/
 | csi.agent.enabled | bool | `true` |  |
 | csi.agent.extraArgs | list | `[]` |  |
 | csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| csi.agent.image.tag | string | `"1.15.3"` |  |
+| csi.agent.image.tag | string | `"1.17.3"` |  |
 | csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.agent.logFormat | string | `"standard"` |  |
 | csi.agent.logLevel | string | `"info"` |  |
@@ -386,4 +390,3 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
-
