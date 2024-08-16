@@ -11,10 +11,9 @@ describe('Verify vault ui accessibility and components', () => {
     cy.viewport(1520, 1380)
     // Login with token
     cy.get('[data-test-select="auth-method"]').select('token')
-    cy.get('input[name="token"]').type(Cypress.env('token'))
-    cy.get('button[id="auth-submit"]').click()
+    cy.get('input[name="token"]').type(Cypress.env('token')).type('{enter}')
     cy.wait(8500); // wait for warning to disappear
-    cy.get('h3:contains("Secrets engines")')
+    cy.get('h2:contains("Secrets engines")')
     // Generate random base64 value
     cy.get('a[href*="/ui/vault/tools/wrap"]').click()
     cy.get('a[href*="/ui/vault/tools/random"]').click()
