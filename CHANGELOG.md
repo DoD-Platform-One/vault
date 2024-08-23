@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.28.1-bb.1] - 2024-08-21
+
+### Changed
+
+- ironbank/hashicorp/vault 1.14.10 -> 1.17.3
+- Updated minio-instance 5.0.15-bb.2 -> 6.0.2-bb.2
+
 ## [0.28.1-bb.0] - 2024-08-12
 
 ### Changed
