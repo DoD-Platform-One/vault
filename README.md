@@ -1,12 +1,11 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.28.1-bb.1](https://img.shields.io/badge/Version-0.28.1--bb.1-informational?style=flat-square) ![AppVersion: 1.17.3](https://img.shields.io/badge/AppVersion-1.17.3-informational?style=flat-square)
+![Version: 0.28.1-bb.2](https://img.shields.io/badge/Version-0.28.1--bb.2-informational?style=flat-square) ![AppVersion: 1.17.3](https://img.shields.io/badge/AppVersion-1.17.3-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
-
 * <https://www.vaultproject.io>
 
 * <https://github.com/hashicorp/vault>
@@ -18,7 +17,6 @@ Official HashiCorp Vault Chart
 
 This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
 Example:
-
 ```yaml
 annotations:
   bigbang.dev/upstreamReleaseNotesMarkdown: |
@@ -27,7 +25,6 @@ annotations:
 ```
 
 ## Learn More
-
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -41,13 +38,12 @@ Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
-
 ```bash
 helm install vault chart/
 ```
@@ -215,6 +211,7 @@ helm install vault chart/
 | server.priorityClassName | string | `""` |  |
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
+| server.configAnnotation | bool | `false` |  |
 | server.service.enabled | bool | `true` |  |
 | server.service.active.enabled | bool | `true` |  |
 | server.service.active.annotations | object | `{}` |  |
@@ -367,6 +364,8 @@ helm install vault chart/
 | serverTelemetry.serviceMonitor.selectors | object | `{}` |  |
 | serverTelemetry.serviceMonitor.interval | string | `"30s"` |  |
 | serverTelemetry.serviceMonitor.scrapeTimeout | string | `"10s"` |  |
+| serverTelemetry.serviceMonitor.tlsConfig | object | `{}` |  |
+| serverTelemetry.serviceMonitor.authorization | object | `{}` |  |
 | serverTelemetry.prometheusRules.enabled | bool | `false` |  |
 | serverTelemetry.prometheusRules.selectors | object | `{}` |  |
 | serverTelemetry.prometheusRules.rules | list | `[]` |  |
@@ -390,3 +389,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+
