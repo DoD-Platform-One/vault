@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.28.1-bb.2] - 2024-08-27
+
+### Updated
+
+- Modified templating for `extraLabels` on `csi-daemonset.yaml`, `injector-deployment.yaml` and `server-statefulset.yaml` to use `tpl` to support passing kiali-required labels
+
 ## [0.28.1-bb.1] - 2024-08-21
 
 ### Changed
