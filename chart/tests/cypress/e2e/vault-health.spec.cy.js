@@ -11,8 +11,13 @@ describe('Verify vault ui accessibility and components', () => {
     cy.viewport(1520, 1380)
     // Login with token
     cy.get('[data-test-select="auth-method"]').select('token')
-    cy.get('input[name="token"]').type(Cypress.env('token')).type('{enter}')
-    cy.get('input[name="token"]').should('not.exist'); // checks for token in the DOM. Indicating successful login
+    cy.get('input[name="token"]').type(Cypress.env('token'))
+    cy.wait(1000);
+    cy.get('body').then(($body) => {
+      if($body.find('button[id="auth-submit"]').length>0){
+        cy.get('button[id="auth-submit"]').click();
+      }
+    });
     cy.wait(8500); // wait for warning to disappear
     cy.get('h2:contains("Secrets engines")')
     // Generate random base64 value
