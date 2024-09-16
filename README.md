@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.28.1-bb.5](https://img.shields.io/badge/Version-0.28.1--bb.5-informational?style=flat-square) ![AppVersion: 1.17.5](https://img.shields.io/badge/AppVersion-1.17.5-informational?style=flat-square)
+![Version: 0.28.1-bb.6](https://img.shields.io/badge/Version-0.28.1--bb.6-informational?style=flat-square) ![AppVersion: 1.17.5](https://img.shields.io/badge/AppVersion-1.17.5-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -292,8 +292,10 @@ helm install vault chart/
 | csi.daemonSet.providersDir | string | `"/etc/kubernetes/secrets-store-csi-providers"` |  |
 | csi.daemonSet.kubeletRootDir | string | `"/var/lib/kubelet"` |  |
 | csi.daemonSet.extraLabels | object | `{}` |  |
-| csi.daemonSet.securityContext.pod | object | `{}` |  |
-| csi.daemonSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
+| csi.daemonSet.securityContext.pod.runAsNonRoot | bool | `true` |  |
+| csi.daemonSet.securityContext.pod.runAsGroup | int | `1000` |  |
+| csi.daemonSet.securityContext.pod.runAsUser | int | `100` |  |
+| csi.daemonSet.securityContext.pod.fsGroup | int | `1000` |  |
 | csi.pod.annotations | object | `{}` |  |
 | csi.pod.tolerations | list | `[]` |  |
 | csi.pod.nodeSelector | object | `{}` |  |
