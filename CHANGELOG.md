@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.28.1-bb.7] - 2024-09-18
+
+### Changed
+
+- Updated minio-instance from 6.0.2-bb.2 -> 6.0.3-bb.2
+
 ## [0.28.1-bb.6] - 2024-09-12
 
 ### Changed

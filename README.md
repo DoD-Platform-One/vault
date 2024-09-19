@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.28.1-bb.6](https://img.shields.io/badge/Version-0.28.1--bb.6-informational?style=flat-square) ![AppVersion: 1.17.5](https://img.shields.io/badge/AppVersion-1.17.5-informational?style=flat-square)
+![Version: 0.28.1-bb.7](https://img.shields.io/badge/Version-0.28.1--bb.7-informational?style=flat-square) ![AppVersion: 1.17.5](https://img.shields.io/badge/AppVersion-1.17.5-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
