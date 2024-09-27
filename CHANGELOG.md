@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.28.1-bb.8] - 2024-09-27
+
+### Changed
+
+- Upgraded registry1.dso.mil/ironbank/hashicorp/vault 1.17.5 -> 1.17.6
+- ironbank/hashicorp/vault 1.17.5-> 1.17.6
+
 ## [0.28.1-bb.7] - 2024-09-18
 
 ### Changed
@@ -38,6 +45,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Modified templating for `extraLabels` on `csi-daemonset.yaml`, `injector-deployment.yaml` and `server-statefulset.yaml` to use `tpl` to support passing kiali-required labels
+
 
 ## [0.28.1-bb.1] - 2024-08-21
 
