@@ -54,7 +54,7 @@ vault policy write prometheus-monitoring - << EOF
     path "/sys/metrics" {
       capabilities = ["read"]
     }
-    EOF
+EOF
 ```
 
 Then attach the policy to the existing `monitoring-monitoring-kube-prometheus` ServiceAccount used by the Prometheus pod:
