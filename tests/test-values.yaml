@@ -1,13 +1,7 @@
 networkPolicies:
   enabled: true
   controlPlaneCidr: 172.16.0.0/12
-minio:
-  enabled: false
-  disableSSL: true
-  endpoint: minio.minio.svc.cluster.local
-  accessKey: "minio"
-  secretKey: "minio123"
-  bucketName: vault-data
+
 injector:
   affinity: |
     podAntiAffinity:
