@@ -1,5 +1,5 @@
 # Vault Keycloak integration.
-Because of security concerns BigBang does not provide automated SSO integration with Vault. Also, there is not a one-size-fits-all for all organizations. Each organization must determine their own Vault policies. Instead, BigBang provides example steps that operational environments can follow and modify. The example assumes that the domain is ```*.bigbang.dev```.
+Because of security concerns BigBang does not provide automated SSO integration with Vault. Also, there is not a one-size-fits-all for all organizations. Each organization must determine their own Vault policies. Instead, BigBang provides example steps that operational environments can follow and modify. The example assumes that the domain is ```*.dev.bigbang.mil```.
 
 Vault SSO integration requires configuration in Keycloak and configuration in Vault.
 
@@ -15,8 +15,8 @@ Create an OIDC client with the following (modify as needed):
 1. Name:  Dev Vault
 1. Access Type:  confidential  (or ```public``` for dev environments)
 1. Valid Redirect URIs:
-    https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback
-    https://vault.bigbang.dev/oidc/callback
+    https://vault.dev.bigbang.mil/ui/vault/auth/oidc/oidc/callback
+    https://vault.dev.bigbang.mil/oidc/callback
 1. Click ```Save``` button
 1. Map ```groups``` to user token claim. This will create a field on the user token that includes the user's Keycloak groups. This is needed so that Vault can use Keycloak groups.
     a. Click the Mappers tab
@@ -40,9 +40,9 @@ The [upstream Vault documentation](https://learn.hashicorp.com/tutorials/vault/o
     ```
     export OIDC_CLIENT_ID=dev_00eb8904-5b88-4c68-ad67-cec0d2e07aa6_vault
     export OIDC_CLIENT_SECRET=fakesecret
-    export ALLOWED_REDIRECT_URI_1=https://vault.bigbang.dev/ui/vault/auth/oidc/oidc/callback
-    export ALLOWED_REDIRECT_URI_2=https://vault.bigbang.dev/oidc/callback
-    export OIDC_DISCOVERY_URL=https://keycloak.bigbang.dev/auth/realms/baby-yoda
+    export ALLOWED_REDIRECT_URI_1=https://vault.dev.bigbang.mil/ui/vault/auth/oidc/oidc/callback
+    export ALLOWED_REDIRECT_URI_2=https://vault.dev.bigbang.mil/oidc/callback
+    export OIDC_DISCOVERY_URL=https://keycloak.dev.bigbang.mil/auth/realms/baby-yoda
     export VAULT_TOKEN=your-vault-root-token
     ```
 1. create a default reader policy

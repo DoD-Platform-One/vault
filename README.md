@@ -1,22 +1,24 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.28.1-bb.9](https://img.shields.io/badge/Version-0.28.1--bb.9-informational?style=flat-square) ![AppVersion: 1.17.6](https://img.shields.io/badge/AppVersion-1.17.6-informational?style=flat-square)
+![Version: 0.28.1-bb.11](https://img.shields.io/badge/Version-0.28.1--bb.11-informational?style=flat-square) ![AppVersion: 1.18.0](https://img.shields.io/badge/AppVersion-1.18.0-informational?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
-* <https://www.vaultproject.io>
 
-* <https://github.com/hashicorp/vault>
-* <https://github.com/hashicorp/vault-helm>
-* <https://github.com/hashicorp/vault-k8s>
-* <https://github.com/hashicorp/vault-csi-provider>
+- <https://www.vaultproject.io>
 
-### Upstream Release Notes
+- <https://github.com/hashicorp/vault>
+- <https://github.com/hashicorp/vault-helm>
+- <https://github.com/hashicorp/vault-k8s>
+- <https://github.com/hashicorp/vault-csi-provider>
 
-This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
+## Upstream Release Notes
+
+This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.dev.bigbang.mil/upstreamReleaseNotesMarkdown`.
 Example:
+
 ```yaml
 annotations:
   bigbang.dev/upstreamReleaseNotesMarkdown: |
@@ -25,25 +27,27 @@ annotations:
 ```
 
 ## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+
+- [Application Overview](docs/overview.md)
+- [Other Documentation](docs/)
 
 ## Pre-Requisites
 
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
+- Kubernetes Cluster deployed
+- Kubernetes config installed in `~/.kube/config`
+- Helm installed
 
 Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
-https://helm.sh/docs/intro/install/
+<https://helm.sh/docs/intro/install/>
 
 ## Deployment
 
-* Clone down the repository
-* cd into directory
+- Clone down the repository
+- cd into directory
+
 ```bash
 helm install vault chart/
 ```
@@ -71,7 +75,7 @@ helm install vault chart/
 | injector.image.tag | string | `"v1.4.2"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| injector.agentImage.tag | string | `"1.17.6"` |  |
+| injector.agentImage.tag | string | `"1.18.0"` |  |
 | injector.agentDefaults.cpuLimit | string | `"500m"` |  |
 | injector.agentDefaults.cpuRequest | string | `"500m"` |  |
 | injector.agentDefaults.memLimit | string | `"250Mi"` |  |
@@ -141,7 +145,7 @@ helm install vault chart/
 | server.enterpriseLicense.secretName | string | `""` |  |
 | server.enterpriseLicense.secretKey | string | `"license"` |  |
 | server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| server.image.tag | string | `"1.17.6"` |  |
+| server.image.tag | string | `"1.18.0"` |  |
 | server.image.pullPolicy | string | `"IfNotPresent"` |  |
 | server.updateStrategyType | string | `"OnDelete"` |  |
 | server.logLevel | string | `""` |  |
@@ -304,7 +308,7 @@ helm install vault chart/
 | csi.agent.enabled | bool | `true` |  |
 | csi.agent.extraArgs | list | `[]` |  |
 | csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| csi.agent.image.tag | string | `"1.17.6"` |  |
+| csi.agent.image.tag | string | `"1.18.0"` |  |
 | csi.agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | csi.agent.logFormat | string | `"standard"` |  |
 | csi.agent.logLevel | string | `"info"` |  |
@@ -391,4 +395,3 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
-

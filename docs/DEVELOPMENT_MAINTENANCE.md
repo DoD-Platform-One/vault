@@ -59,7 +59,7 @@ istio:
     passthrough:
       ingressGateways: "passthrough-ingressgateway"
       hosts:
-      - "vault.bigbang.dev"
+      - "vault.dev.bigbang.mil"
       tls:
         mode: "PASSTHROUGH"
 
@@ -230,7 +230,7 @@ addons:
 
 
 ```
-5. Browse to https://vault.bigbang.dev/
+5. Browse to https://vault.dev.bigbang.mil
 5. Set Method to Token and log in. To get the token, run:
 ```kubectl get secret -n vault vault-token -o go-template='{{.data.key | base64decode}}'```
 5. Once you've logged in, choose Tools from the left-hand column. 
