@@ -6,11 +6,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 
 describe('Verify vault ui accessibility and components', () => {
   it('Access Vault', () => {
-    // Browse to https://vault.bigbang.dev/
+    // Browse to https://vault.dev.bigbang.mil
     cy.visit(Cypress.env('vault_url'))
     cy.viewport(1520, 1380)
     // Login with token
-    cy.get('[data-test-select="auth-method"]').select('token')
+    cy.get('select[id="select-auth-method"]').select('token')
     cy.get('input[name="token"]').type(Cypress.env('token'))
     cy.wait(1000);
     cy.get('body').then(($body) => {
@@ -26,7 +26,7 @@ describe('Verify vault ui accessibility and components', () => {
     cy.wait(2000)
     cy.get('h1:contains("Random Bytes")')
     cy.contains('Generate').click()
-    cy.contains('Copy').click()
+    cy.get('button.hds-copy-snippet').should('be.visible').click()
     cy.contains('Back to main navigation').click()
     cy.contains('cubbyhole').click()
     cy.contains('Create secret').click()

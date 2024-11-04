@@ -75,7 +75,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-    tag: "1.17.6"
+    tag: "1.18.0"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -283,7 +283,7 @@ injector:
   extraEnvironmentVars: {}
     # KUBERNETES_SERVICE_HOST: kubernetes.default.svc
 
-    # VAULT_API_ADDR: https://vault.bigbang.dev
+    # VAULT_API_ADDR: https://vault.dev.bigbang.mil
     # VAULT_ADDR:  https://127.0.0.1:8200
     # VAULT_SKIP_VERIFY: "true"
     # VAULT_LOG_FORMAT: "json"
@@ -392,7 +392,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-    tag: "1.17.6"
+    tag: "1.18.0"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -1237,7 +1237,7 @@ csi:
 
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.17.6"
+      tag: "1.18.0"
       pullPolicy: IfNotPresent
 
     logFormat: standard
@@ -1297,7 +1297,7 @@ csi:
   # for the available command line flags.
   extraArgs: []
 
-domain: bigbang.dev
+domain: dev.bigbang.mil
 monitoring:
   enabled: false
   namespace: monitoring

@@ -146,7 +146,7 @@ The following is a bare minimum configuration for a production/operational deplo
 
 	# tell the deployments where our Vault API endpoint is
 	# see https://github.com/hashicorp/vault-helm/issues/789
-        apiAddr: "https://vault.bigbang.dev"
+        apiAddr: "https://vault.dev.bigbang.mil"
 
         # raft is the license free most simple solution for distributed filesystem
         raft:
@@ -175,21 +175,21 @@ The following is a bare minimum configuration for a production/operational deplo
                 leader_api_addr = "https://vault-vault-0.vault-vault-internal:8200"
                 leader_client_cert_file = "/vault/tls/tls.crt"
                 leader_client_key_file = "/vault/tls/tls.key"
-                leader_tls_servername = "vault.bigbang.dev"
+                leader_tls_servername = "vault.dev.bigbang.mil"
               }
 
               retry_join {
                 leader_api_addr = "https://vault-vault-1.vault-vault-internal:8200"
                 leader_client_cert_file = "/vault/tls/tls.crt"
                 leader_client_key_file = "/vault/tls/tls.key"
-                leader_tls_servername = "vault.bigbang.dev"
+                leader_tls_servername = "vault.dev.bigbang.mil"
               }
 
               retry_join {
                 leader_api_addr = "https://vault-vault-2.vault-vault-internal:8200"
                 leader_client_cert_file = "/vault/tls/tls.crt"
                 leader_client_key_file = "/vault/tls/tls.key"
-                leader_tls_servername = "vault.bigbang.dev"
+                leader_tls_servername = "vault.dev.bigbang.mil"
               }
             }
 

@@ -103,7 +103,7 @@ Prometheus is configured using an `additionalScrapeConfig` passthrough value to 
       authorization:
         credentials_file: /vault/secrets/token
       static_configs:
-      - targets: [vault.bigbang.dev]
+      - targets: [vault.dev.bigbang.mil]
 ```
 
 ## Known issues
