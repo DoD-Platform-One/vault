@@ -67,7 +67,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-    tag: "v1.4.2"
+    tag: "v1.5.0"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -688,7 +688,7 @@ server:
   # This can be used together with an OnDelete deployment strategy to help
   # identify which pods still need to be deleted during a deployment to pick up
   # any configuration changes.
-  configAnnotation: false
+  includeConfigAnnotation: false
 
   # Enables a headless service to be used by the Vault Statefulset
   service:
@@ -844,13 +844,13 @@ server:
     # config is a raw string of default configuration when using a Stateful
     # deployment. Default is to use a PersistentVolumeClaim mounted at /vault/data
     # and store data there. This is only used when using a Replica count of 1, and
-    # using a stateful set. This should be HCL.
+    # using a stateful set. Supported formats are HCL and JSON.
 
     # Note: Configuration files are stored in ConfigMaps so sensitive data
     # such as passwords should be either mounted through extraSecretEnvironmentVars
-    # or through a Kube secret.  For more information see:
+    # or through a Kube secret. For more information see:
     # https://developer.hashicorp.com/vault/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
-    config: |
+    config: |-
       ui = true
 
       listener "tcp" {
@@ -942,6 +942,7 @@ server:
       # such as passwords should be either mounted through extraSecretEnvironmentVars
       # or through a Kube secret.  For more information see:
       # https://developer.hashicorp.com/vault/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
+      # Supported formats are HCL and JSON.
       config: |
         ui = true
 
@@ -976,11 +977,11 @@ server:
 
     # config is a raw string of default configuration when using a Stateful
     # deployment. Default is to use a Consul for its HA storage backend.
-    # This should be HCL.
+    # Supported formats are HCL and JSON.
 
     # Note: Configuration files are stored in ConfigMaps so sensitive data
     # such as passwords should be either mounted through extraSecretEnvironmentVars
-    # or through a Kube secret.  For more information see:
+    # or through a Kube secret. For more information see:
     # https://developer.hashicorp.com/vault/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
     config: |
       ui = true
@@ -1181,6 +1182,10 @@ csi:
   # generating secret versions.
   hmacSecretName: ""
 
+  # Allow modification of the hostNetwork parameter to avoid the need of a
+  # dedicated pod ip
+  hostNetwork: false
+
   # Settings for the daemonSet used to run the provider.
   daemonSet:
     updateStrategy:
@@ -1289,7 +1294,12 @@ csi:
     # Number of seconds after which the probe times out.
     timeoutSeconds: 3
 
-  # Enables debug logging.
+  # Configures the log level for the Vault CSI provider.
+  # Supported log levels include: trace, debug, info, warn, error, and off
+  logLevel: "info"
+
+  # Deprecated, set logLevel to debug instead.
+  # If set to true, the logLevel will be set to debug.
   debug: false
 
   # Pass arbitrary additional arguments to vault-csi-provider.
@@ -1440,7 +1450,7 @@ serverTelemetry:
     scrapeTimeout: 10s
 
     # tlsConfig used for scraping the Vault metrics API.
-    # See API reference: https://prometheus-operator.dev/docs/operator/api/#monitoring.coreos.com/v1.TLSConfig
+    # See API reference: https://prometheus-operator.dev/docs/api-reference/api/#monitoring.coreos.com/v1.TLSConfig
     # example:
     # tlsConfig:
     #   ca:
@@ -1450,7 +1460,7 @@ serverTelemetry:
     tlsConfig: {}
 
     # authorization used for scraping the Vault metrics API.
-    # See API reference: https://prometheus-operator.dev/docs/operator/api/#monitoring.coreos.com/v1.SafeAuthorization
+    # See API reference: https://prometheus-operator.dev/docs/api-reference/api/#monitoring.coreos.com/v1.SafeAuthorization
     # example:
     # authorization:
     #   credentials:
