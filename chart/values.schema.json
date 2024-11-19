@@ -102,6 +102,9 @@
                 "hmacSecretName": {
                     "type": "string"
                 },
+                "hostNetwork": {
+                    "type": "boolean"
+                },
                 "image": {
                     "type": "object",
                     "properties": {
@@ -135,6 +138,9 @@
                             "type": "integer"
                         }
                     }
+                },
+                "logLevel": {
+                    "type": "string"
                 },
                 "pod": {
                     "type": "object",
@@ -664,9 +670,6 @@
                         }
                     }
                 },
-                "configAnnotation": {
-                    "type": "boolean"
-                },
                 "dataStorage": {
                     "type": "object",
                     "properties": {
@@ -845,6 +848,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "includeConfigAnnotation": {
+                    "type": "boolean"
                 },
                 "ingress": {
                     "type": "object",

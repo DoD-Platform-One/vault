@@ -1,5 +1,22 @@
 ## Unreleased
 
+## 0.29.0 (November 7, 2024)
+
+Changes:
+
+* Default `vault` version updated to 1.18.1
+* Default `vault-k8s` version updated to 1.5.0
+* Default `vault-csi-provider` version updated to 1.5.0
+* Tested with Kubernetes versions 1.28-1.31
+
+Features:
+
+* csi: Allow modification of the hostNetwork parameter on the DaemonSet [GH-1046](https://github.com/hashicorp/vault-helm/pull/1046)
+
+Bugs:
+
+* Properly handle JSON formatted server config [GH-1049](https://github.com/hashicorp/vault-helm/pull/1049)
+
 ## 0.28.1 (July 11, 2024)
 
 Changes:
