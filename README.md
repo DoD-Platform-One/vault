@@ -1,24 +1,22 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.29.0-bb.0](https://img.shields.io/badge/Version-0.29.0--bb.0-informational?style=flat-square) ![AppVersion: 1.18.1](https://img.shields.io/badge/AppVersion-1.18.1-informational?style=flat-square)
+![Version: 0.29.0-bb.0](https://img.shields.io/badge/Version-0.29.0--bb.0-informational?style=flat-square) ![AppVersion: 1.18.1](https://img.shields.io/badge/AppVersion-1.18.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
-
 - <https://www.vaultproject.io>
 
-- <https://github.com/hashicorp/vault>
-- <https://github.com/hashicorp/vault-helm>
-- <https://github.com/hashicorp/vault-k8s>
-- <https://github.com/hashicorp/vault-csi-provider>
+* <https://github.com/hashicorp/vault>
+* <https://github.com/hashicorp/vault-helm>
+* <https://github.com/hashicorp/vault-k8s>
+* <https://github.com/hashicorp/vault-csi-provider>
 
 ## Upstream Release Notes
 
-This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.dev.bigbang.mil/upstreamReleaseNotesMarkdown`.
+This package has no upstream release note links on file. Please add some to [chart/Chart.yaml](chart/Chart.yaml) under `annotations.bigbang.dev/upstreamReleaseNotesMarkdown`.
 Example:
-
 ```yaml
 annotations:
   bigbang.dev/upstreamReleaseNotesMarkdown: |
@@ -41,7 +39,7 @@ Kubernetes: `>= 1.20.0-0`
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
@@ -72,7 +70,7 @@ helm install vault chart/
 | injector.metrics.enabled | bool | `true` |  |
 | injector.externalVaultAddr | string | `""` |  |
 | injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| injector.image.tag | string | `"v1.4.2"` |  |
+| injector.image.tag | string | `"v1.5.0"` |  |
 | injector.image.pullPolicy | string | `"IfNotPresent"` |  |
 | injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
 | injector.agentImage.tag | string | `"1.18.1"` |  |
@@ -215,7 +213,7 @@ helm install vault chart/
 | server.priorityClassName | string | `""` |  |
 | server.extraLabels | object | `{}` |  |
 | server.annotations | object | `{}` |  |
-| server.configAnnotation | bool | `false` |  |
+| server.includeConfigAnnotation | bool | `false` |  |
 | server.service.enabled | bool | `true` |  |
 | server.service.active.enabled | bool | `true` |  |
 | server.service.active.annotations | object | `{}` |  |
@@ -247,7 +245,7 @@ helm install vault chart/
 | server.dev.enabled | bool | `false` |  |
 | server.dev.devRootToken | string | `"root"` |  |
 | server.standalone.enabled | string | `"-"` |  |
-| server.standalone.config | string | `"ui = true\n\nlistener \"tcp\" {\n  {{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key (not .Values.global.tlsDisable) }}\n  tls_disable = 0\n  tls_key_file = \"/vault/tls/tls.key\"\n  tls_cert_file = \"/vault/tls/tls.crt\"\n  {{- else }}\n  tls_disable = 1\n  {{- end }}\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n{{- if .Values.server.dataStorage.enabled }}\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n{{- end }}\n\n{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}\nstorage \"s3\" {\n    access_key = \"{{ .Values.minio.accessKey }}\"\n    secret_key = \"{{ .Values.minio.secretKey }}\"\n    endpoint = \"{{ .Values.minio.endpoint }}\"\n    bucket = \"{{ .Values.minio.bucketName }}\"\n    s3_force_path_style = \"true\"\n    disable_ssl = \"{{ .Values.minio.disableSSL }}\"\n}\n{{- end }}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics in your config.\n#telemetry {\n#  prometheus_retention_time = \"30s\"\n#  disable_hostname = true\n#}\n"` |  |
+| server.standalone.config | string | `"ui = true\n\nlistener \"tcp\" {\n  {{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key (not .Values.global.tlsDisable) }}\n  tls_disable = 0\n  tls_key_file = \"/vault/tls/tls.key\"\n  tls_cert_file = \"/vault/tls/tls.crt\"\n  {{- else }}\n  tls_disable = 1\n  {{- end }}\n  address = \"[::]:8200\"\n  cluster_address = \"[::]:8201\"\n  # Enable unauthenticated metrics access (necessary for Prometheus Operator)\n  #telemetry {\n  #  unauthenticated_metrics_access = \"true\"\n  #}\n}\n\ntelemetry {\n  prometheus_retention_time = \"24h\"\n  disable_hostname = true\n  unauthenticated_metrics_access = true\n}\n\n{{- if .Values.server.dataStorage.enabled }}\nstorage \"raft\" {\n  path = \"/vault/data\"\n}\n{{- end }}\n\n{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}\nstorage \"s3\" {\n    access_key = \"{{ .Values.minio.accessKey }}\"\n    secret_key = \"{{ .Values.minio.secretKey }}\"\n    endpoint = \"{{ .Values.minio.endpoint }}\"\n    bucket = \"{{ .Values.minio.bucketName }}\"\n    s3_force_path_style = \"true\"\n    disable_ssl = \"{{ .Values.minio.disableSSL }}\"\n}\n{{- end }}\n\n# Example configuration for using auto-unseal, using Google Cloud KMS. The\n# GKMS keys must already exist, and the cluster must have a service account\n# that is authorized to access GCP KMS.\n#seal \"gcpckms\" {\n#   project     = \"vault-helm-dev\"\n#   region      = \"global\"\n#   key_ring    = \"vault-helm-unseal-kr\"\n#   crypto_key  = \"vault-helm-unseal-key\"\n#}\n\n# Example configuration for enabling Prometheus metrics in your config.\n#telemetry {\n#  prometheus_retention_time = \"30s\"\n#  disable_hostname = true\n#}"` |  |
 | server.ha.enabled | bool | `false` |  |
 | server.ha.replicas | int | `3` |  |
 | server.ha.apiAddr | string | `nil` |  |
@@ -290,6 +288,7 @@ helm install vault chart/
 | csi.resources.limits.cpu | string | `"50m"` |  |
 | csi.resources.limits.memory | string | `"128Mi"` |  |
 | csi.hmacSecretName | string | `""` |  |
+| csi.hostNetwork | bool | `false` |  |
 | csi.daemonSet.updateStrategy.type | string | `"RollingUpdate"` |  |
 | csi.daemonSet.updateStrategy.maxUnavailable | string | `""` |  |
 | csi.daemonSet.annotations | object | `{}` |  |
@@ -329,9 +328,10 @@ helm install vault chart/
 | csi.livenessProbe.periodSeconds | int | `5` |  |
 | csi.livenessProbe.successThreshold | int | `1` |  |
 | csi.livenessProbe.timeoutSeconds | int | `3` |  |
+| csi.logLevel | string | `"info"` |  |
 | csi.debug | bool | `false` |  |
 | csi.extraArgs | list | `[]` |  |
-| domain | string | `"bigbang.dev"` |  |
+| domain | string | `"dev.bigbang.mil"` |  |
 | monitoring.enabled | bool | `false` |  |
 | monitoring.namespace | string | `"monitoring"` |  |
 | networkPolicies.enabled | bool | `false` |  |
@@ -395,3 +395,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

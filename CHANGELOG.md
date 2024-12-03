@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Updated minio-instance from 6.0.2-bb.2 -> 6.0.3-bb.2
 - Updated gluon to 0.5.9
 - Updated registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s (source) v1.4.2 -> v1.5.0
+- Added the maintenance track annotation and badge
 
 ## [0.28.1-bb.12] - 2024-11-06
 
