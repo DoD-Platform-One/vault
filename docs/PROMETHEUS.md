@@ -110,9 +110,43 @@ Prometheus is configured using an `additionalScrapeConfig` passthrough value to 
 
 **These only apply to development and testing environments which are using the Big Bang default settings**
 
-1. Permission denied trying to re-authenticate after upgrade
-    * see here for possible, related issue [after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied](https://discuss.hashicorp.com/t/after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied/29392)
-    * **Fix**: Re-save the **Access/Authentication Methods/kubernetes/Configuration/Configure** settings
+### Permission denied trying to re-authenticate after upgrade
+After upgrading Big Bang versions you may encounter an issue where the Prometheus pod is unable to start. Tailing the logs should reveal an error that looks like this coming from the `vault-agent-init` initContianer:
+```plaintext
+vault-agent-init 2024-12-03T20:55:20.244Z [ERROR] agent.auth.handler: error authenticating:
+  error=Error making API request.
+  URL: PUT https://vault.example.com/v1/auth/kubernetes/login
+  Code: 403. Errors:
+    * permission denied
+```
+To resolve this, you will need to re-save the **Access/Authentication Methods/kubernetes/Configuration/Configure** settings.
+
+1. Get the Vault root token
+  - If using the BigBang developer `autoInit` job, you can access the root token by running the following command:
+```shell
+kubectl get secret -n vault vault-token -o go-template='{{.data.key | base64decode}}'
+```
+2. Get a shell to the running Vault pod
+```shell
+kubectl exec -it pod/vault-vault-0 -n vault -- /bin/bash
+```
+3. Login to Vault uasing the root token
+```shell
+vault login
+```
+4.  Re-save the **Access/Authentication Methods/kubernetes/Configuration/Configure** settings
+```shell
+vault write auth/kubernetes/config \
+  kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
+  token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+  kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+  issuer="https://kubernetes.default.svc.cluster.local" 
+```
+5. Restart the Prometheus pod
+
+After restarting the Prometheus pod, the vault-agent-init container should start successfully and the Prometheus pod should be able to start.
+
+See here for possible, related issue: [after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied](https://discuss.hashicorp.com/t/after-upgrading-to-kubernetes-1-21-kubernetes-authentication-request-to-vault-fails-with-permission-denied/29392)
 
 ## Vault Reference Documentation
 
