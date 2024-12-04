@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.29.0-bb.1] - 2024-12-04
+
+### Changed
+
+- Updated minio-instance from 6.0.4-bb.2 -> 6.0.4-bb.3
+- Updated gluon to 0.5.12
+- Added missing label for app.kubernetes.io/version
+
 ## [0.29.0-bb.0] - 2024-11-12
 
 ### Changed
