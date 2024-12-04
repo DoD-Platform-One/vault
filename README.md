@@ -1,17 +1,17 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.29.0-bb.0](https://img.shields.io/badge/Version-0.29.0--bb.0-informational?style=flat-square) ![AppVersion: 1.18.1](https://img.shields.io/badge/AppVersion-1.18.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 0.29.0-bb.1](https://img.shields.io/badge/Version-0.29.0--bb.1-informational?style=flat-square) ![AppVersion: 1.18.1](https://img.shields.io/badge/AppVersion-1.18.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
 ## Upstream References
 - <https://www.vaultproject.io>
 
-* <https://github.com/hashicorp/vault>
-* <https://github.com/hashicorp/vault-helm>
-* <https://github.com/hashicorp/vault-k8s>
-* <https://github.com/hashicorp/vault-csi-provider>
+- <https://github.com/hashicorp/vault>
+- <https://github.com/hashicorp/vault-helm>
+- <https://github.com/hashicorp/vault-k8s>
+- <https://github.com/hashicorp/vault-csi-provider>
 
 ## Upstream Release Notes
 
