@@ -1,13 +1,21 @@
 ## Unreleased
 
+## 0.29.1 (November 20, 2024)
+
+Bugs:
+* server: restore support for templated config [GH-1073](https://github.com/hashicorp/vault-helm/pull/1073)
+
 ## 0.29.0 (November 7, 2024)
+
+KNOWN ISSUES:
+* Template support in server config stopped working [GH-1072](https://github.com/hashicorp/vault-helm/issues/1072)
 
 Changes:
 
 * Default `vault` version updated to 1.18.1
 * Default `vault-k8s` version updated to 1.5.0
 * Default `vault-csi-provider` version updated to 1.5.0
-* Tested with Kubernetes versions 1.28-1.31
+* Tested with Kubernetes versions 1.27-1.31
 
 Features:
 
