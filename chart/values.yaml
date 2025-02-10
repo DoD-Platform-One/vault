@@ -75,7 +75,7 @@ injector:
   # required.
   agentImage:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-    tag: "1.18.3"
+    tag: "1.18.4"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -392,7 +392,7 @@ server:
 
   image:
     repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-    tag: "1.18.3"
+    tag: "1.18.4"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 
@@ -1242,7 +1242,7 @@ csi:
 
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.18.3"
+      tag: "1.18.4"
       pullPolicy: IfNotPresent
 
     logFormat: standard
