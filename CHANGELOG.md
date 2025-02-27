@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.29.1-bb.6] - 2025-02-26
+
+### Changed
+
+- Added logic to init container script to check if vault is alsready initialized
+
 ## [0.29.1-bb.5] - 2025-02-05
 
 ### Changed
