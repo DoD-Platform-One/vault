@@ -28,9 +28,9 @@ data:
       echo "---=== Waiting For Vault Server ===---"; 
       sleep 5; 
     done
-    
+
     echo "---=== Initializing Vault ===---"
-    until vault operator init -address=$VAULT_ADDR > $INIT_OUT; do
+    until vault operator init -address=$VAULT_ADDR > $INIT_OUT || vault operator init -address=$VAULT_ADDR -status; do
       echo "retry initialize"
       sleep 5;
     done
