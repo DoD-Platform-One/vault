@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.29.1-bb.8] - 2025-02-27
+
+### Changed
+
+- registry1.dso.mil/ironbank/hashicorp/vault-csi-provider v1.6.0 -> 1.5.0
+
 ## [0.29.1-bb.7] - 2025-02-27
 
 ### Changed
