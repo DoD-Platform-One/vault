@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.29.1-bb.11] - 2024-03-28
+
+### Changed
+
+- Updated minio-instance from 6.0.4-bb.3 -> 7.0.0-bb.3
+
 ## [0.29.1-bb.10] - 2025-03-19
 
 ### Changed
