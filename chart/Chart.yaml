@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vault
-version: '0.29.1-bb.10'
+version: '0.29.1-bb.11'
 appVersion: 1.18.5
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
@@ -23,7 +23,7 @@ sources:
   - https://github.com/hashicorp/vault-csi-provider
 dependencies:
   - name: minio-instance
-    version: 6.0.4-bb.3
+    version: 7.0.0-bb.3
     alias: minio
     condition: minio.enabled
     repository: oci://registry1.dso.mil/bigbang
