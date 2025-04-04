@@ -1,23 +1,35 @@
-networkPolicies:
-  enabled: true
-  controlPlaneCidr: 172.16.0.0/12
-
-injector:
-  affinity: |
-    podAntiAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/name: {{ template "vault.name" . }}-agent-injector
-                app.kubernetes.io/instance: "{{ .Release.Name }}"
-                component: webhook
-            topologyKey: kubernetes.io/hostname
-
-istio:
-  hardened:
+#########################
+# Disable Core Packages #
+#########################
+grafana:
+  enabled: false
+monitoring:
+  enabled: false
+kyvernoReporter:
+  enabled: false
+neuvector:
+  enabled: false
+loki:
+  enabled: false
+promtail:
+  enabled: false
+tempo:
+  enabled: false
+kiali:
+  enabled: false
+addons:
+  minioOperator:
+    enabled: false
+########################
+# Required for package #
+########################
+  vault:
     enabled: true
-
-bbtests:
-  enabled: true
+kyverno:
+  values:
+    bbtests:
+      enabled: false
+kyvernoPolicies:
+  values:
+    bbtests:
+      enabled: false
