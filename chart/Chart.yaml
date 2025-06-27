@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vault
-version: 0.30.0-bb.6
+version: 0.30.0-bb.7
 appVersion: 1.19.5
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
@@ -28,7 +28,7 @@ dependencies:
     condition: minio.enabled
     repository: oci://registry1.dso.mil/bigbang
   - name: gluon
-    version: "0.6.2"
+    version: "0.6.3"
     repository: oci://registry1.dso.mil/bigbang
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
@@ -38,7 +38,7 @@ annotations:
     - name: vault
       image: registry1.dso.mil/ironbank/hashicorp/vault:1.19.5
     - name: vault-k8s
-      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.6.2
+      image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.7.0
     - name: vault-csi-provider
       condition: csi.enabled
       image: registry1.dso.mil/ironbank/hashicorp/vault-csi-provider:v1.5.0
