@@ -3,11 +3,24 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.30.0-bb.7] - 2025-06-27
+
+### Changed
+
+- gluon 0.6.2 -> 0.6.3
+- registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s (source) v1.6.2 -> v1.7.0
+
 ## [0.30.0-bb.6] - 2025-06-19
 
 ### Changed
 
 - Updated minio-instance (source) 7.0.0-bb.3 -> 7.1.1-bb.3
+
+## [0.30.0-bb.5] - 2025-06-03
+
+### Changed
+
+- Updated registry1.dso.mil/ironbank/hashicorp/vault (source) 1.19.3 -> 1.19.5
 
 ## [0.30.0-bb.5] - 2025-06-03
 
