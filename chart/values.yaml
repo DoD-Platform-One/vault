@@ -1529,4 +1529,26 @@ bbtests:
             key: key
     disableDefaultTests: false
 
+  scripts:
+    permissions:
+      apiGroups:
+        - ""
+      resources:
+        - configmaps
+      verbs:
+        - create
+        - delete
+        - list
+        - get
+    image: registry1.dso.mil/ironbank/big-bang/base:2.1.0
+    envs:
+      VAULT_PORT: '80'
+      VAULT_HOST: 'http://vault'
+    secretEnvs:
+      - name: vault_token
+        valueFrom:
+          secretKeyRef:
+            name: vault-token
+            key: key
+
 openshift: false 
