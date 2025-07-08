@@ -10,7 +10,7 @@ describe('Verify vault ui accessibility and components', () => {
     cy.visit(Cypress.env('vault_url'))
     cy.viewport(1520, 1380)
     // Login with token
-    cy.get('select[id="select-auth-method"]').select('token')
+    cy.url().should('include', '/ui/vault/auth')
     cy.get('input[name="token"]').type(Cypress.env('token'))
     cy.wait(1000);
     cy.get('body').then(($body) => {
@@ -28,9 +28,8 @@ describe('Verify vault ui accessibility and components', () => {
     cy.contains('Generate').click()
     cy.get('button.hds-copy-snippet').should('be.visible').click()
     cy.contains('Back to main navigation').click()
-    cy.contains('cubbyhole').click()
-    cy.contains('Create secret').click()
-    cy.contains('cubbyhole').click()
+    cy.contains('cubbyhole/').click()
+    cy.contains('Create secret').should('be.visible').click()
     // Check for policies
     cy.get('a[href*="/ui/vault/policies/acl"]').click()
     cy.contains('prometheus-metrics')
