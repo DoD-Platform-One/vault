@@ -1,7 +1,7 @@
 apiVersion: v2
 name: vault
-version: 0.30.0-bb.8
-appVersion: 1.19.5
+version: 0.30.0-bb.9
+appVersion: 1.20.0
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
 home: https://www.vaultproject.io
@@ -33,10 +33,10 @@ dependencies:
 annotations:
   bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
-    - Vault: 1.19.5
+    - Vault: 1.20.0
   helm.sh/images: |
     - name: vault
-      image: registry1.dso.mil/ironbank/hashicorp/vault:1.19.5
+      image: registry1.dso.mil/ironbank/hashicorp/vault:1.20.0
     - name: vault-k8s
       image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.7.0
     - name: vault-csi-provider
