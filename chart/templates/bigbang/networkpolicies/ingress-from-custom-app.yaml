@@ -18,7 +18,7 @@ spec:
           {{ .Values.customAppIngressSelector.key }}: "{{ .Values.customAppIngressSelector.value }}"
     ports:
     - protocol: TCP
-      port: {{ .Values.injector.port }}
+      port: {{ .Values.upstream.injector.port }}
     - protocol: TCP
-      port: {{ .Values.server.service.port }}
+      port: {{ .Values.upstream.server.service.port }}
 {{- end }}

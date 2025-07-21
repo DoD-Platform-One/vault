@@ -1,4 +1,4 @@
-{{- if and .Values.networkPolicies.enabled (not .Values.global.tlsDisable) }}
+{{- if and .Values.networkPolicies.enabled (not .Values.upstream.global.tlsDisable) }}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:

@@ -18,14 +18,14 @@ data:
     MONITORING_NAMESPACE="monitoring"
     INIT_OUT=/export/init.out
 
-    {{- if not .Values.global.tlsDisable }}
+    {{- if not .Values.upstream.global.tlsDisable }}
     export VAULT_ADDR=https://vault.{{ .Values.domain }}
     {{- else }}
-    export VAULT_ADDR={{ include "vault.scheme" . }}://{{ template "vault.fullname" . }}-internal:8200
+    export VAULT_ADDR={{ include "vault.bb_scheme" . }}://{{ template "vault.fullname" . }}-internal:8200
     {{- end }}
 
     until curl -L -s -k -f $VAULT_ADDR/v1/sys/seal-status | grep 'initialized' >& /dev/null; do
-      echo "---=== Waiting For Vault Server ===---"; 
+      echo "---=== Waiting For Vault Server: $VAULT_ADDR ===---"; 
       sleep 5; 
     done
 
