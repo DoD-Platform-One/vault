@@ -16,3 +16,27 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- define "minio.labels" -}}
 app: minio
 {{- end }}
+
+
+{{- define "bb_imagePullSecrets" -}}
+{{- with .Values.upstream.global.imagePullSecrets -}}
+imagePullSecrets:
+{{- range . -}}
+{{- if typeIs "string" . }}
+  - name: {{ . }}
+{{- else if index . "name" }}
+  - name: {{ .name }}
+{{- end }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Scheme for health check and local endpoint */}}
+{{- define "vault.bb_scheme" -}}
+{{- if .Values.upstream.global.tlsDisable -}}
+{{ "http" }}
+{{- else -}}
+{{ "https" }}
+{{- end -}}
+{{- end -}}
+

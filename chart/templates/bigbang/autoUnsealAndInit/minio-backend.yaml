@@ -1,4 +1,4 @@
-{{- if and (not .Values.server.dataStorage.enabled) .Values.minio.enabled }}
+{{- if and (not .Values.upstream.server.dataStorage.enabled) .Values.minio.enabled }}
 ---
 apiVersion: v1
 kind: Secret
@@ -30,7 +30,7 @@ metadata:
 spec: 
   template:     
     spec:
-      {{- include "imagePullSecrets" . | nindent 6 }}
+      {{- include "bb_imagePullSecrets" . | nindent 6 }}
       containers:
       - name: minio-client
         image: minio/mc:latest
