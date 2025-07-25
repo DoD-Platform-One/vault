@@ -220,7 +220,7 @@ upstream:
   csi:
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"
-      tag: "v1.5.0"
+      tag: "v1.5.1"
 
     resources:
       requests:
