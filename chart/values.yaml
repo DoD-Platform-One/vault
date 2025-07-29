@@ -159,7 +159,7 @@ upstream:
 
     agentImage:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.20.0"
+      tag: "1.20.1"
 
     agentDefaults:
       memLimit: "250Mi"
@@ -184,7 +184,7 @@ upstream:
 
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.20.0"
+      tag: "1.20.1"
 
     resources:
       requests:
@@ -241,7 +241,7 @@ upstream:
     agent:
       image:
         repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-        tag: "1.20.0"
+        tag: "1.20.1"
 
       resources:
         requests:
