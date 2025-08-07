@@ -144,7 +144,7 @@ upstream:
       - name: private-registry
 
   injector:
-    enabled: false
+    enabled: "-"
 
     leaderElector:
       enabled: false

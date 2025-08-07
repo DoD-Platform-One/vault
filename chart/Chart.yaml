@@ -1,6 +1,6 @@
 apiVersion: v2
 name: vault
-version: 0.30.1-bb.0
+version: 0.30.1-bb.1
 appVersion: 1.20.1
 kubeVersion: ">= 1.20.0-0"
 description: Official HashiCorp Vault Chart
@@ -44,7 +44,7 @@ annotations:
     - name: vault-k8s
       image: registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s:v1.7.0
     - name: vault-csi-provider
-      condition: csi.enabled
+      condition: upstream.csi.enabled
       image: registry1.dso.mil/ironbank/hashicorp/vault-csi-provider:v1.5.1
     - name: base
       condition: autoInit.enabled
