@@ -1,23 +1,43 @@
 {
-    "baseBranches": ["main"],
+    "baseBranches": [
+        "main"
+    ],
     "configWarningReuseIssue": false,
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate: Upgrade Vault Package Dependencies",
     "draftPR": true,
-    "enabledManagers": ["helm-values","regex", "helmv3"],
-    "ignorePaths": ["chart/charts/**"],
-    "postUpdateOptions": ["helmUpdateSubChartArchives"],
-    "labels": ["vault","renovate"],
+    "enabledManagers": [
+        "helm-values",
+        "custom.regex",
+        "helmv3"
+    ],
+    "ignorePaths": [
+        "chart/charts/**"
+    ],
+    "postUpdateOptions": [
+        "helmUpdateSubChartArchives"
+    ],
+    "labels": [
+        "vault",
+        "renovate"
+    ],
     "packageRules": [
         {
-            "matchDatasources": ["docker"],
+            "matchDatasources": [
+                "docker"
+            ],
             "groupName": "Ironbank",
-            "registryUrls": ["https://registry1.dso.mil"]
+            "registryUrls": [
+                "https://registry1.dso.mil"
+            ]
         }
     ],
-    "regexManagers": [
+    "customManagers": [
         {
-            "fileMatch": ["^chart/values\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^chart/values\\.yaml$"
+            ],
             "matchStrings": [
                 "repository\\S*:\\s*(?<depName>\\S+).*\n\\s+tag:\\s*(?<currentValue>.+)"
             ],
@@ -25,7 +45,10 @@
             "datasourceTemplate": "docker"
         },
         {
-            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^chart/Chart\\.yaml$"
+            ],
             "matchStrings": [
                 "- Vault:\\s*(?<currentValue>.+)",
                 "appVersion:\\s+(?<currentValue>.+)"
@@ -35,16 +58,22 @@
             "registryUrlTemplate": "https://registry1.dso.mil"
         },
         {
-            "fileMatch": ["^chart/Chart\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^chart/Chart\\.yaml$"
+            ],
             "matchStrings": [
                 "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
             ],
             "datasourceTemplate": "docker"
         },
         {
-            "fileMatch": ["^chart/deps/minio/Chart\\.yaml$"],
+            "customType": "regex",
+            "fileMatch": [
+                "^chart/deps/minio/Chart\\.yaml$"
+            ],
             "matchStrings": [
-              "version:\\s+(?<currentValue>.+)"
+                "version:\\s+(?<currentValue>.+)"
             ],
             "depNameTemplate": "https://repo1.dso.mil/platform-one/big-bang/apps/application-utilities/minio.git",
             "datasourceTemplate": "git-tags",
