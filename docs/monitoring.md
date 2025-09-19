@@ -1,3 +1,3 @@
 # Monitoring in Vault
 
-# https://learn.hashicorp.com/tutorials/vault/agent-kubernetes
+# https://developer.hashicorp.com/vault/tutorials/kubernetes-introduction/agent-kubernetes

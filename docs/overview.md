@@ -6,7 +6,7 @@ This package contains an extensible and configurable installation of Hashicorp V
 
 ## Vault
 
-[HashiCorp Vault](https://www.hashicorp.com/products/vault) is an identity-based secrets and encryption management system that helps organizations reduce the risk of breaches and data exposure with identity-based security automation and encryption-as-a-service.
+[HashiCorp Vault](https://www.hashicorp.com/en/products/vault) is an identity-based secrets and encryption management system that helps organizations reduce the risk of breaches and data exposure with identity-based security automation and encryption-as-a-service.
 
 ## Production/Operational Configuration
 Please see the BigBang recommended [production configuration](./production-ha.md) for high availability and auto-unseal.

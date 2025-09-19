@@ -4,7 +4,7 @@ Because of security concerns BigBang does not provide automated SSO integration 
 Vault SSO integration requires configuration in Keycloak and configuration in Vault.
 
 Reference online documentation:
-https://learn.hashicorp.com/vault/identity-access-management/oidc-auth
+https://developer.hashicorp.com/vault/tutorials/auth-methods/oidc-auth
 https://www.spicyomelet.com/sso-with-keycloak-and-hashicorp-vault/
 
 ## KeyCloak Configuration
@@ -31,7 +31,7 @@ Create an OIDC client with the following (modify as needed):
 1. Optional: Add user(s) to the vault-admin group
 
 ## Vault configuration
-The [upstream Vault documentation](https://learn.hashicorp.com/tutorials/vault/oidc-auth) provides examples of CLI command, API using cURL, or Web UI. We will use CLI commands here. For convenience, we will exec onto the Vault pod so that we don't have to install vault on our workstation.
+The [upstream Vault documentation](https://developer.hashicorp.com/vault/tutorials/auth-methods/oidc-auth) provides examples of CLI command, API using cURL, or Web UI. We will use CLI commands here. For convenience, we will exec onto the Vault pod so that we don't have to install vault on our workstation.
 1. Exec onto the Vault pod
     ```
     kubectl exec -n vault -it vault-vault-0 -- /bin/bash -c "cd /home/vault/ && /bin/bash"

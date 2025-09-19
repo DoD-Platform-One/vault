@@ -8,7 +8,7 @@ Vault needs the following permissions on the KMS key:
 * kms:Decrypt
 * kms:DescribeKey
 
-See [awskms Seal](https://www.vaultproject.io/docs/configuration/seal/awskms) for additional details.
+See [awskms Seal](https://developer.hashicorp.com/vault/docs/configuration/seal/awskms) for additional details.
 
 Because Vault encrypts all persistent data, the server needs keys to decrypt the data.  This process of Vault starting up, and getting the keys to decrypt the data is part of the unseal process.
 
@@ -65,7 +65,7 @@ entropy "seal" {
 }
 ```
 
-See [Entropy Augmentation Seal](https://www.vaultproject.io/docs/configuration/entropy-augmentation) for details.
+See [Entropy Augmentation Seal](https://developer.hashicorp.com/vault/docs/configuration/entropy-augmentation) for details.
 
 With this configuration, the initial init procedure remains the same, and vault will be configured with 5 shamir keys.  See init.sh defined in [configmap-for-vault-init.yaml](../chart/templates/bigbang/autoUnsealAndInit/configmap-for-vault-init.yaml).  In addition, vault will configure the server to be unsealed with the kms_key_id key.
 
