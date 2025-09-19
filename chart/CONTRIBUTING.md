@@ -244,4 +244,4 @@ Here are some examples of common test patterns:
 We require that all contributors sign our Contributor License Agreement ("CLA")
 before we can accept the contribution.
 
-[Learn more about why HashiCorp requires a CLA and what the CLA includes](https://www.hashicorp.com/cla)
+[Learn more about why HashiCorp requires a CLA and what the CLA includes](https://www.hashicorp.com/en/cla)

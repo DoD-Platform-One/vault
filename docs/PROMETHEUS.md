@@ -12,7 +12,7 @@ This guide creates a Role called **prometheus-monitoring** and binds the Role to
 
 The Kubernetes Authentication Method can be enabled/configured using Vault's web interface or by the vault cli.
 
-See [HashiCorp Vault Kubernetes Auth Method](https://www.vaultproject.io/docs/auth/kubernetes) for more details
+See [HashiCorp Vault Kubernetes Auth Method](https://developer.hashicorp.com/vault/docs/auth/kubernetes) for more details
 
 * Exec into a vault pod & login via the CLI (see below) and run the following commands:
 
@@ -72,7 +72,7 @@ vault write auth/kubernetes/role/prometheus \
 
 Using a k8s MutatingWebhookConfiguration (vault-vault-agent-injector-cfg), Vault will add a sidecar to annotated pods.
 
-See [HashiCorp Vault Agent Annotations](https://www.vaultproject.io/docs/platform/k8s/injector/annotations#agent-annotations) for details
+See [HashiCorp Vault Agent Annotations](https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations#agent-annotations) for details
 
 The Big Bang prometheus pod is annotated with the following values when both `monitoring` & `vault` are enabled within BigBang:
 
@@ -150,6 +150,6 @@ See here for possible, related issue: [after-upgrading-to-kubernetes-1-21-kubern
 
 ## Vault Reference Documentation
 
-* [HashiCorp Vault Telemetry](https://www.vaultproject.io/docs/configuration/telemetry#prometheus)
-* [HashiCorp Vault Agent Annotations](https://www.vaultproject.io/docs/platform/k8s/injector/annotations#agent-annotations)
-* [HashiCorp Vault Kubernetes Auth Method](https://www.vaultproject.io/docs/auth/kubernetes)
+* [HashiCorp Vault Telemetry](https://developer.hashicorp.com/vault/docs/configuration/telemetry#prometheus)
+* [HashiCorp Vault Agent Annotations](https://developer.hashicorp.com/vault/docs/platform/k8s/injector/annotations#agent-annotations)
+* [HashiCorp Vault Kubernetes Auth Method](https://developer.hashicorp.com/vault/docs/auth/kubernetes)

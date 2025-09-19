@@ -2,7 +2,7 @@
 
 The BigBang vault package supports the Vault's agent injector service to bind vault secrets to running pods.
 
-For a detailed description and walk-through, see [Injecting Secrets into Kubernetes Pods via Vault Agent Containers](https://learn.hashicorp.com/tutorials/vault/kubernetes-sidecar?in=vault/kubernetes)
+For a detailed description and walk-through, see [Injecting Secrets into Kubernetes Pods via Vault Agent Containers](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-sidecar?in=vault%2Fkubernetes)
 
 There are 3 main parts to getting secrets to Kubernetes pods:
 

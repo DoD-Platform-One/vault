@@ -1,5 +1,5 @@
 # Vault configuration for production high availability
-This document describes BigBang recommended minimum production/operational settings. Vault is a large complicated application and has many options that cannot adequately be covered here. Vault has significant security risks if not properly configured and administrated. Please consult the upstream [Vault documentation](https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#configure-vault-helm-chart) as the ultimate authority.
+This document describes BigBang recommended minimum production/operational settings. Vault is a large complicated application and has many options that cannot adequately be covered here. Vault has significant security risks if not properly configured and administrated. Please consult the upstream [Vault documentation](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-raft-deployment-guide?in=vault%2Fkubernetes#configure-vault-helm-chart) as the ultimate authority.
 
 [[_TOC_]]
 
@@ -13,7 +13,7 @@ autoInit:
 ## Vault Initialization
 Regardless of whether or not you configure for auto-unseal, you must first initialize Vault for a new deployment.
 
-Review the [Vault init documentation for available options](https://www.vaultproject.io/docs/commands/operator/init)
+Review the [Vault init documentation for available options](https://developer.hashicorp.com/vault/docs/commands/operator/init)
 
 Exec into one of the Vault k8s containers and run your `init` command:
 ```bash
@@ -23,7 +23,7 @@ vault operator init ...
 ```
 Be sure to save the root token and recovery keys to a secure location, one of the two outputs will be required to continue use of the Vault Installation.
 
-Also see the [Vault documentation](https://www.vaultproject.io/docs/commands/operator/init)
+Also see the [Vault documentation](https://developer.hashicorp.com/vault/docs/commands/operator/init)
 
 ## High availability
 An operational deployment of Vault should be configured for high availability.
@@ -35,7 +35,7 @@ server:
 ```
 
 ## Auto Unseal
-For an operational deployment of Vault you should use [Auto Unseal](https://learn.hashicorp.com/collections/vault/auto-unseal). Automatically unsealing Vault reduces the operational maintenance of having to manually unseal when a k8s pod restarts. You must setup AWS IAM role and policy. See the [example policy](./awsKMSPolicy.md).
+For an operational deployment of Vault you should use [Auto Unseal](https://developer.hashicorp.com/vault/tutorials/auto-unseal). Automatically unsealing Vault reduces the operational maintenance of having to manually unseal when a k8s pod restarts. You must setup AWS IAM role and policy. See the [example policy](./awsKMSPolicy.md).
 ```yaml
 server:
   ha:
@@ -51,7 +51,7 @@ server:
 
 ## Production/Operational Configuration Example
 The following is a bare minimum configuration for a production/operational deployment. We recommend high availability and auto-unseal. Assumptions and considerations:
-1. This example assumes AWS is the cloud provider. [Documentation for other cloud providers](https://learn.hashicorp.com/tutorials/vault/kubernetes-raft-deployment-guide?in=vault/kubernetes#vault-storage-config) is provided by Vault.
+1. This example assumes AWS is the cloud provider. [Documentation for other cloud providers](https://developer.hashicorp.com/vault/tutorials/kubernetes/kubernetes-raft-deployment-guide?in=vault%2Fkubernetes#vault-storage-config) is provided by Vault.
 1. This example config uses passthrough ingress. It is possible to deploy Vault with TLS termination at the ingress gateway. But for better security TLS should be passed through to the Vault backend by using passthrough ingress. Also, passthrough ingress is required for Vault site-to-site replication. When deploying this Package with BigBang you should configure an istio passthrough gateway in the BigBang chart values and provide the passthrough cert. If the key and cert values are provided the vault-tls secret will be created for you and also take care of the secret volume and volume mount. Otherwise you can create the secret and config for volume/volumemount yourself.
     ```yaml
     istio:
