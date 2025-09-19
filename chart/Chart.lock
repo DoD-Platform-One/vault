@@ -4,9 +4,9 @@ dependencies:
   version: 7.1.1-bb.3
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
-  version: 0.8.4
+  version: 0.9.0
 - name: vault
   repository: https://helm.releases.hashicorp.com/
   version: 0.30.1
-digest: sha256:fb274f54c321930d078dcf79bbd26ac46c437672a378aa4a64ed63d6de5fedf0
-generated: "2025-08-26T06:15:13.924970528Z"
+digest: sha256:d98ac87aa8a11d37c2d08064c4659b58d39f1070dafb8bad5fd029ceab864a7f
+generated: "2025-09-19T10:30:23.1752728-04:00"
