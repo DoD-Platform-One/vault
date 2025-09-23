@@ -1,8 +1,8 @@
-{{- if and .Values.istio.enabled .Values.autoInit.enabled (eq .Values.istio.mtls.mode "STRICT") }}
+{{- if and .Values.istio.enabled (eq .Values.istio.mtls.mode "STRICT") (or .Values.autoInit.enabled .Values.monitoring.enabled) }}
 apiVersion: "security.istio.io/v1beta1"
 kind: PeerAuthentication
 metadata:
-  name: vault-autoinit-exception
+  name: vault-access-exception
   namespace: {{ .Release.Namespace }}
 spec:
   mtls:
