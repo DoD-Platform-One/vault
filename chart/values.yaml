@@ -198,14 +198,7 @@ upstream:
       enabled: true
 
     ha:
-      enabled: true
-      replicas: 1
-
       apiAddr: "https://vault.dev.bigbang.mil"
-
-      raft:
-        enabled: true
-        setNodeId: true
 
     statefulSet:
       securityContext:

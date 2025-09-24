@@ -5,7 +5,7 @@ Vault SSO integration requires configuration in Keycloak and configuration in Va
 
 Reference online documentation:
 https://developer.hashicorp.com/vault/tutorials/auth-methods/oidc-auth
-https://www.spicyomelet.com/sso-with-keycloak-and-hashicorp-vault/
+https://www.keycloak.org/server/vault
 
 ## KeyCloak Configuration
 There is a sample Keycloak realm with pre-configured clients in the [Keycloak package repository](https://repo1.dso.mil/platform-one/big-bang/apps/security-tools/keycloak/-/tree/main/chart/resources/dev/).
@@ -36,7 +36,7 @@ The [upstream Vault documentation](https://developer.hashicorp.com/vault/tutoria
     ```
     kubectl exec -n vault -it vault-vault-0 -- /bin/bash -c "cd /home/vault/ && /bin/bash"
     ```
-1. Set environment variables that will be used by CLI commands. You will need the vault root token. If you enabled autoinit the root token can be found in the [vault-token secret](./login-vault.md)
+1. Set environment variables that will be used by CLI commands. You will need the vault root token. If you enabled autoinit the root token can be found in the vault/vault-token secret
     ```
     export OIDC_CLIENT_ID=dev_00eb8904-5b88-4c68-ad67-cec0d2e07aa6_vault
     export OIDC_CLIENT_SECRET=fakesecret
