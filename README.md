@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.30.1-bb.6](https://img.shields.io/badge/Version-0.30.1--bb.6-informational?style=flat-square) ![AppVersion: 1.20.3](https://img.shields.io/badge/AppVersion-1.20.3-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 0.30.1-bb.7](https://img.shields.io/badge/Version-0.30.1--bb.7-informational?style=flat-square) ![AppVersion: 1.20.3](https://img.shields.io/badge/AppVersion-1.20.3-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -138,11 +138,7 @@ helm install vault chart/
 | upstream.server.resources.limits.memory | string | `"256Mi"` |  |
 | upstream.server.resources.limits.cpu | string | `"250m"` |  |
 | upstream.server.auditStorage.enabled | bool | `true` |  |
-| upstream.server.ha.enabled | bool | `true` |  |
-| upstream.server.ha.replicas | int | `1` |  |
 | upstream.server.ha.apiAddr | string | `"https://vault.dev.bigbang.mil"` |  |
-| upstream.server.ha.raft.enabled | bool | `true` |  |
-| upstream.server.ha.raft.setNodeId | bool | `true` |  |
 | upstream.server.statefulSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
 | upstream.ui.enabled | bool | `true` |  |
 | upstream.csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
