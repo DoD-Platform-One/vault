@@ -8,38 +8,18 @@ flux:
 networkPolicies:
   enabled: true
 
-jaeger:
-  enabled: false
-
-kiali:
-  enabled: false
-
-clusterAuditor:
-  enabled: false
-
-gatekeeper:
-  enabled: false
-
-fluentbit:
-  enabled: false
-
-monitoring:
-  enabled: false
-
-twistlock:
-  enabled: false
-
-istio:
-  ingressGateways:
-    passthrough-ingressgateway:
-      type: "LoadBalancer"
-  gateways:
-    passthrough:
-      ingressGateways: "passthrough-ingressgateway"
-      hosts:
-      - "vault.dev.bigbang.mil"
-      tls:
-        mode: "PASSTHROUGH"
+istioGateway:
+  values:
+    ingressGateways:
+      passthrough-ingressgateway:
+        type: "LoadBalancer"
+    gateways:
+      passthrough:
+        ingressGateways: "passthrough-ingressgateway"
+        hosts:
+        - "vault.dev.bigbang.mil"
+        tls:
+          mode: "PASSTHROUGH"
 
 kyvernoPolicies:
   enabled: true
@@ -65,23 +45,8 @@ addons:
     git:
       repo: https://repo1.dso.mil/big-bang/product/packages/vault.git
       path: chart
-      tag: null
-      # tag: 6.3.4
+      tag: null 
       branch: "renovate/ironbank" # update this branch with your target branch.
-      # existingSecret: ""
-      # credentials:
-      #   password: ""
-      #   username: ""
-
-    values:
-      istio:
-        enabled: true
-        hardened:
-          enabled: true
-          # enabled: false
-
-      global:
-        tlsDisable: false
 
     ingress:
       gateway: passthrough

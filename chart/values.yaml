@@ -135,6 +135,8 @@ bbtests:
 
 openshift: false 
 
+# -- Values to pass to [the upstream vault chart](https://github.com/hashicorp/vault-helm/blob/main/values.yaml)
+# @default -- Upstream chart values
 upstream:
   fullnameOverride: "vault-vault"
   nameOverride: "vault"
