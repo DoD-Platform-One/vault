@@ -1,7 +1,7 @@
 # How to upgrade the Vault Package chart
 
 1. Checkout the branch that renovate created. This branch will have the image tag updates and typically some other necessary version changes that you will want. You can either work off of this branch or branch off of it.
-2. Update the vault via kpt. You should be able to run kpt pkg update chart/vault@<version> --strategy force-delete-replace (ex: kpt pkg update chart/vault@1.14.3 --strategy force-delete-replace).
+2. To update vault's helm chart visit the upstream to see if there is a new release: https://github.com/hashicorp/vault-helm/blob/main/values.yaml. Locate dependencies within chart/chart.yaml and update. Whenever a dependency is updated you need to run `helm dependencies update ./chart` to pull in the new chart. Make sure the old helm chart has been removed and the new one has been added within chart/charts.
 3. Update version references for the Chart in chart/Chart.yaml. versionshould be-bb.0(ex:1.14.3-bb.0) and appVersionshould be(ex:1.14.3). Also validate that the BB annotation for the main Istio version is updated (leave the Tetrate version as-is unless you are updating those images).
 4. Verify that chart/values.yaml tag have been updated to the new version.
 5. Add a changelog entry for the update. At minimum mention updating the image versions.
@@ -22,14 +22,8 @@ addons:
     git:
       repo: https://repo1.dso.mil/big-bang/product/packages/vault.git
       path: chart
-      tag: null
-      # tag: 6.3.4
-      branch: "57-implement-istio-authorization-policies" # update this branch with your target branch.
-      # existingSecret: ""
-      # credentials:
-      #   password: ""
-      #   username: ""
-
+      tag: null # make sure to set tag to null
+      branch: "renovate/ironbank" # update this branch with your target branch.
 ```
 
 ## Cluster setup
@@ -125,14 +119,6 @@ This is a high-level list of modifitations that Big Bang has made to the upstrea
 - add MinIO and `helm dependency update`
 ## chart/templates/bigbang/*
 - add templates to support Big Bang integration
-## chart/templates/server-service.yaml
-- add `prometeus-metrics: "true"` to end of `metadata: labels:`
-## chart/templates/injector-deployment.yaml
-- ensure `AGENT_INJECT_VAULT_ADDR` environment variable has third if else option checking for `.Values.server.ha.apiAddr`. This is a BigBang addition.
-## chart/templates/csi-daemonset.yaml
-- ensure `VAULT_ADDR` environment variable has if else option checking for `.Values.server.ha.apiAddr`. This is a BigBang addition.
-## chart/templates/tests/*
-- delete server-test.yaml
 ## chart/tests/*
 - add cypress tests
 ## chart/Chart.yaml
