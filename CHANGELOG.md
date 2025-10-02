@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
+## [0.31.0-bb.0] - 2025-09-30
+
+### Changed
+
+- Updated chart to 0.31.0
+- gluon 0.9.0 -> 0.9.2
+- ironbank/hashicorp/vault (source) 1.20.3 -> 1.20.4
+- registry1.dso.mil/ironbank/hashicorp/vault (source) 1.20.3 -> 1.20.4
+- registry1.dso.mil/ironbank/hashicorp/vault-csi-provider (source) v1.5.1 -> v1.6.0
+
 ## [0.30.1-bb.7] - 2025-09-24
 
 ### Changed

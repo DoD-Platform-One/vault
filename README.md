@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.30.1-bb.7](https://img.shields.io/badge/Version-0.30.1--bb.7-informational?style=flat-square) ![AppVersion: 1.20.3](https://img.shields.io/badge/AppVersion-1.20.3-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 0.31.0-bb.0](https://img.shields.io/badge/Version-0.31.0--bb.0-informational?style=flat-square) ![AppVersion: 1.20.4](https://img.shields.io/badge/AppVersion-1.20.4-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -122,7 +122,7 @@ helm install vault chart/
 | upstream.injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
 | upstream.injector.image.tag | string | `"v1.7.0"` |  |
 | upstream.injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.injector.agentImage.tag | string | `"1.20.3"` |  |
+| upstream.injector.agentImage.tag | string | `"1.20.4"` |  |
 | upstream.injector.agentDefaults.memLimit | string | `"250Mi"` |  |
 | upstream.injector.agentDefaults.memRequest | string | `"250Mi"` |  |
 | upstream.injector.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
@@ -132,7 +132,7 @@ helm install vault chart/
 | upstream.injector.resources.limits.cpu | string | `"250m"` |  |
 | upstream.server.enabled | bool | `true` |  |
 | upstream.server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.server.image.tag | string | `"1.20.3"` |  |
+| upstream.server.image.tag | string | `"1.20.4"` |  |
 | upstream.server.resources.requests.memory | string | `"256Mi"` |  |
 | upstream.server.resources.requests.cpu | string | `"250m"` |  |
 | upstream.server.resources.limits.memory | string | `"256Mi"` |  |
@@ -152,7 +152,7 @@ helm install vault chart/
 | upstream.csi.daemonSet.securityContext.pod.runAsUser | int | `100` |  |
 | upstream.csi.daemonSet.securityContext.pod.fsGroup | int | `1000` |  |
 | upstream.csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.csi.agent.image.tag | string | `"1.20.3"` |  |
+| upstream.csi.agent.image.tag | string | `"1.20.4"` |  |
 | upstream.csi.agent.resources.requests.memory | string | `"256Mi"` |  |
 | upstream.csi.agent.resources.requests.cpu | string | `"250m"` |  |
 | upstream.csi.agent.resources.limits.memory | string | `"256Mi"` |  |
