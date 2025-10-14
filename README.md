@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.31.0-bb.0](https://img.shields.io/badge/Version-0.31.0--bb.0-informational?style=flat-square) ![AppVersion: 1.20.4](https://img.shields.io/badge/AppVersion-1.20.4-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 0.31.0-bb.1](https://img.shields.io/badge/Version-0.31.0--bb.1-informational?style=flat-square) ![AppVersion: 1.20.4](https://img.shields.io/badge/AppVersion-1.20.4-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -113,50 +113,7 @@ helm install vault chart/
 | bbtests.scripts.secretEnvs[0].valueFrom.secretKeyRef.name | string | `"vault-token"` |  |
 | bbtests.scripts.secretEnvs[0].valueFrom.secretKeyRef.key | string | `"key"` |  |
 | openshift | bool | `false` |  |
-| upstream.fullnameOverride | string | `"vault-vault"` |  |
-| upstream.nameOverride | string | `"vault"` |  |
-| upstream.global.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.injector.enabled | string | `"-"` |  |
-| upstream.injector.leaderElector.enabled | bool | `false` |  |
-| upstream.injector.metrics.enabled | bool | `true` |  |
-| upstream.injector.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"` |  |
-| upstream.injector.image.tag | string | `"v1.7.0"` |  |
-| upstream.injector.agentImage.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.injector.agentImage.tag | string | `"1.20.4"` |  |
-| upstream.injector.agentDefaults.memLimit | string | `"250Mi"` |  |
-| upstream.injector.agentDefaults.memRequest | string | `"250Mi"` |  |
-| upstream.injector.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
-| upstream.injector.resources.requests.memory | string | `"256Mi"` |  |
-| upstream.injector.resources.requests.cpu | string | `"250m"` |  |
-| upstream.injector.resources.limits.memory | string | `"256Mi"` |  |
-| upstream.injector.resources.limits.cpu | string | `"250m"` |  |
-| upstream.server.enabled | bool | `true` |  |
-| upstream.server.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.server.image.tag | string | `"1.20.4"` |  |
-| upstream.server.resources.requests.memory | string | `"256Mi"` |  |
-| upstream.server.resources.requests.cpu | string | `"250m"` |  |
-| upstream.server.resources.limits.memory | string | `"256Mi"` |  |
-| upstream.server.resources.limits.cpu | string | `"250m"` |  |
-| upstream.server.auditStorage.enabled | bool | `true` |  |
-| upstream.server.ha.apiAddr | string | `"https://vault.dev.bigbang.mil"` |  |
-| upstream.server.statefulSet.securityContext.container.capabilities.drop[0] | string | `"ALL"` |  |
-| upstream.ui.enabled | bool | `true` |  |
-| upstream.csi.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault-csi-provider"` |  |
-| upstream.csi.image.tag | string | `"v1.5.1"` |  |
-| upstream.csi.resources.requests.cpu | string | `"50m"` |  |
-| upstream.csi.resources.requests.memory | string | `"128Mi"` |  |
-| upstream.csi.resources.limits.cpu | string | `"50m"` |  |
-| upstream.csi.resources.limits.memory | string | `"128Mi"` |  |
-| upstream.csi.daemonSet.securityContext.pod.runAsNonRoot | bool | `true` |  |
-| upstream.csi.daemonSet.securityContext.pod.runAsGroup | int | `1000` |  |
-| upstream.csi.daemonSet.securityContext.pod.runAsUser | int | `100` |  |
-| upstream.csi.daemonSet.securityContext.pod.fsGroup | int | `1000` |  |
-| upstream.csi.agent.image.repository | string | `"registry1.dso.mil/ironbank/hashicorp/vault"` |  |
-| upstream.csi.agent.image.tag | string | `"1.20.4"` |  |
-| upstream.csi.agent.resources.requests.memory | string | `"256Mi"` |  |
-| upstream.csi.agent.resources.requests.cpu | string | `"250m"` |  |
-| upstream.csi.agent.resources.limits.memory | string | `"256Mi"` |  |
-| upstream.csi.agent.resources.limits.cpu | string | `"250m"` |  |
+| upstream | object | Upstream chart values | Values to pass to [the upstream vault chart](https://github.com/hashicorp/vault-helm/blob/main/values.yaml) |
 
 ## Contributing
 
