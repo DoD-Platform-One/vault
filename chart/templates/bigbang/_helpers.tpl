@@ -31,12 +31,3 @@ imagePullSecrets:
 {{- end -}}
 {{- end -}}
 
-{{/* Scheme for health check and local endpoint */}}
-{{- define "vault.bb_scheme" -}}
-{{- if .Values.upstream.global.tlsDisable -}}
-{{ "http" }}
-{{- else -}}
-{{ "https" }}
-{{- end -}}
-{{- end -}}
-

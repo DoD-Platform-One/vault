@@ -21,7 +21,7 @@ data:
     {{- if not .Values.upstream.global.tlsDisable }}
     export VAULT_ADDR=https://vault.{{ .Values.domain }}
     {{- else }}
-    export VAULT_ADDR={{ include "vault.bb_scheme" . }}://{{ template "vault.fullname" . }}-internal:8200
+    export VAULT_ADDR=http://{{ template "vault.fullname" . }}-internal:8200
     {{- end }}
 
     until curl -L -s -k -f $VAULT_ADDR/v1/sys/seal-status | grep 'initialized' >& /dev/null; do
