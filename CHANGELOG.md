@@ -4,11 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.31.0-bb.3] - 2025-10-27
+
+### Changed
+
+- Updated gluon 0.9.2 -> 0.9.5
+
 ## [0.31.0-bb.2] - 2025-10-15
 
 ### Changed
 
-- Updated auto unseal configuration 
+- Updated auto unseal configuration
 
 ## [0.31.0-bb.1] - 2025-10-13
 
