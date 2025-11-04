@@ -23,8 +23,6 @@ See [HashiCorp Vault Kubernetes Auth Method](https://developer.hashicorp.com/vau
   
   vault write auth/kubernetes/config \
     kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
-    token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-    kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
     issuer="https://kubernetes.default.svc.cluster.local" 
   ```
 
@@ -138,8 +136,6 @@ vault login
 ```shell
 vault write auth/kubernetes/config \
   kubernetes_host="https://$KUBERNETES_PORT_443_TCP_ADDR:443" \
-  token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
-  kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
   issuer="https://kubernetes.default.svc.cluster.local" 
 ```
 5. Restart the Prometheus pod

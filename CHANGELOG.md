@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.31.0-bb.4] - 2025-11-03
+
+### Changed
+
+- Support kubernetes short-lived service account tokens
+
 ## [0.31.0-bb.3] - 2025-10-27
 
 ### Changed
