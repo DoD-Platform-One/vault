@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.31.0-bb.5] - 2025-11-13
+
+### Changed
+
+- Updated the egress-kube-api-agent-injector and egress-kube-api-job-init network policies to allow for setting the vpcCidr value
+
 ## [0.31.0-bb.4] - 2025-11-03
 
 ### Changed
