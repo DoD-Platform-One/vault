@@ -4,6 +4,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.31.0-bb.7] - 2025-12-03
+
+### Changed
+
+- Updated registry1.dso.mil/ironbank/hashicorp/vault (source) 1.20.4 -> 1.21.1
+- Updated registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s (source) v1.7.0 -> v1.7.1
+
 ## [0.31.0-bb.6] - 2025-11-24
 
 ### Changed
