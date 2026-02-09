@@ -1,5 +1,5 @@
 {{- if .Values.istio.enabled }}
-{{- if and .Values.istio.vault.tls.cert .Values.istio.vault.tls.key }}
+{{- if and .Values.tls.cert .Values.tls.key }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 type: kubernetes.io/tls
 data:
-  tls.crt: {{ .Values.istio.vault.tls.cert | b64enc }}
-  tls.key: {{ .Values.istio.vault.tls.key | b64enc }}
+  tls.crt: {{ .Values.tls.cert | b64enc }}
+  tls.key: {{ .Values.tls.key | b64enc }}
 {{- end }}
 {{- end }}

@@ -2,17 +2,95 @@ domain: dev.bigbang.mil
 monitoring:
   enabled: false
   namespace: monitoring
+
+routes:
+  inbound:
+    vault:
+      enabled: true
+      gateways:
+        - istio-gateway/passthrough-ingressgateway
+      hosts:
+        - vault.{{ .Values.domain }}
+      service: vault-vault.vault.svc.cluster.local
+      port: 8200
+      passthrough:
+        enabled: true
+
+istio:
+  enabled: false
+
+  sidecar:
+    enabled: false
+    outboundTrafficPolicyMode: "REGISTRY_ONLY"
+
+  serviceEntries:
+    custom: []
+
+  authorizationPolicies:
+    enabled: false
+    custom: []
+
+  # Default vault peer authentication
+  mtls:
+    # STRICT = Allow only mutual TLS traffic
+    # PERMISSIVE = Allow both plain text and mutual TLS traffic
+    mode: STRICT
+
+tls:
+  cert: ""
+  key: ""
+
 networkPolicies:
   enabled: false
-  # For vault-agent-injector egress to Kube-API
-  controlPlaneCidr: 0.0.0.0/0
-  # For Vault pod egress to VPC DNS & Endpoints, please review ../docs/bigbang-kms-auto-unseal.md
-  vpcCidr: 0.0.0.0/0
-  ingressLabels:
-    app: istio-ingressgateway
-    istio: ingressgateway
-  # Additional network policies
-  # ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  ingress:
+    definitions:
+      custom-app-ingress:
+        from:
+          - namespaceSelector: {}
+            podSelector:
+              matchLabels:
+                vault-ingress: "true"
+    to:
+      vault:8200:
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+          definition:
+            custom-app-ingress: true
+      vault-agent-injector:8080:
+        from:
+          cidr:
+            0.0.0.0/0: true # Required for control plane and any workloads using vault sidecar injection
+  egress:
+    definitions:
+      kms:
+        to:
+          - ipBlock:
+              cidr: "0.0.0.0/0"
+        ports:
+          - port: 443
+            protocol: TCP
+    from:
+      vault:
+        to:
+          cidr:
+            169.254.169.254/32: true # Access to metadata IP address is always required
+          k8s:
+            tempo/tempo:9411: false
+          definition:
+            kms: true
+            kubeAPI: true
+      vault-agent-injector:
+        to:
+          definition:
+            kubeAPI: true
+      vault-autoinit:
+        podSelector:
+          matchLabels:
+            batch.kubernetes.io/job-name: vault-vault-job-init
+        to:
+          definition:
+            kubeAPI: true
   additionalPolicies: []
 
 # BigBang autoInit Job
@@ -27,54 +105,6 @@ autoInit:
   # Init Job PVC Storage Size
   storage:
     size: 2Gi
-
-istio:
-  # Toggle istio interaction
-  enabled: false
-  hardened:
-    enabled: false
-    customAuthorizationPolicies: []
-    # - name: "allow-nothing"
-    #   enabled: true
-    #   spec: {}
-    # - name: allow-egress-instance-metadata
-    #   enabled: true
-    #   spec:
-    #     action: ALLOW
-    #     rules:
-    #     - from:
-    #       - source:
-    #           ipBlocks:
-    #             - 169.254.169.254/32
-    monitoring:
-      enabled: true
-      namespaces:
-        - monitoring
-      principals:
-        - cluster.local/ns/monitoring/sa/monitoring-grafana
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-alertmanager
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-operator
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-state-metrics
-        - cluster.local/ns/monitoring/sa/monitoring-monitoring-prometheus-node-exporter
-    apiAccess:
-      enabled: true
-      ports:
-        - "8200"
-  vault:
-    enabled: true
-    gateways:
-    -  istio-system/main
-    hosts:
-    -  vault.{{ .Values.domain }}
-    tls:
-      # for passthrough tls
-      cert: ""
-      key: ""
-  mtls:
-    # STRICT = Allow only mutual TLS traffic
-    # PERMISSIVE = Allow both plain text and mutual TLS traffic
-    mode: STRICT
 
 minio:
   enabled: false
