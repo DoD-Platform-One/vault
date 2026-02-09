@@ -47,7 +47,6 @@ metadata:
     app.kubernetes.io/name: {{ include "vault.name" . }}-root-token-secret
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-
 ---
 apiVersion: batch/v1
 kind: Job
@@ -117,10 +116,6 @@ spec:
               sleep 5;
             done
 
-            {{- if .Values.istio.enabled }}
-              echo "Killing Istio Sidecar"
-              curl -fsI -X POST http://localhost:15020/quitquitquit
-            {{- end}}
             exit 0
         securityContext:
           capabilities:

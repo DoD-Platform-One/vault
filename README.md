@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # vault
 
-![Version: 0.31.0-bb.8](https://img.shields.io/badge/Version-0.31.0--bb.8-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 0.31.0-bb.9](https://img.shields.io/badge/Version-0.31.0--bb.9-informational?style=flat-square) ![AppVersion: 1.21.1](https://img.shields.io/badge/AppVersion-1.21.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Official HashiCorp Vault Chart
 
@@ -57,35 +57,42 @@ helm install vault chart/
 | domain | string | `"dev.bigbang.mil"` |  |
 | monitoring.enabled | bool | `false` |  |
 | monitoring.namespace | string | `"monitoring"` |  |
+| routes.inbound.vault.enabled | bool | `true` |  |
+| routes.inbound.vault.gateways[0] | string | `"istio-gateway/passthrough-ingressgateway"` |  |
+| routes.inbound.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
+| routes.inbound.vault.service | string | `"vault-vault.vault.svc.cluster.local"` |  |
+| routes.inbound.vault.port | int | `8200` |  |
+| routes.inbound.vault.passthrough.enabled | bool | `true` |  |
+| istio.enabled | bool | `false` |  |
+| istio.sidecar.enabled | bool | `false` |  |
+| istio.sidecar.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.serviceEntries.custom | list | `[]` |  |
+| istio.authorizationPolicies.enabled | bool | `false` |  |
+| istio.authorizationPolicies.custom | list | `[]` |  |
+| istio.mtls.mode | string | `"STRICT"` |  |
+| tls.cert | string | `""` |  |
+| tls.key | string | `""` |  |
 | networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
-| networkPolicies.vpcCidr | string | `"0.0.0.0/0"` |  |
-| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
-| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
+| networkPolicies.ingress.definitions.custom-app-ingress.from[0].namespaceSelector | object | `{}` |  |
+| networkPolicies.ingress.definitions.custom-app-ingress.from[0].podSelector.matchLabels.vault-ingress | string | `"true"` |  |
+| networkPolicies.ingress.to.vault:8200.from.k8s.monitoring-monitoring-kube-prometheus@monitoring/prometheus | bool | `false` |  |
+| networkPolicies.ingress.to.vault:8200.from.definition.custom-app-ingress | bool | `true` |  |
+| networkPolicies.ingress.to.vault-agent-injector:8080.from.cidr."0.0.0.0/0" | bool | `true` |  |
+| networkPolicies.egress.definitions.kms.to[0].ipBlock.cidr | string | `"0.0.0.0/0"` |  |
+| networkPolicies.egress.definitions.kms.ports[0].port | int | `443` |  |
+| networkPolicies.egress.definitions.kms.ports[0].protocol | string | `"TCP"` |  |
+| networkPolicies.egress.from.vault.to.cidr."169.254.169.254/32" | bool | `true` |  |
+| networkPolicies.egress.from.vault.to.k8s.tempo/tempo:9411 | bool | `false` |  |
+| networkPolicies.egress.from.vault.to.definition.kms | bool | `true` |  |
+| networkPolicies.egress.from.vault.to.definition.kubeAPI | bool | `true` |  |
+| networkPolicies.egress.from.vault-agent-injector.to.definition.kubeAPI | bool | `true` |  |
+| networkPolicies.egress.from.vault-autoinit.podSelector.matchLabels."batch.kubernetes.io/job-name" | string | `"vault-vault-job-init"` |  |
+| networkPolicies.egress.from.vault-autoinit.to.definition.kubeAPI | bool | `true` |  |
 | networkPolicies.additionalPolicies | list | `[]` |  |
 | autoInit.enabled | bool | `true` |  |
 | autoInit.image.repository | string | `"registry1.dso.mil/ironbank/big-bang/base"` |  |
 | autoInit.image.tag | string | `"2.1.0"` |  |
 | autoInit.storage.size | string | `"2Gi"` |  |
-| istio.enabled | bool | `false` |  |
-| istio.hardened.enabled | bool | `false` |  |
-| istio.hardened.customAuthorizationPolicies | list | `[]` |  |
-| istio.hardened.monitoring.enabled | bool | `true` |  |
-| istio.hardened.monitoring.namespaces[0] | string | `"monitoring"` |  |
-| istio.hardened.monitoring.principals[0] | string | `"cluster.local/ns/monitoring/sa/monitoring-grafana"` |  |
-| istio.hardened.monitoring.principals[1] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-alertmanager"` |  |
-| istio.hardened.monitoring.principals[2] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-operator"` |  |
-| istio.hardened.monitoring.principals[3] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-prometheus"` |  |
-| istio.hardened.monitoring.principals[4] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-kube-state-metrics"` |  |
-| istio.hardened.monitoring.principals[5] | string | `"cluster.local/ns/monitoring/sa/monitoring-monitoring-prometheus-node-exporter"` |  |
-| istio.hardened.apiAccess.enabled | bool | `true` |  |
-| istio.hardened.apiAccess.ports[0] | string | `"8200"` |  |
-| istio.vault.enabled | bool | `true` |  |
-| istio.vault.gateways[0] | string | `"istio-system/main"` |  |
-| istio.vault.hosts[0] | string | `"vault.{{ .Values.domain }}"` |  |
-| istio.vault.tls.cert | string | `""` |  |
-| istio.vault.tls.key | string | `""` |  |
-| istio.mtls.mode | string | `"STRICT"` |  |
 | minio.enabled | bool | `false` |  |
 | customAppIngressSelector.key | string | `"vault-ingress"` |  |
 | customAppIngressSelector.value | bool | `true` |  |

@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ---
 
+## [0.31.0-bb.9] - 2026-02-03
+
+### Changed
+
+- Integrated bb-common and replaced static resources with dynamically generated resources
+
 ## [0.31.0-bb.8] - 2026-01-05
 
 ### Changed
