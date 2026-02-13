@@ -187,11 +187,11 @@ upstream:
 
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault/vault-k8s"
-      tag: "v1.7.1"
+      tag: "v1.7.2"
 
     agentImage:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.21.1"
+      tag: "1.21.2"
 
     agentDefaults:
       memLimit: "250Mi"
@@ -216,7 +216,7 @@ upstream:
 
     image:
       repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-      tag: "1.21.1"
+      tag: "1.21.2"
 
     resources:
       requests:
@@ -266,7 +266,7 @@ upstream:
     agent:
       image:
         repository: "registry1.dso.mil/ironbank/hashicorp/vault"
-        tag: "1.21.1"
+        tag: "1.21.2"
 
       resources:
         requests:
